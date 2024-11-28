@@ -1,0 +1,45 @@
+How I make a translation of the zegar program.
+
+1. I copied Qt program called lupdate.txt   into the current directory
+
+2.
+Otworzyłem w tym current directory okienko cmd
+
+lupdate.exe   zegar.pro   -ts   polski2.ts
+
+Wyjęło o informacje o tekstach z całego projektu
+
+3.
+Otworzyłem okienkowy program  QtLinguist
+a w nim otworzyłem plik  polski2.ts
+
+Wtedy zaoferował mi pozycje do tłumaczenia.
+Zrobiłem te tłumacznia.
+
+4. Gdy skończyłem to wybrałem w tym programie opcję
+File->Wydaj   (lub wydaj jako)
+
+Powstaje wtedy plik: polski2.qm
+
+5.
+
+Nazwa tego pliku  powinna się znaleźć w pliku projektu zegar.pro
+
+OTHER_FILES  += \
+    content/*.png \
+    polski2.qm      <-------------tutaj
+
+6. Dodatkowo w tym projekcie jest też
+
+RESOURCES += \
+    translations.qrc \    <---------to
+    zegar_elementy.qrc
+
+ale nie pamiętam już jak to zrobiłem. Jest to resource file  translations.qrc
+do którego wstawilem  plik:  polski2.qm
+
+
+7. Gdy coś zmieniam w programie to wystarczy zrobić powtórnie
+punkt  2. (lupdate.exe) a stare tłumaczenia zostają zachowane
+dodają się tylko konieczne nowe.
+
