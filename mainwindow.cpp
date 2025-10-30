@@ -22,7 +22,7 @@
 #include <QBitmap>
 #include <QGraphicsPixmapItem>
 #include <QtMath>
-#include <QSound>
+//#include <QSound>
 #include <QMediaPlayer>
 #include <QPair>
 #include <QDir>
@@ -32,15 +32,17 @@
 #include <QScreen>
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include <bitset>
 #include <QProcess>
 #include <QTranslator>
 #include <QMessageBox>
 #include  <random>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 #include "tpreferred_hands.h"
 
@@ -1529,7 +1531,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
         context_Menu->addAction(tr("Exit program"), this, SLOT(koniec_programu() ));
 
         // uruchomienie przygotowanego menu
-        context_Menu->exec(mapToGlobal(QPoint(e->x() ,e->y()   )));
+        context_Menu->exec(mapToGlobal(QPoint(e->position().x() ,e->position().y()   )));
         delete context_Menu;
     }
 
@@ -1537,14 +1539,14 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
 #if KRZYZE_PROWADZACE
         //if(e->button() & Qt::ControlModifier)
         cout << "zwykle klikniecie .. lewym klawiszem w pozycji x="
-             << e->x()
-             << ", y= "  << e->y()
+             << e->position().x()
+             << ", y= "  << e->position().y()
              << endl;
 #endif
 
         // do suwania tarczy po ekranie
-        lastMouseX = e->x();
-        lastMouseY = e->y();
+        lastMouseX = e->position().x();
+        lastMouseY = e->position().y();
     }
 
 
@@ -1556,8 +1558,8 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     auto okno_x = this->x();
     auto okno_y = this->y();
 
-    okno_x += (event->x()  - lastMouseX);
-    okno_y += (event->y()  - lastMouseY);
+    okno_x += (event->position().x()  - lastMouseX);
+    okno_y += (event->position().y()  - lastMouseY);
 
     if(flag_blokuj_na_ekranie == false){
         this->move(okno_x, okno_y);
@@ -1733,7 +1735,9 @@ void MainWindow::paintEvent(QPaintEvent *)
                         font_w_pikselach  // height
                         );
 
-            auto loc_long = date.toString(Qt::DefaultLocaleLongDate);
+            // auto loc_long = date.toString(QLocale::LongFormat);
+            auto loc_long = QLocale().toString(date, QLocale::LongFormat);
+
             auto dzien_tyg =  date.toString("dddd") ;  // dzien tygodnia
             // czy w tym jest już dzień tygodnia?
             bool flag_juz_jest = true;
@@ -1743,11 +1747,10 @@ void MainWindow::paintEvent(QPaintEvent *)
             }
 
             auto full_date =
-                    " " +
-                    (flag_juz_jest ?  "" :  date.toString("dddd, ")) +  // dzien tygodnia
-                    date.toString(Qt::DefaultLocaleLongDate)
-                    //                    + " " + date.toString(Qt::DefaultLocaleShortDate)
-                    + " ";
+                " " +
+                (flag_juz_jest ? "" : QLocale().toString(date, "dddd, ")) +  // dzień tygodnia w lokalnym języku
+                QLocale().toString(date, QLocale::LongFormat)
+                + " ";
 
 
 
@@ -2472,9 +2475,7 @@ void MainWindow::wywolanie_okna_opcji()
             auto odp =  QMessageBox::warning ( this,
                                                tr("Random time was while you entered option menu"),
                                                tr( "Do you want to continue the 'random clock' mode ? "),
-                                               QMessageBox::Yes,
-                                               QMessageBox::No,
-                                               QMessageBox::NoButton );
+                                               QMessageBox::Yes | QMessageBox::No);
             if(odp == QMessageBox::Yes)
                 flag_random_tarcza = true;
         }
@@ -8893,9 +8894,18 @@ void MainWindow::sprawdzenie_alarmow()
                     //QSound::play(al.muzyka.c_str());
                     if(al.player ==nullptr)   al.player = new QMediaPlayer;
                     // ...
-                    al.player->setMedia(QUrl::fromLocalFile(al.muzyka.c_str()) );
-                    al.player->setVolume(50);
+                    // al.player->setMedia(QUrl::fromLocalFile(al.muzyka.c_str()) );
+                    // al.player->setVolume(50);
+
+                    al.player = new QMediaPlayer(this);
+                    al.audioOutput = new QAudioOutput(this);    // nowy element w Qt6
+                    al.player->setAudioOutput(al.audioOutput);  // powiązanie
+
+                    al.player->setSource(QUrl::fromLocalFile(QString::fromStdString(al.muzyka)));
+                    al.audioOutput->setVolume(0.5);  // zakres 0.0–1.0
+
                     al.player->play();
+
 
                     if(al.sekund_dzwieku > 0)
                     {

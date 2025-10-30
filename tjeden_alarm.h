@@ -2,11 +2,13 @@
 #define TJEDEN_ALARM_H
 
 #include <string>
-#include <fstream>
 #include <iostream>
 
 #include <QStringList>
 #include <QObject>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
 using namespace  std;
 
 //  #define tr  QObject::tr
@@ -41,6 +43,7 @@ public:   // jeśli coś dodasz do tej listy, to pamietaj, ze trzeba to też wcz
     bool flag_alarm_jest_na_ekranie = false;
     Togloszenie_alarmu *dlg = nullptr;
     QMediaPlayer *player = nullptr;
+    QAudioOutput *audioOutput;
     bool flag_test_alarm_now = false;
 
 

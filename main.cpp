@@ -3,6 +3,7 @@
 #include <QTranslator>
 #include <QDir>
 #include <QProcess>
+#include <fstream>
 
 #include <string>
 
@@ -225,7 +226,7 @@ int main(int argc, char *argv[])
     file.close();
 //        cout << "wczytany nr jezyka = " << nr_jezyka << endl;
 
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+   //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
 
 
     while(1) {

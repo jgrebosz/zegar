@@ -311,32 +311,43 @@ void Alarmy::on_pushButton_usun_rzad_clicked()
             //  unsigned row = ui->tableWidget->selectRow();    ro sel currentRow() ;
             if(row >= tablica_alarmow.size() ) return ;
 
-            QString mess_usuwanie = tr("You are going to remove the alarm =  nr %1\n\n"
-                                       " called  : %2\n"
-                                       " hour: %3\n"
-                                       " date: %4\n"
-                                       " polygon   : %5\n\n"
-                                       "Are you sure ?")
-                    .arg(row+1)
-                    .arg(tablica_alarmow[row].nazwa.c_str())
-                    .arg(tablica_alarmow[row].godzina.c_str())
-                    .arg(tablica_alarmow[row].data.c_str())
-                    .arg(tablica_alarmow[row].czestotliwosc) ;
-            //QString are_you_sure { tr("ARE YOU SURE ? ") } ;
+            QString mess_usuwanie = tr(
+                                        "You are going to remove the alarm = nr %1\n\n"
+                                        "called  : %2\n"
+                                        "hour: %3\n"
+                                        "date: %4\n"
+                                        "polygon : %5\n\n"
+                                        "Are you sure?")
+                                        .arg(row + 1)
+                                        .arg(QString::fromStdString(tablica_alarmow[row].nazwa))
+                                        .arg(QString::fromStdString(tablica_alarmow[row].godzina))
+                                        .arg(QString::fromStdString(tablica_alarmow[row].data))
+                                        .arg(tablica_alarmow[row].czestotliwosc);
 
-            switch(QMessageBox::warning( this,  tr("ARE YOU SURE ? "),
-                                         mess_usuwanie,
-                                         tr("Yes"),
-                                         tr("No"),
-                                         tr("Cancel"), 1))
-            {
-            case 0: // Yes :
-                // user selected an item and pressed OK
+            QMessageBox::StandardButton reply = QMessageBox::warning(
+                this,
+                tr("ARE YOU SURE?"),
+                mess_usuwanie,
+                QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+                QMessageBox::No // domyślnie zaznaczony
+                );
+
+            switch (reply) {
+            case QMessageBox::Yes:
                 tablica_alarmow.erase(tablica_alarmow.begin() + row);
-
                 redisplay_table();
-                break ;
-            } // switch
+                break;
+
+            case QMessageBox::No:
+                // użytkownik wybrał "No"
+                break;
+
+            case QMessageBox::Cancel:
+            default:
+                // anulowanie lub zamknięcie okna
+                break;
+            }
+
         } // for row
     } // for sel
     zapisanie_tablicy_na_dysku();
@@ -406,12 +417,12 @@ void Alarmy::on_pushButton_edytuj_clicked()
 //    cout << "selected range list size = ", range_list.size();
     if(range_list.empty())     // jesli zaden, to error message
     {
-        QMessageBox::warning ( this,
+       // QMessageBox::StandardButton reply =
+            QMessageBox::warning
+            ( this,
                                tr("No alarm entry selected"),
                                tr( "At first select some alarm by clicking on its name "),
-                               QMessageBox::Ok,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton );
+                               QMessageBox::Ok);
         return;
     }
 
