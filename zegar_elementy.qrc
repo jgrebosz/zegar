@@ -225,5 +225,6 @@
         <file>content/zestaw_barok_gold_h.png</file>
         <file>content/zestaw_barok_gold_m.png</file>
         <file>content/zifferblatt-uhr-rolex.png</file>
+        <file>polski2.qm</file>
     </qresource>
 </RCC>

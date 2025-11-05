@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>polski2.qm</file>
+    </qresource>
+</RCC>

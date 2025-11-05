@@ -20,7 +20,7 @@ string sciezka;
 //********************************************************************************
 void system_srodowsko()
 {
-   // cout << "srodowisko " << endl;
+    // cout << "srodowisko " << endl;
 
     //! UWAGA: Nawet jeśli dowiem się ile kopii programu właśnie
     //! się wykonuje, to nie powinno mi przeszkadzać jeśli są one
@@ -36,7 +36,7 @@ void system_srodowsko()
     //--------------------
 
     const QString &processname {"zegar*"};
-//    {"Av*"};    // wykryje Avasty
+    //    {"Av*"};    // wykryje Avasty
 
     QProcess tasklist;
 
@@ -44,26 +44,26 @@ void system_srodowsko()
 
     // TAK JEST DLA WINDOWS
     tasklist.start(
-                "tasklist",
-                QStringList() << "/NH"
-                << "/FO"
-                << "CSV"
-                << "/FI"
-                << QString("IMAGENAME eq %1").arg(processname)
-                )
+        "tasklist",
+        QStringList() << "/NH"
+                      << "/FO"
+                      << "CSV"
+                      << "/FI"
+                      << QString("IMAGENAME eq %1").arg(processname)
+        )
 
-            ;
+        ;
 #elif defined      Q_OS_LINUX
 
     //       ps axco pid,command
 
     tasklist.start(
-                "ps",
-                QStringList() << "/NH"
-                << "/FO"
-                << "CSV"
-                << "/FI"
-                << QString("IMAGENAME eq %1").arg(processname));
+        "ps",
+        QStringList() << "/NH"
+                      << "/FO"
+                      << "CSV"
+                      << "/FI"
+                      << QString("IMAGENAME eq %1").arg(processname));
 #endif
     tasklist.waitForFinished();
     QString output = tasklist.readAllStandardOutput();
@@ -121,14 +121,14 @@ bool czy_wolno_uruchomic(char * arg0)
     string sama_nazwa_programu;
     string slesz =   // w windosach i linuxie są różne
 #ifdef Q_OS_WINDOWS
-            "\\";
+        "\\";
 #elif defined      Q_OS_LINUX
-            "/";
+        "/";
 #else   // nie windows (a co z Mac-iem)
-        #error "Oparating system not recognised "
- #endif
+#error "Oparating system not recognised "
+#endif
 
-            size_t pozycja = nazwa_programu_ze_sciezka.rfind(slesz);  // może backslash?
+    size_t pozycja = nazwa_programu_ze_sciezka.rfind(slesz);  // może backslash?
 
     if( pozycja != string::npos)
     {
@@ -145,22 +145,22 @@ bool czy_wolno_uruchomic(char * arg0)
     QDir dir;
 
     if(
-            dir.exists(wlasciwy.c_str())
-            ||
-            dir.exists(deb_progr.c_str())
-            ||
-            dir.exists(rel_progr.c_str())
-            )
+        dir.exists(wlasciwy.c_str())
+        ||
+        dir.exists(deb_progr.c_str())
+        ||
+        dir.exists(rel_progr.c_str())
+        )
     {
         //        OK
     }
     else
     {
         cout
-                << "w biezacym katalogu " << sciezka
-                << "\n(ani w podkatalogach  Release, Debug)   nie ma  pliku programowego ="
-                << sama_nazwa_programu
-                << endl;;
+            << "w biezacym katalogu " << sciezka
+            << "\n(ani w podkatalogach  Release, Debug)   nie ma  pliku programowego ="
+            << sama_nazwa_programu
+            << endl;;
         return false;
     }
 
@@ -174,17 +174,17 @@ bool czy_wolno_uruchomic(char * arg0)
 
     if(plik)
     {   // jesli plik jest to może jest za stary
-//        cout << "Plik sygnalizujacy aktywnosci istnieje " << endl;
+        //        cout << "Plik sygnalizujacy aktywnosci istnieje " << endl;
         time_t czas;
         bool czy_pozwalam = true;
         plik >> czas >> czy_pozwalam;
         auto roznica_czasu = time(nullptr) - czas;
         if( roznica_czasu >  (CO_ILE_SEK_SPRAWDZENIE_AKTYWNOSCI * 1.2) )
         {
-//            cout << " Jest jakis stary wpis dot. aktywnosci, ale to bylo "
-//                 << roznica_czasu << " s temu, "
-//                                     "\nwiec mozna uznac, ze skoro program dawno przestal dzialac to mozemy uruchomic ten "
-//                 << endl;
+            //            cout << " Jest jakis stary wpis dot. aktywnosci, ale to bylo "
+            //                 << roznica_czasu << " s temu, "
+            //                                     "\nwiec mozna uznac, ze skoro program dawno przestal dzialac to mozemy uruchomic ten "
+            //                 << endl;
         }else
         {
             cout << "Juz program Zegar w tym katalogu pracowal " << roznica_czasu << " sekund temu ... "
@@ -210,7 +210,7 @@ bool czy_wolno_uruchomic(char * arg0)
 int main(int argc, char *argv[])
 {
 
-//    system_srodowsko();
+    //    system_srodowsko();
 
     nr_jezyka = 0;
 
@@ -224,9 +224,9 @@ int main(int argc, char *argv[])
     ifstream file(pathed_nazwa_pliku_z_opcjami);
     file >> nr_jezyka ;
     file.close();
-//        cout << "wczytany nr jezyka = " << nr_jezyka << endl;
+    cout << "wczytany nr jezyka = " << nr_jezyka << endl;
 
-   //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
+    //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
 
 
     while(1) {
@@ -234,41 +234,42 @@ int main(int argc, char *argv[])
 
         QTranslator t;
 
-        switch(nr_jezyka)
+        switch (nr_jezyka)
         {
         case 0:
-            //                        cout << "Jezyk nr 0 czyli default " << endl;
+            qDebug() << "Język nr 0 (domyślny, angielski)";
             break;
+
+        case 1:
         default:
+        {
+            QString nazwa_jezyka = ":/polski2.qm";
+            qDebug() << "Wybrany język: " << nazwa_jezyka;
 
-        case 1:  // polish
-            string nazwa_jezyka = ":/polski2.qm";
-            //  cout << "wybrany jezyk nr 1 czyli " << nazwa_jezyka << endl;
+            bool rezultat = t.load(nazwa_jezyka);
+            qDebug() << "Wynik wczytania: " << rezultat;
 
-            bool rezultat [[maybe_unused]] =
-                    t.load(nazwa_jezyka.c_str());
-            //                        cout << "Loading language:  " << nazwa_jezyka
-            //                             << ", result of loading = "
-            //                             << boolalpha << rezultat << endl;
-
+            if (rezultat)
+                a.installTranslator(&t);
             break;
         }
+        }
 
-        a.installTranslator(&t);
+
         nr_obecnie_zainstalowanego_jezyka = nr_jezyka;
 
         MainWindow w;
         w.show();
-//        cout << __LINE__ << " przed w.exec() " << endl;
+        //        cout << __LINE__ << " przed w.exec() " << endl;
         int answer = a.exec();
-//  cout << __LINE__ << " PO w.exec() " << endl;
-                        cout << "main,  flag_ma_byc_restart = "<< boolalpha
-                             << flag_ma_byc_restart << endl;
+        //  cout << __LINE__ << " PO w.exec() " << endl;
+        cout << "main,  flag_ma_byc_restart = "<< boolalpha
+             << flag_ma_byc_restart << endl;
         if(flag_ma_byc_restart )
         {
-                        cout << "[main.c ] Powtorne pokazanie okna, z opcją flag_ma_byc_restart,   oraz  flag_na_wierzchu= "
-                             << flag_na_wierzchu
-                             << " i jezykiem nr " << nr_jezyka << endl;
+            cout << "[main.c ] Powtorne pokazanie okna, z opcją flag_ma_byc_restart,   oraz  flag_na_wierzchu= "
+                 << flag_na_wierzchu
+                 << " i jezykiem nr " << nr_jezyka << endl;
 
             w.setWindowFlag(Qt::WindowStaysOnTopHint, flag_na_wierzchu );
             w.setWindowFlag(Qt::X11BypassWindowManagerHint, flag_na_wierzchu);

@@ -29,6 +29,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
+TRANSLATIONS += polski2.ts
+
+# Automatyczna kompilacja translacji do .qm
+updateqm.input = TRANSLATIONS
+updateqm.output = ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
+updateqm.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_NAME} -qm ${QMAKE_FILE_OUT}
+updateqm.CONFIG += no_link target_predeps
+
+QMAKE_EXTRA_COMPILERS += updateqm
+
+
+
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     alarmy.cpp \
@@ -53,14 +66,15 @@ FORMS    += mainwindow.ui \
     topcje_dlg.ui
 
 
+
 RESOURCES += \
     translations.qrc \
     zegar_elementy.qrc
 
 
-OTHER_FILES  += \
-                content/*.png \
-    polski2.qm
+DISTFILES += polski2.qm \
+                content/*.png
+
 
 DISTFILES += \
     content/iwc_schaffhausen_short.png \
