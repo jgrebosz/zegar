@@ -30,6 +30,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 TRANSLATIONS += polski2.ts
+LUPDATE += -no-obsolete
+
 
 # Automatyczna kompilacja translacji do .qm
 updateqm.input = TRANSLATIONS

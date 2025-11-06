@@ -3,18 +3,18 @@
 #include <QMediaPlayer>
 
 // static
-QStringList Tjeden_alarm::list_czestotliwosc =
-  {
-      QObject::tr("Once"),            // "Raz",
-     QObject::tr("Every day"),            //"Codziennie",
-    QObject:: tr("Every week"),            //"Co tydzień",
-      QObject:: tr("Every 2 weeks"),            //"Co dwa tygodnie",
-    QObject:: tr("Every month"),            //"Co miesiąc",
-     QObject::tr("Every year"),            //"Co rok",
-    QObject:: tr("Every N Minutes"),            //"Minuty"
-     QObject:: tr("Every EVEN week"),            //"Co PARZ  tydzień",,
-     QObject:: tr("Every ODD week"),            //"Co NIEPARZ  tydzień",
-  };
+// QStringList Tjeden_alarm::list_czestotliwosc =
+//   {
+//       QObject::tr("Once"),            // "Raz",
+//      QObject::tr("Every day"),            //"Codziennie",
+//     QObject:: tr("Every week"),            //"Co tydzień",
+//       QObject:: tr("Every 2 weeks"),            //"Co dwa tygodnie",
+//     QObject:: tr("Every month"),            //"Co miesiąc",
+//      QObject::tr("Every year"),            //"Co rok",
+//     QObject:: tr("Every N Minutes"),            //"Minuty"
+//      QObject:: tr("Every EVEN week"),            //"Co PARZ  tydzień",,
+//      QObject:: tr("Every ODD week"),            //"Co NIEPARZ  tydzień",
+//   };
 
 //**************************************************************************************************************
 Tjeden_alarm::Tjeden_alarm()

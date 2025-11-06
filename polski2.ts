@@ -26,7 +26,7 @@
     <message>
         <location filename="alarmy.ui" line="128"/>
         <source> Test now</source>
-        <translation>Sprawdź alarm teraz</translation>
+        <translation> Sprawdź alarm teraz</translation>
     </message>
     <message>
         <location filename="alarmy.ui" line="148"/>
@@ -293,13 +293,14 @@ Jesteś pewny?</translation>
     <message>
         <location filename="mainwindow.cpp" line="2599"/>
         <source>Can&apos;t open file with user alarms: </source>
-        <translation>Nie mogę otworzyć pliku z alarmami użytkownika:</translation>
+        <translation>Nie mogę otworzyć pliku z alarmami użytkownika: </translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2601"/>
         <source>
  (if you haven&apos;t defined them yet - no problem)</source>
-        <translation>(Jeśli ich jeszcze nie definiowałeś - żaden problem)</translation>
+        <translation>
+ (Jeśli ich jeszcze nie definiowałeś - żaden problem)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="6796"/>
@@ -314,7 +315,7 @@ Jesteś pewny?</translation>
     <message>
         <location filename="mainwindow.cpp" line="9794"/>
         <source>&amp;Restore on screen</source>
-        <translation>Przywołaj na ekran</translation>
+        <translation>&amp;R-Przywołaj na ekran</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="9797"/>
@@ -683,7 +684,7 @@ Jesteś pewny?</translation>
     <message>
         <location filename="tedytor_alarmow_dlg.cpp" line="241"/>
         <source>Why?  After week nr 53 (ODD number) in December %1, &lt;br&gt;there will be another ODD week nr 1 (in January %2)&lt;br&gt;&lt;br&gt;This will make a following consequence:&lt;br&gt;The first alarm in the %3 week of January %4 &lt;br&gt;will &apos;fire: &apos; </source>
-        <translation>Dlaczego? Po tygodniu nr 53 (numer parzysty) w grudniu %1, &lt;br&gt;następi kolejny nieparzysty tydzień nr 1 (w styczniu %2).&lt;br&gt;&lt;br&gt;To sprawi, że:&lt;br&gt;pierwszy alarm w %3 tygodniu stycznia %4&lt;br&gt;nastąpi: </translation>
+        <translation>Dlaczego? Po tygodniu nr 53 (numer nieparzysty) w grudniu %1, &lt;br&gt;następi kolejny nieparzysty tydzień nr 1 (w styczniu %2).&lt;br&gt;&lt;br&gt;To sprawi, że:&lt;br&gt;pierwszy alarm w styczniu %4 będzie w tygodniu  %3 </translation>
     </message>
     <message>
         <location filename="tedytor_alarmow_dlg.ui" line="301"/>
@@ -778,7 +779,7 @@ Jesteś pewny?</translation>
     <message>
         <location filename="topcje_dlg.ui" line="82"/>
         <source>255</source>
-        <translation></translation>
+        <translation>255</translation>
     </message>
     <message>
         <location filename="topcje_dlg.ui" line="95"/>
@@ -852,7 +853,7 @@ Jesteś pewny?</translation>
     <message>
         <location filename="topcje_dlg.ui" line="241"/>
         <source>Choose a mode for clock hands:</source>
-        <translation>Wybór trybu dla wskazówek zegara</translation>
+        <translation>Wybór trybu dla wskazówek zegara:</translation>
     </message>
     <message>
         <location filename="topcje_dlg.ui" line="249"/>
@@ -925,7 +926,7 @@ Jesteś pewny?</translation>
     <message>
         <location filename="topcje_dlg.ui" line="387"/>
         <source>Remember also a current scale (zoom) factor</source>
-        <translation type="unfinished">Zapamiętaj także bieżącą wielkość tarczy (zoom)</translation>
+        <translation>Zapamiętaj także bieżącą wielkość tarczy (zoom)</translation>
     </message>
     <message>
         <location filename="topcje_dlg.ui" line="394"/>
@@ -1001,7 +1002,7 @@ Jesteś pewny?</translation>
     <message>
         <location filename="topcje_dlg.ui" line="628"/>
         <source>vector-type hours&apos; hand</source>
-        <translation>wektorowa  rodzaju nr:</translation>
+        <translation>wektorowa  rodzaju nr</translation>
     </message>
     <message>
         <location filename="topcje_dlg.ui" line="648"/>
@@ -1023,7 +1024,7 @@ Jesteś pewny?</translation>
     <message>
         <location filename="topcje_dlg.ui" line="688"/>
         <source>vector-type minutes&apos; hand</source>
-        <translation>wektorowe, typu nr:</translation>
+        <translation>wektorowe, typu nr</translation>
     </message>
     <message>
         <location filename="topcje_dlg.ui" line="726"/>
@@ -1043,7 +1044,7 @@ Jesteś pewny?</translation>
     <message>
         <location filename="topcje_dlg.ui" line="745"/>
         <source>vector-type seconds&apos; hand</source>
-        <translation>wektorowe, typu nr:</translation>
+        <translation>wektorowe, typu nr</translation>
     </message>
     <message>
         <location filename="topcje_dlg.ui" line="783"/>

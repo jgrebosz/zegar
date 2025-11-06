@@ -7,7 +7,6 @@
 #include <QMessageBox>
 
 #include <iostream>
-#include <bitset>
 using namespace std;
 
 #include "tjeden_alarm.h"
@@ -22,7 +21,9 @@ Tedytor_alarmow_dlg::Tedytor_alarmow_dlg(QWidget *parent) :
 
     // cout << __PRETTY_FUNCTION__ << endl;
     ui->setupUi(this);
-    ui->comboBox_powtarzanie->insertItems(0, al.list_czestotliwosc);
+
+
+    ui->comboBox_powtarzanie->insertItems(0, al.list_czestotliwosc() );
 
     rozlozenie_po_kontrolkach();
 
@@ -228,6 +229,13 @@ void Tedytor_alarmow_dlg::mod_co_2tygodnie()
     int tygodni_w_biezacym_roku = sylwestra.weekNumber();
 
 
+
+    // Ale trzeba uważać: np. 31 grudnia może należeć już do tygodnia "1" następnego roku
+    if (sylwestra.weekNumber() == 1)
+        tygodni_w_biezacym_roku=  QDate(now_today.year(), 12, 24).weekNumber();  // cofamy się o tydzień, by znaleźć ostatni tydzień bieżącego roku
+
+    // cout << "tygodni_w_biezacym_roku = " << tygodni_w_biezacym_roku <<endl;
+
     if(tygodni_w_biezacym_roku  == 52)
     {
         // info += "\nSo your alarm will work OK also in the next year" ;
@@ -239,15 +247,10 @@ void Tedytor_alarmow_dlg::mod_co_2tygodnie()
                        "<br>So your alarm may surprise you in January, next year<br><br>")).arg(sylwestra.weekNumber());
 
         explanation += QString(tr("Why?  "
-                                  // "Some years have 52 weeks,<br>but some other 53.<br>"
-                                  //                                  "The current year (%1) has 53 weeks - (note: 53 is an ODD number),<br> "
-                                  //                                  "the first week of the new year (%2) is 1 - (note: 1 is ALSO an ODD number.<br><br>"
-
-
                                   "After week nr 53 (ODD number) in December %1, <br>"
                                   "there will be another ODD week nr 1 (in January %2)<br><br>"
                                   "This will make a following consequence:<br>"
-                                  "The first alarm in the %3 week of January %4 <br>will 'fire: ' "))
+                                  "The first alarm in January %4 will fire in the week %3"))
                 .arg(this_year)
                 .arg(this_year + 1)
                 .arg(al.flag_even_odd_week_nr? tr("EVEN") : tr("ODD") )

@@ -47,7 +47,7 @@ public:   // jeśli coś dodasz do tej listy, to pamietaj, ze trzeba to też wcz
     bool flag_test_alarm_now = false;
 
 
-  static  QStringList list_czestotliwosc ;
+  //static  QStringList list_czestotliwosc ;
 //  =
 //    {
 //        QObject::tr("Once"),            // "Raz",
@@ -61,7 +61,20 @@ public:   // jeśli coś dodasz do tej listy, to pamietaj, ze trzeba to też wcz
 //       QObject:: tr("Every ODD week"),            //"Co NIEPARZ  tydzień",
 //    };
 
-
+    static   QStringList list_czestotliwosc()
+  {
+      return {
+          QObject::tr("Once"),
+          QObject::tr("Every day"),
+          QObject::tr("Every week"),
+          QObject::tr("Every 2 weeks"),
+          QObject::tr("Every month"),
+          QObject::tr("Every year"),
+          QObject::tr("Every N Minutes"),
+          QObject::tr("Every EVEN week"),
+          QObject::tr("Every ODD week")
+      };
+  }
 
 
 

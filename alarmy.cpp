@@ -129,7 +129,7 @@ void Alarmy::redisplay_table()
 //             <<  Tjeden_alarm::list_czestotliwosc.size() << endl;
 
         ui->tableWidget->item(j, kol_czestotliwosci) -> setText(
-                    Tjeden_alarm::list_czestotliwosc[ tablica_alarmow[j].czestotliwosc]
+                    Tjeden_alarm::list_czestotliwosc()[ tablica_alarmow[j].czestotliwosc]
                 ) ;
 
 
@@ -318,11 +318,14 @@ void Alarmy::on_pushButton_usun_rzad_clicked()
                                         "date: %4\n"
                                         "polygon : %5\n\n"
                                         "Are you sure?")
-                                        .arg(row + 1)
-                                        .arg(QString::fromStdString(tablica_alarmow[row].nazwa))
-                                        .arg(QString::fromStdString(tablica_alarmow[row].godzina))
-                                        .arg(QString::fromStdString(tablica_alarmow[row].data))
-                                        .arg(tablica_alarmow[row].czestotliwosc);
+                                        .arg(
+                                            QString::number(row + 1),
+                                            QString::fromStdString(tablica_alarmow[row].nazwa),
+                                            QString::fromStdString(tablica_alarmow[row].godzina),
+                                            QString::fromStdString(tablica_alarmow[row].data),
+                                            QString::number(tablica_alarmow[row].czestotliwosc)
+                                            );
+
 
             QMessageBox::StandardButton reply = QMessageBox::warning(
                 this,
