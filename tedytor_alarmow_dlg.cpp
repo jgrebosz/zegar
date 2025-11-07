@@ -21,6 +21,8 @@ Tedytor_alarmow_dlg::Tedytor_alarmow_dlg(QWidget *parent) :
 
     // cout << __PRETTY_FUNCTION__ << endl;
     ui->setupUi(this);
+   ui->frame_dni_tygodnia->setStyleSheet("");  // <--W Windows 11 był w Qt6 jakis bug
+
 
 
     ui->comboBox_powtarzanie->insertItems(0, al.list_czestotliwosc() );
