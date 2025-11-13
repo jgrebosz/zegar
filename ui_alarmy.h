@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'alarmy.ui'
 **
-** Created by: Qt User Interface Compiler version 5.14.2
+** Created by: Qt User Interface Compiler version 6.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -41,18 +41,18 @@ public:
     void setupUi(QDialog *Alarmy)
     {
         if (Alarmy->objectName().isEmpty())
-            Alarmy->setObjectName(QString::fromUtf8("Alarmy"));
+            Alarmy->setObjectName("Alarmy");
         Alarmy->resize(620, 465);
         verticalLayout_3 = new QVBoxLayout(Alarmy);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setObjectName("verticalLayout_3");
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName("verticalLayout_2");
         tableWidget = new QTableWidget(Alarmy);
         if (tableWidget->columnCount() < 15)
             tableWidget->setColumnCount(15);
-        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
+        tableWidget->setObjectName("tableWidget");
         tableWidget->setMinimumSize(QSize(300, 0));
         QFont font;
         font.setPointSize(8);
@@ -72,7 +72,7 @@ public:
 
         verticalLayout_2->addWidget(tableWidget);
 
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         verticalLayout_2->addItem(horizontalSpacer);
 
@@ -80,38 +80,38 @@ public:
         horizontalLayout->addLayout(verticalLayout_2);
 
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName("verticalLayout");
         pushButton_nowy = new QPushButton(Alarmy);
-        pushButton_nowy->setObjectName(QString::fromUtf8("pushButton_nowy"));
+        pushButton_nowy->setObjectName("pushButton_nowy");
 
         verticalLayout->addWidget(pushButton_nowy);
 
         pushButton_edytuj = new QPushButton(Alarmy);
-        pushButton_edytuj->setObjectName(QString::fromUtf8("pushButton_edytuj"));
+        pushButton_edytuj->setObjectName("pushButton_edytuj");
 
         verticalLayout->addWidget(pushButton_edytuj);
 
         pushButton_usun_rzad = new QPushButton(Alarmy);
-        pushButton_usun_rzad->setObjectName(QString::fromUtf8("pushButton_usun_rzad"));
+        pushButton_usun_rzad->setObjectName("pushButton_usun_rzad");
 
         verticalLayout->addWidget(pushButton_usun_rzad);
 
         pushButton_test = new QPushButton(Alarmy);
-        pushButton_test->setObjectName(QString::fromUtf8("pushButton_test"));
+        pushButton_test->setObjectName("pushButton_test");
 
         verticalLayout->addWidget(pushButton_test);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
 
         pushButton = new QPushButton(Alarmy);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setObjectName("pushButton");
 
         verticalLayout->addWidget(pushButton);
 
         pushButton_OK = new QPushButton(Alarmy);
-        pushButton_OK->setObjectName(QString::fromUtf8("pushButton_OK"));
+        pushButton_OK->setObjectName("pushButton_OK");
 
         verticalLayout->addWidget(pushButton_OK);
 

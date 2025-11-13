@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.14.2
+** Created by: Qt User Interface Compiler version 6.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -25,14 +25,14 @@ public:
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+            MainWindow->setObjectName("MainWindow");
         MainWindow->resize(377, 267);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/new/prefix1/content/zegar_ikona.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon.addFile(QString::fromUtf8(":/new/prefix1/content/zegar_ikona.png"), QSize(), QIcon::Mode::Normal, QIcon::State::On);
         MainWindow->setWindowIcon(icon);
         MainWindow->setWindowOpacity(0.200000000000000);
         centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        centralWidget->setObjectName("centralWidget");
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);

@@ -6075,7 +6075,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       QPoint(0, 133),    // pozycja pełnej daty ( % z dlug promienia)
                                       QColor(50, 50, 200),   // kolor pełnej daty
 
-                                      QPoint(41, 0),    // pozycja datownika % z dlug promienia
+                                      QPoint(41, -2),    // pozycja datownika % z dlug promienia
                                       15,   // szer okienka w % dlugosci promienia
                                       14,   // wys okienka i fontu  (w % dlugosci promienia)
 
@@ -9033,7 +9033,7 @@ void MainWindow::odczytaj_ulubione_wskazowki_z_dysku()
     //
 
     size_t kursor = 0;
-    for(int entry = 0 ; ; entry++)      // petla po faworytach
+    for(int entry  [[__maybe_unused__]] = 0 ; ; entry++)      // petla po faworytach
     {
         // cout << "obieg nr " << entry << endl;
         // wyjecie jednego alarmu ----------------------

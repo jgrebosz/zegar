@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'togloszenie_alarmu.ui'
 **
-** Created by: Qt User Interface Compiler version 5.14.2
+** Created by: Qt User Interface Compiler version 6.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -30,25 +30,25 @@ public:
     void setupUi(QDialog *Togloszenie_alarmu)
     {
         if (Togloszenie_alarmu->objectName().isEmpty())
-            Togloszenie_alarmu->setObjectName(QString::fromUtf8("Togloszenie_alarmu"));
+            Togloszenie_alarmu->setObjectName("Togloszenie_alarmu");
         Togloszenie_alarmu->resize(400, 300);
         Togloszenie_alarmu->setModal(false);
         verticalLayout = new QVBoxLayout(Togloszenie_alarmu);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName("verticalLayout");
         label = new QLabel(Togloszenie_alarmu);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName("label");
         label->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label);
 
         plainTextEdit = new QPlainTextEdit(Togloszenie_alarmu);
-        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
+        plainTextEdit->setObjectName("plainTextEdit");
         plainTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
         verticalLayout->addWidget(plainTextEdit);
 
         pushButton_close = new QPushButton(Togloszenie_alarmu);
-        pushButton_close->setObjectName(QString::fromUtf8("pushButton_close"));
+        pushButton_close->setObjectName("pushButton_close");
 
         verticalLayout->addWidget(pushButton_close);
 

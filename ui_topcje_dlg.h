@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'topcje_dlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.14.2
+** Created by: Qt User Interface Compiler version 6.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,6 +12,7 @@
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
+#include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
@@ -148,34 +149,34 @@ public:
     void setupUi(QDialog *Topcje_dlg)
     {
         if (Topcje_dlg->objectName().isEmpty())
-            Topcje_dlg->setObjectName(QString::fromUtf8("Topcje_dlg"));
+            Topcje_dlg->setObjectName("Topcje_dlg");
         Topcje_dlg->resize(733, 719);
         Topcje_dlg->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         gridLayout = new QGridLayout(Topcje_dlg);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setObjectName("gridLayout");
         buttonBox = new QDialogButtonBox(Topcje_dlg);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setObjectName("buttonBox");
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok);
 
         gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
 
         tabWidget = new QTabWidget(Topcje_dlg);
-        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setObjectName("tabWidget");
         tabWidget->setTabPosition(QTabWidget::North);
         tab_General = new QWidget();
-        tab_General->setObjectName(QString::fromUtf8("tab_General"));
+        tab_General->setObjectName("tab_General");
         horizontalLayout = new QHBoxLayout(tab_General);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout_8 = new QVBoxLayout();
-        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
+        verticalLayout_8->setObjectName("verticalLayout_8");
         groupBox = new QGroupBox(tab_General);
-        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setObjectName("groupBox");
         groupBox->setCheckable(false);
         verticalLayout_7 = new QVBoxLayout(groupBox);
-        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        verticalLayout_7->setObjectName("verticalLayout_7");
         horizontalSlider_przezroczystosc = new QSlider(groupBox);
-        horizontalSlider_przezroczystosc->setObjectName(QString::fromUtf8("horizontalSlider_przezroczystosc"));
+        horizontalSlider_przezroczystosc->setObjectName("horizontalSlider_przezroczystosc");
         horizontalSlider_przezroczystosc->setMaximum(255);
         horizontalSlider_przezroczystosc->setPageStep(50);
         horizontalSlider_przezroczystosc->setValue(255);
@@ -187,7 +188,7 @@ public:
         verticalLayout_7->addWidget(horizontalSlider_przezroczystosc);
 
         label_transparency = new QLabel(groupBox);
-        label_transparency->setObjectName(QString::fromUtf8("label_transparency"));
+        label_transparency->setObjectName("label_transparency");
         label_transparency->setAlignment(Qt::AlignCenter);
 
         verticalLayout_7->addWidget(label_transparency);
@@ -196,50 +197,50 @@ public:
         verticalLayout_8->addWidget(groupBox);
 
         groupBox_3 = new QGroupBox(tab_General);
-        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        groupBox_3->setObjectName("groupBox_3");
         verticalLayout_6 = new QVBoxLayout(groupBox_3);
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        verticalLayout_6->setObjectName("verticalLayout_6");
         checkBox_na_wierzchu = new QCheckBox(groupBox_3);
-        checkBox_na_wierzchu->setObjectName(QString::fromUtf8("checkBox_na_wierzchu"));
+        checkBox_na_wierzchu->setObjectName("checkBox_na_wierzchu");
 
         verticalLayout_6->addWidget(checkBox_na_wierzchu);
 
         checkBox_blokuj_pozycje_na_ekranie = new QCheckBox(groupBox_3);
-        checkBox_blokuj_pozycje_na_ekranie->setObjectName(QString::fromUtf8("checkBox_blokuj_pozycje_na_ekranie"));
+        checkBox_blokuj_pozycje_na_ekranie->setObjectName("checkBox_blokuj_pozycje_na_ekranie");
 
         verticalLayout_6->addWidget(checkBox_blokuj_pozycje_na_ekranie);
 
         checkBox_kilka_kopii = new QCheckBox(groupBox_3);
-        checkBox_kilka_kopii->setObjectName(QString::fromUtf8("checkBox_kilka_kopii"));
+        checkBox_kilka_kopii->setObjectName("checkBox_kilka_kopii");
 
         verticalLayout_6->addWidget(checkBox_kilka_kopii);
 
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_6->addItem(verticalSpacer_2);
 
         groupBox__uruchom_z_Linuxem = new QGroupBox(groupBox_3);
-        groupBox__uruchom_z_Linuxem->setObjectName(QString::fromUtf8("groupBox__uruchom_z_Linuxem"));
+        groupBox__uruchom_z_Linuxem->setObjectName("groupBox__uruchom_z_Linuxem");
         verticalLayout_3 = new QVBoxLayout(groupBox__uruchom_z_Linuxem);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setObjectName("verticalLayout_3");
         pushButton_sciezka = new QPushButton(groupBox__uruchom_z_Linuxem);
-        pushButton_sciezka->setObjectName(QString::fromUtf8("pushButton_sciezka"));
+        pushButton_sciezka->setObjectName("pushButton_sciezka");
 
         verticalLayout_3->addWidget(pushButton_sciezka);
 
         pushButton_shutdown = new QPushButton(groupBox__uruchom_z_Linuxem);
-        pushButton_shutdown->setObjectName(QString::fromUtf8("pushButton_shutdown"));
+        pushButton_shutdown->setObjectName("pushButton_shutdown");
         pushButton_shutdown->setEnabled(false);
 
         verticalLayout_3->addWidget(pushButton_shutdown);
 
         checkBox_uruchom_przy_logowaniu = new QCheckBox(groupBox__uruchom_z_Linuxem);
-        checkBox_uruchom_przy_logowaniu->setObjectName(QString::fromUtf8("checkBox_uruchom_przy_logowaniu"));
+        checkBox_uruchom_przy_logowaniu->setObjectName("checkBox_uruchom_przy_logowaniu");
 
         verticalLayout_3->addWidget(checkBox_uruchom_przy_logowaniu);
 
         pushButton_start_with_login = new QPushButton(groupBox__uruchom_z_Linuxem);
-        pushButton_start_with_login->setObjectName(QString::fromUtf8("pushButton_start_with_login"));
+        pushButton_start_with_login->setObjectName("pushButton_start_with_login");
 
         verticalLayout_3->addWidget(pushButton_start_with_login);
 
@@ -253,19 +254,19 @@ public:
         horizontalLayout->addLayout(verticalLayout_8);
 
         verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_4->setObjectName("verticalLayout_4");
         groupBox_4 = new QGroupBox(tab_General);
-        groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
+        groupBox_4->setObjectName("groupBox_4");
         verticalLayout_2 = new QVBoxLayout(groupBox_4);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName("verticalLayout_2");
         comboBox_language = new QComboBox(groupBox_4);
         comboBox_language->addItem(QString());
         comboBox_language->addItem(QString());
-        comboBox_language->setObjectName(QString::fromUtf8("comboBox_language"));
+        comboBox_language->setObjectName("comboBox_language");
 
         verticalLayout_2->addWidget(comboBox_language);
 
-        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_3);
 
@@ -277,37 +278,37 @@ public:
 
         tabWidget->addTab(tab_General, QString());
         tab_Clock_face = new QWidget();
-        tab_Clock_face->setObjectName(QString::fromUtf8("tab_Clock_face"));
+        tab_Clock_face->setObjectName("tab_Clock_face");
         gridLayout_3 = new QGridLayout(tab_Clock_face);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        gridLayout_3->setObjectName("gridLayout_3");
         verticalLayout_15 = new QVBoxLayout();
-        verticalLayout_15->setObjectName(QString::fromUtf8("verticalLayout_15"));
+        verticalLayout_15->setObjectName("verticalLayout_15");
         groupBox_6 = new QGroupBox(tab_Clock_face);
-        groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
+        groupBox_6->setObjectName("groupBox_6");
         groupBox_6->setMinimumSize(QSize(0, 60));
         gridLayout_2 = new QGridLayout(groupBox_6);
-        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        gridLayout_2->setObjectName("gridLayout_2");
         verticalLayout_11 = new QVBoxLayout();
-        verticalLayout_11->setObjectName(QString::fromUtf8("verticalLayout_11"));
+        verticalLayout_11->setObjectName("verticalLayout_11");
         label_infor_mode = new QLabel(groupBox_6);
-        label_infor_mode->setObjectName(QString::fromUtf8("label_infor_mode"));
+        label_infor_mode->setObjectName("label_infor_mode");
         label_infor_mode->setTextFormat(Qt::RichText);
 
         verticalLayout_11->addWidget(label_infor_mode);
 
         horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        horizontalLayout_6->setObjectName("horizontalLayout_6");
         radioButton_factory_favourite = new QRadioButton(groupBox_6);
-        radioButton_factory_favourite->setObjectName(QString::fromUtf8("radioButton_factory_favourite"));
+        radioButton_factory_favourite->setObjectName("radioButton_factory_favourite");
 
         horizontalLayout_6->addWidget(radioButton_factory_favourite);
 
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_6->addItem(horizontalSpacer_3);
 
         radioButton_previous = new QRadioButton(groupBox_6);
-        radioButton_previous->setObjectName(QString::fromUtf8("radioButton_previous"));
+        radioButton_previous->setObjectName("radioButton_previous");
 
         horizontalLayout_6->addWidget(radioButton_previous);
 
@@ -321,12 +322,12 @@ public:
         verticalLayout_15->addWidget(groupBox_6);
 
         label = new QLabel(tab_Clock_face);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName("label");
 
         verticalLayout_15->addWidget(label);
 
         tableWidget_cyferblaty = new QTableWidget(tab_Clock_face);
-        tableWidget_cyferblaty->setObjectName(QString::fromUtf8("tableWidget_cyferblaty"));
+        tableWidget_cyferblaty->setObjectName("tableWidget_cyferblaty");
         tableWidget_cyferblaty->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
         verticalLayout_15->addWidget(tableWidget_cyferblaty);
@@ -335,24 +336,24 @@ public:
         gridLayout_3->addLayout(verticalLayout_15, 0, 0, 1, 1);
 
         verticalLayout_13 = new QVBoxLayout();
-        verticalLayout_13->setObjectName(QString::fromUtf8("verticalLayout_13"));
+        verticalLayout_13->setObjectName("verticalLayout_13");
         groupBox_2 = new QGroupBox(tab_Clock_face);
-        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        groupBox_2->setObjectName("groupBox_2");
         verticalLayout_14 = new QVBoxLayout(groupBox_2);
-        verticalLayout_14->setObjectName(QString::fromUtf8("verticalLayout_14"));
+        verticalLayout_14->setObjectName("verticalLayout_14");
         checkBox_full_date = new QCheckBox(groupBox_2);
-        checkBox_full_date->setObjectName(QString::fromUtf8("checkBox_full_date"));
+        checkBox_full_date->setObjectName("checkBox_full_date");
 
         verticalLayout_14->addWidget(checkBox_full_date);
 
         checkBox_display_date = new QCheckBox(groupBox_2);
-        checkBox_display_date->setObjectName(QString::fromUtf8("checkBox_display_date"));
+        checkBox_display_date->setObjectName("checkBox_display_date");
         checkBox_display_date->setEnabled(false);
 
         verticalLayout_14->addWidget(checkBox_display_date);
 
         checkBox_dispaly_sekundnik = new QCheckBox(groupBox_2);
-        checkBox_dispaly_sekundnik->setObjectName(QString::fromUtf8("checkBox_dispaly_sekundnik"));
+        checkBox_dispaly_sekundnik->setObjectName("checkBox_dispaly_sekundnik");
 
         verticalLayout_14->addWidget(checkBox_dispaly_sekundnik);
 
@@ -360,94 +361,94 @@ public:
         verticalLayout_13->addWidget(groupBox_2);
 
         checkBox_favourites = new QCheckBox(tab_Clock_face);
-        checkBox_favourites->setObjectName(QString::fromUtf8("checkBox_favourites"));
+        checkBox_favourites->setObjectName("checkBox_favourites");
         QIcon icon;
         QString iconThemeName = QString::fromUtf8("pencil.png");
         if (QIcon::hasThemeIcon(iconThemeName)) {
             icon = QIcon::fromTheme(iconThemeName);
         } else {
-            icon.addFile(QString::fromUtf8(":/new/prefix1/content/pencil.png"), QSize(), QIcon::Normal, QIcon::On);
+            icon.addFile(QString::fromUtf8(":/new/prefix1/content/pencil.png"), QSize(), QIcon::Mode::Normal, QIcon::State::On);
         }
         checkBox_favourites->setIcon(icon);
 
         verticalLayout_13->addWidget(checkBox_favourites);
 
         groupBox_preferences = new QGroupBox(tab_Clock_face);
-        groupBox_preferences->setObjectName(QString::fromUtf8("groupBox_preferences"));
+        groupBox_preferences->setObjectName("groupBox_preferences");
         groupBox_preferences->setCheckable(false);
         verticalLayout_12 = new QVBoxLayout(groupBox_preferences);
-        verticalLayout_12->setObjectName(QString::fromUtf8("verticalLayout_12"));
-        verticalSpacer_5 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalLayout_12->setObjectName("verticalLayout_12");
+        verticalSpacer_5 = new QSpacerItem(20, 20, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_12->addItem(verticalSpacer_5);
 
         label_fav_info = new QLabel(groupBox_preferences);
-        label_fav_info->setObjectName(QString::fromUtf8("label_fav_info"));
+        label_fav_info->setObjectName("label_fav_info");
 
         verticalLayout_12->addWidget(label_fav_info);
 
         checkBox_remember__scale = new QCheckBox(groupBox_preferences);
-        checkBox_remember__scale->setObjectName(QString::fromUtf8("checkBox_remember__scale"));
+        checkBox_remember__scale->setObjectName("checkBox_remember__scale");
 
         verticalLayout_12->addWidget(checkBox_remember__scale, 0, Qt::AlignRight);
 
         pushButton_assign_preferred_hands = new QPushButton(groupBox_preferences);
-        pushButton_assign_preferred_hands->setObjectName(QString::fromUtf8("pushButton_assign_preferred_hands"));
+        pushButton_assign_preferred_hands->setObjectName("pushButton_assign_preferred_hands");
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/new/prefix1/content/pencil.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon1.addFile(QString::fromUtf8(":/new/prefix1/content/pencil.png"), QSize(), QIcon::Mode::Normal, QIcon::State::On);
         pushButton_assign_preferred_hands->setIcon(icon1);
         pushButton_assign_preferred_hands->setIconSize(QSize(25, 25));
 
         verticalLayout_12->addWidget(pushButton_assign_preferred_hands);
 
         pushButton_return_favourite = new QPushButton(groupBox_preferences);
-        pushButton_return_favourite->setObjectName(QString::fromUtf8("pushButton_return_favourite"));
+        pushButton_return_favourite->setObjectName("pushButton_return_favourite");
 
         verticalLayout_12->addWidget(pushButton_return_favourite);
 
         pushButton_delete_preference = new QPushButton(groupBox_preferences);
-        pushButton_delete_preference->setObjectName(QString::fromUtf8("pushButton_delete_preference"));
+        pushButton_delete_preference->setObjectName("pushButton_delete_preference");
 
         verticalLayout_12->addWidget(pushButton_delete_preference);
 
         label_inf_czy_fabryczne = new QLabel(groupBox_preferences);
-        label_inf_czy_fabryczne->setObjectName(QString::fromUtf8("label_inf_czy_fabryczne"));
+        label_inf_czy_fabryczne->setObjectName("label_inf_czy_fabryczne");
         label_inf_czy_fabryczne->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 127);"));
         label_inf_czy_fabryczne->setTextFormat(Qt::RichText);
 
         verticalLayout_12->addWidget(label_inf_czy_fabryczne);
 
         pushButton_reset_to_factory = new QPushButton(groupBox_preferences);
-        pushButton_reset_to_factory->setObjectName(QString::fromUtf8("pushButton_reset_to_factory"));
+        pushButton_reset_to_factory->setObjectName("pushButton_reset_to_factory");
 
         verticalLayout_12->addWidget(pushButton_reset_to_factory);
 
 
         verticalLayout_13->addWidget(groupBox_preferences);
 
-        verticalSpacer_6 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer_6 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_13->addItem(verticalSpacer_6);
 
         groupBox_5 = new QGroupBox(tab_Clock_face);
-        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        groupBox_5->setObjectName("groupBox_5");
         groupBox_5->setMaximumSize(QSize(16777215, 5555));
         verticalLayout = new QVBoxLayout(groupBox_5);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName("verticalLayout");
         horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
         checkBox_zoom = new QCheckBox(groupBox_5);
-        checkBox_zoom->setObjectName(QString::fromUtf8("checkBox_zoom"));
+        checkBox_zoom->setObjectName("checkBox_zoom");
 
         horizontalLayout_2->addWidget(checkBox_zoom);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_2->addItem(horizontalSpacer_2);
 
         pushButton_zoom50 = new QPushButton(groupBox_5);
-        pushButton_zoom50->setObjectName(QString::fromUtf8("pushButton_zoom50"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        pushButton_zoom50->setObjectName("pushButton_zoom50");
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
         sizePolicy.setHorizontalStretch(1);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(pushButton_zoom50->sizePolicy().hasHeightForWidth());
@@ -458,14 +459,14 @@ public:
         horizontalLayout_2->addWidget(pushButton_zoom50);
 
         pushButton_zoom100 = new QPushButton(groupBox_5);
-        pushButton_zoom100->setObjectName(QString::fromUtf8("pushButton_zoom100"));
+        pushButton_zoom100->setObjectName("pushButton_zoom100");
         pushButton_zoom100->setMinimumSize(QSize(50, 0));
         pushButton_zoom100->setMaximumSize(QSize(16777215, 40));
 
         horizontalLayout_2->addWidget(pushButton_zoom100);
 
         pushButton_zoom200 = new QPushButton(groupBox_5);
-        pushButton_zoom200->setObjectName(QString::fromUtf8("pushButton_zoom200"));
+        pushButton_zoom200->setObjectName("pushButton_zoom200");
         pushButton_zoom200->setMinimumSize(QSize(50, 0));
 
         horizontalLayout_2->addWidget(pushButton_zoom200);
@@ -477,7 +478,7 @@ public:
         verticalLayout->addLayout(horizontalLayout_2);
 
         horizontalSlider_zoom = new QSlider(groupBox_5);
-        horizontalSlider_zoom->setObjectName(QString::fromUtf8("horizontalSlider_zoom"));
+        horizontalSlider_zoom->setObjectName("horizontalSlider_zoom");
         horizontalSlider_zoom->setMaximum(300);
         horizontalSlider_zoom->setSingleStep(25);
         horizontalSlider_zoom->setPageStep(25);
@@ -489,7 +490,7 @@ public:
         verticalLayout->addWidget(horizontalSlider_zoom);
 
         label_zoom = new QLabel(groupBox_5);
-        label_zoom->setObjectName(QString::fromUtf8("label_zoom"));
+        label_zoom->setObjectName("label_zoom");
         label_zoom->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_zoom);
@@ -500,31 +501,31 @@ public:
 
         gridLayout_3->addLayout(verticalLayout_13, 0, 1, 1, 1);
 
-        horizontalSpacer = new QSpacerItem(318, 4, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer = new QSpacerItem(318, 4, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         gridLayout_3->addItem(horizontalSpacer, 1, 0, 1, 1);
 
         tabWidget->addTab(tab_Clock_face, QString());
         tab_hour = new QWidget();
-        tab_hour->setObjectName(QString::fromUtf8("tab_hour"));
+        tab_hour->setObjectName("tab_hour");
         verticalLayout_9 = new QVBoxLayout(tab_hour);
-        verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
+        verticalLayout_9->setObjectName("verticalLayout_9");
         groupBox_8 = new QGroupBox(tab_hour);
-        groupBox_8->setObjectName(QString::fromUtf8("groupBox_8"));
+        groupBox_8->setObjectName("groupBox_8");
         horizontalLayout_4 = new QHBoxLayout(groupBox_8);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setObjectName("horizontalLayout_4");
         radioButton_hours_hand_bitmap_type = new QRadioButton(groupBox_8);
-        radioButton_hours_hand_bitmap_type->setObjectName(QString::fromUtf8("radioButton_hours_hand_bitmap_type"));
+        radioButton_hours_hand_bitmap_type->setObjectName("radioButton_hours_hand_bitmap_type");
 
         horizontalLayout_4->addWidget(radioButton_hours_hand_bitmap_type);
 
         radioButton_hours_hand_vector_type = new QRadioButton(groupBox_8);
-        radioButton_hours_hand_vector_type->setObjectName(QString::fromUtf8("radioButton_hours_hand_vector_type"));
+        radioButton_hours_hand_vector_type->setObjectName("radioButton_hours_hand_vector_type");
 
         horizontalLayout_4->addWidget(radioButton_hours_hand_vector_type);
 
         spinBox_nr_wsk_wektorowej_godz = new QSpinBox(groupBox_8);
-        spinBox_nr_wsk_wektorowej_godz->setObjectName(QString::fromUtf8("spinBox_nr_wsk_wektorowej_godz"));
+        spinBox_nr_wsk_wektorowej_godz->setObjectName("spinBox_nr_wsk_wektorowej_godz");
         spinBox_nr_wsk_wektorowej_godz->setMaximum(2);
         spinBox_nr_wsk_wektorowej_godz->setValue(1);
 
@@ -537,12 +538,12 @@ public:
         verticalLayout_9->addWidget(groupBox_8);
 
         label_3 = new QLabel(tab_hour);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setObjectName("label_3");
 
         verticalLayout_9->addWidget(label_3);
 
         tableWidget_wsk_godzinowe = new QTableWidget(tab_hour);
-        tableWidget_wsk_godzinowe->setObjectName(QString::fromUtf8("tableWidget_wsk_godzinowe"));
+        tableWidget_wsk_godzinowe->setObjectName("tableWidget_wsk_godzinowe");
         tableWidget_wsk_godzinowe->setIconSize(QSize(150, 150));
         tableWidget_wsk_godzinowe->horizontalHeader()->setVisible(false);
 
@@ -550,25 +551,25 @@ public:
 
         tabWidget->addTab(tab_hour, QString());
         tab_minute = new QWidget();
-        tab_minute->setObjectName(QString::fromUtf8("tab_minute"));
+        tab_minute->setObjectName("tab_minute");
         verticalLayout_17 = new QVBoxLayout(tab_minute);
-        verticalLayout_17->setObjectName(QString::fromUtf8("verticalLayout_17"));
+        verticalLayout_17->setObjectName("verticalLayout_17");
         groupBox_7 = new QGroupBox(tab_minute);
-        groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
+        groupBox_7->setObjectName("groupBox_7");
         horizontalLayout_3 = new QHBoxLayout(groupBox_7);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
         radioButton_minutes_hand_bitmap_type = new QRadioButton(groupBox_7);
-        radioButton_minutes_hand_bitmap_type->setObjectName(QString::fromUtf8("radioButton_minutes_hand_bitmap_type"));
+        radioButton_minutes_hand_bitmap_type->setObjectName("radioButton_minutes_hand_bitmap_type");
 
         horizontalLayout_3->addWidget(radioButton_minutes_hand_bitmap_type);
 
         radioButton_minutes_hand_vector_type = new QRadioButton(groupBox_7);
-        radioButton_minutes_hand_vector_type->setObjectName(QString::fromUtf8("radioButton_minutes_hand_vector_type"));
+        radioButton_minutes_hand_vector_type->setObjectName("radioButton_minutes_hand_vector_type");
 
         horizontalLayout_3->addWidget(radioButton_minutes_hand_vector_type);
 
         spinBox_nr_wsk_wektorowej_min = new QSpinBox(groupBox_7);
-        spinBox_nr_wsk_wektorowej_min->setObjectName(QString::fromUtf8("spinBox_nr_wsk_wektorowej_min"));
+        spinBox_nr_wsk_wektorowej_min->setObjectName("spinBox_nr_wsk_wektorowej_min");
         spinBox_nr_wsk_wektorowej_min->setMaximum(2);
 
         horizontalLayout_3->addWidget(spinBox_nr_wsk_wektorowej_min);
@@ -577,12 +578,12 @@ public:
         verticalLayout_17->addWidget(groupBox_7);
 
         label_2 = new QLabel(tab_minute);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setObjectName("label_2");
 
         verticalLayout_17->addWidget(label_2);
 
         tableWidget_wsk_minutowe = new QTableWidget(tab_minute);
-        tableWidget_wsk_minutowe->setObjectName(QString::fromUtf8("tableWidget_wsk_minutowe"));
+        tableWidget_wsk_minutowe->setObjectName("tableWidget_wsk_minutowe");
         tableWidget_wsk_minutowe->setIconSize(QSize(150, 150));
         tableWidget_wsk_minutowe->horizontalHeader()->setVisible(false);
 
@@ -590,25 +591,25 @@ public:
 
         tabWidget->addTab(tab_minute, QString());
         tab_seconds = new QWidget();
-        tab_seconds->setObjectName(QString::fromUtf8("tab_seconds"));
+        tab_seconds->setObjectName("tab_seconds");
         verticalLayout_5 = new QVBoxLayout(tab_seconds);
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        verticalLayout_5->setObjectName("verticalLayout_5");
         groupBox_9 = new QGroupBox(tab_seconds);
-        groupBox_9->setObjectName(QString::fromUtf8("groupBox_9"));
+        groupBox_9->setObjectName("groupBox_9");
         horizontalLayout_5 = new QHBoxLayout(groupBox_9);
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        horizontalLayout_5->setObjectName("horizontalLayout_5");
         radioButton_sec_bitmap_type = new QRadioButton(groupBox_9);
-        radioButton_sec_bitmap_type->setObjectName(QString::fromUtf8("radioButton_sec_bitmap_type"));
+        radioButton_sec_bitmap_type->setObjectName("radioButton_sec_bitmap_type");
 
         horizontalLayout_5->addWidget(radioButton_sec_bitmap_type);
 
         radioButton_sec_vector_type = new QRadioButton(groupBox_9);
-        radioButton_sec_vector_type->setObjectName(QString::fromUtf8("radioButton_sec_vector_type"));
+        radioButton_sec_vector_type->setObjectName("radioButton_sec_vector_type");
 
         horizontalLayout_5->addWidget(radioButton_sec_vector_type);
 
         spinBox_nr_wsk_wektorowej_sek = new QSpinBox(groupBox_9);
-        spinBox_nr_wsk_wektorowej_sek->setObjectName(QString::fromUtf8("spinBox_nr_wsk_wektorowej_sek"));
+        spinBox_nr_wsk_wektorowej_sek->setObjectName("spinBox_nr_wsk_wektorowej_sek");
         spinBox_nr_wsk_wektorowej_sek->setMaximum(2);
 
         horizontalLayout_5->addWidget(spinBox_nr_wsk_wektorowej_sek);
@@ -617,12 +618,12 @@ public:
         verticalLayout_5->addWidget(groupBox_9);
 
         label_4 = new QLabel(tab_seconds);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setObjectName("label_4");
 
         verticalLayout_5->addWidget(label_4);
 
         tableWidget_wsk_sekundowe = new QTableWidget(tab_seconds);
-        tableWidget_wsk_sekundowe->setObjectName(QString::fromUtf8("tableWidget_wsk_sekundowe"));
+        tableWidget_wsk_sekundowe->setObjectName("tableWidget_wsk_sekundowe");
         tableWidget_wsk_sekundowe->setIconSize(QSize(150, 150));
         tableWidget_wsk_sekundowe->horizontalHeader()->setVisible(false);
 
@@ -630,35 +631,35 @@ public:
 
         tabWidget->addTab(tab_seconds, QString());
         tab_zones = new QWidget();
-        tab_zones->setObjectName(QString::fromUtf8("tab_zones"));
+        tab_zones->setObjectName("tab_zones");
         verticalLayout_16 = new QVBoxLayout(tab_zones);
-        verticalLayout_16->setObjectName(QString::fromUtf8("verticalLayout_16"));
-        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalLayout_16->setObjectName("verticalLayout_16");
+        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_16->addItem(verticalSpacer_4);
 
         checkBox_AM_PM = new QCheckBox(tab_zones);
-        checkBox_AM_PM->setObjectName(QString::fromUtf8("checkBox_AM_PM"));
+        checkBox_AM_PM->setObjectName("checkBox_AM_PM");
 
         verticalLayout_16->addWidget(checkBox_AM_PM);
 
         label_godzina_w_strefie = new QLabel(tab_zones);
-        label_godzina_w_strefie->setObjectName(QString::fromUtf8("label_godzina_w_strefie"));
+        label_godzina_w_strefie->setObjectName("label_godzina_w_strefie");
 
         verticalLayout_16->addWidget(label_godzina_w_strefie);
 
         comboBox_timezone = new QComboBox(tab_zones);
-        comboBox_timezone->setObjectName(QString::fromUtf8("comboBox_timezone"));
+        comboBox_timezone->setObjectName("comboBox_timezone");
         comboBox_timezone->setMaxVisibleItems(40);
 
         verticalLayout_16->addWidget(comboBox_timezone);
 
         label_6 = new QLabel(tab_zones);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setObjectName("label_6");
 
         verticalLayout_16->addWidget(label_6);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_16->addItem(verticalSpacer);
 
@@ -668,11 +669,11 @@ public:
         verticalLayout_16->setStretch(5, 8);
         tabWidget->addTab(tab_zones, QString());
         tab_about = new QWidget();
-        tab_about->setObjectName(QString::fromUtf8("tab_about"));
+        tab_about->setObjectName("tab_about");
         verticalLayout_10 = new QVBoxLayout(tab_about);
-        verticalLayout_10->setObjectName(QString::fromUtf8("verticalLayout_10"));
+        verticalLayout_10->setObjectName("verticalLayout_10");
         label_5 = new QLabel(tab_about);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setObjectName("label_5");
         label_5->setAlignment(Qt::AlignCenter);
 
         verticalLayout_10->addWidget(label_5);
@@ -683,8 +684,8 @@ public:
 
 
         retranslateUi(Topcje_dlg);
-        QObject::connect(buttonBox, SIGNAL(accepted()), Topcje_dlg, SLOT(accept()));
-        QObject::connect(buttonBox, SIGNAL(rejected()), Topcje_dlg, SLOT(reject()));
+        QObject::connect(buttonBox, &QDialogButtonBox::accepted, Topcje_dlg, qOverload<>(&QDialog::accept));
+        QObject::connect(buttonBox, &QDialogButtonBox::rejected, Topcje_dlg, qOverload<>(&QDialog::reject));
 
         tabWidget->setCurrentIndex(1);
         comboBox_language->setCurrentIndex(0);
