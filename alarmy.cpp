@@ -420,13 +420,13 @@ void Alarmy::on_pushButton_edytuj_clicked()
 //    cout << "selected range list size = ", range_list.size();
     if(range_list.empty())     // jesli zaden, to error message
     {
-       // QMessageBox::StandardButton reply =
             QMessageBox::warning
             ( this,
                                tr("No alarm entry selected"),
                                tr( "At first select some alarm by clicking on its name "),
                                QMessageBox::Ok);
-        return;
+       delete dlg;
+       return;
     }
 
     // sprawdzamy nr_entry wybranego alarmu

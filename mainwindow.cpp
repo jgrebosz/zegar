@@ -682,7 +682,7 @@ bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
         //                     <<  cyf.wsk_minutowa.flag_bitmapowa  << endl;
 
         bool flag_znalezione = false;
-        for(auto entry : vec_pref_hands)
+        for(const auto & entry : vec_pref_hands)
         {
             if(entry.clock_face_name == cyf.nazwa)    // czy jest zapis ulubionych wskazowek dla tego cyferbaltu?
             {
@@ -8984,7 +8984,7 @@ void MainWindow::zapisz_ulubione_wskazowki_na_dysku()
     }
 
 
-    for(auto e : vec_pref_hands)
+    for(const auto & e : vec_pref_hands)
     {
         //        cout << "Tarcza " << e.clock_face_name << " lubi wsk godz:  "
         //             << e.hours_hand
@@ -9636,11 +9636,11 @@ void MainWindow::resource_files_use()
 
     vector <string> used_bitmaps;
 
-    for (auto x : cyferblat) used_bitmaps.push_back( x.bitmapa_tarcza);
-    for (auto x : vect_godzinowych) used_bitmaps.push_back( x.bitmapa  );
-    for (auto x : vect_minutowych) used_bitmaps.push_back( x.bitmapa);
-    for (auto x : vect_sekundnikow) used_bitmaps.push_back( x.bitmapa);
-    for (auto x : vect_extra_wskazowek) used_bitmaps.push_back( x.bitmapa);
+    for (auto &x : cyferblat) used_bitmaps.push_back( x.bitmapa_tarcza);
+    for (auto &x : vect_godzinowych) used_bitmaps.push_back( x.bitmapa  );
+    for (auto &x : vect_minutowych) used_bitmaps.push_back( x.bitmapa);
+    for (auto &x : vect_sekundnikow) used_bitmaps.push_back( x.bitmapa);
+    for (auto &x : vect_extra_wskazowek) used_bitmaps.push_back( x.bitmapa);
 
     sort(
                 used_bitmaps.begin(),
@@ -9651,11 +9651,11 @@ void MainWindow::resource_files_use()
                 );
 
     vector <string> raport_extra;
-    for (auto x : vect_extra_wskazowek) raport_extra.push_back( x.bitmapa);
+    for (auto &x : vect_extra_wskazowek) raport_extra.push_back( x.bitmapa);
 
     // W cyferblacie są zapisane tzw. extra wskazowki (tarcze np. day/night). Teraz sprawdzimy
     // czy w wektorze extra wsk są elementy, ktorych tarcze nigdy nie skorzystaja
-    for (auto x : cyferblat) {
+    for (auto &x : cyferblat) {
 
         //     bool flag_in_use = false;
         for(auto & r : raport_extra){
@@ -9698,14 +9698,14 @@ void MainWindow::resource_files_use()
     QDir res(R"#(:/new/prefix1/content)#" );
     QStringList resource_entry = res.entryList();
 
-    for(auto n : listaf)
+    for(auto &n : listaf)
     {
         //       cout << n.toStdString() << endl;
         // is this file used in resource
         //        cout << "czy ten file jest uzyty w resources ?" << endl;
 
         bool flag_yes = false;
-        for(auto r : resource_entry)
+        for(auto &r : resource_entry)
         {
             // cout << n.toStdString() << endl;
             // sprawdzenie czy ten file jest w resource
@@ -9728,7 +9728,7 @@ void MainWindow::resource_files_use()
     cout << "2. Checking if every resource item used in the program " << endl;
 
     flag_some_issues = false;
-    for(auto res_ent : resource_entry)
+    for(auto &res_ent : resource_entry)
     {
         // cout << n.toStdString() << endl;
         // sprawdzenie czy ten file jest w uzyciu
@@ -9748,7 +9748,7 @@ void MainWindow::resource_files_use()
 
         bool flag_yes = false;
 
-        for(auto ub : used_bitmaps){
+        for(auto &ub : used_bitmaps){
             //            cout << "Porownanie res " <<  res_ent.toStdString()
             //                 << " z used_bitmaps " << ub << endl;
             auto sama_nazwa = res_ent.toStdString();
