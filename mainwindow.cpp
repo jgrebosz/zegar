@@ -47,7 +47,7 @@
 #include "tpreferred_hands.h"
 
 
-#define  KRZYZE_PROWADZACE      false //     true  //
+#define  KRZYZE_PROWADZACE      true  // false //
 
 #define COTO  ;  cout << "File = " << __FILE__ << "Linia = " << __LINE__ << endl;
 
@@ -1738,7 +1738,7 @@ void MainWindow::paintEvent(QPaintEvent *)
             // auto loc_long = date.toString(QLocale::LongFormat);
             auto loc_long = QLocale().toString(date, QLocale::LongFormat);
 
-            auto dzien_tyg =  date.toString("dddd") ;  // dzien tygodnia
+            auto dzien_tyg =  QLocale().toString(date, "dddd") ;  // dzien tygodnia
             // czy w tym jest już dzień tygodnia?
             bool flag_juz_jest = true;
             if(loc_long.contains(dzien_tyg) == false )
@@ -2469,7 +2469,7 @@ void MainWindow::wywolanie_okna_opcji()
 
     if(dlg->exec() == QDialog::Accepted)
     {
-        COTO;
+        // COTO;
         if(flaga__byl_tryb_random)
         {
             auto odp =  QMessageBox::warning ( this,
@@ -2482,7 +2482,7 @@ void MainWindow::wywolanie_okna_opcji()
         zapis_opcji_na_dysku();
     }
     delete dlg;
-COTO;
+    // COTO;
     this->setWindowOpacity(przezroczystosc/255.0);
 
 //        cout << "Po dialogu opcji jezyk nr  " << nr_jezyka << endl;
@@ -2496,7 +2496,7 @@ COTO;
         cout << "zamkniecie okna opcji z restartem  (przed close )" << endl;
         close();
     }
-    COTO;
+   // COTO;
 }
 
 //*********************************************************************************************************
@@ -6061,9 +6061,9 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       1,  // dlugosc sekundnika (w % promienia tarczy)
                                       QColor(250, 10, 10),   // kolor wskaz sekundnika
 
-                                      184, 215,  // pozycja srodka tarczy
+                                      175, 200,  // pozycja srodka tarczy
                                       0.8,  0.8,   // skalowanie zaślepki
-                                      150,  // promien_ tarczy
+                                      145,  // promien_ tarczy
 
                                       -0, -0,  // translacja do odrebnej osi sekundnika (x,y w % promienia)
 
@@ -6072,7 +6072,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
 
                                       QPoint(0, 70),    // pozycja AM_PM ( % z dlug promienia)
                                       QColor(100,100,20),   // kolor AM_PM
-                                      QPoint(0, 133),    // pozycja pełnej daty ( % z dlug promienia)
+                                      QPoint(0, 128),    // pozycja pełnej daty ( % z dlug promienia)
                                       QColor(50, 50, 200),   // kolor pełnej daty
 
                                       QPoint(41, -2),    // pozycja datownika % z dlug promienia
@@ -8892,7 +8892,7 @@ void MainWindow::sprawdzenie_alarmow()
                     cout << "!!!!!! Przed funkcja play !!!!!!!!" << al.muzyka << endl;
 
                     //QSound::play(al.muzyka.c_str());
-                    if(al.player ==nullptr)   al.player = new QMediaPlayer;
+                    // if(al.player ==nullptr)   al.player = new QMediaPlayer;
                     // ...
                     // al.player->setMedia(QUrl::fromLocalFile(al.muzyka.c_str()) );
                     // al.player->setVolume(50);
