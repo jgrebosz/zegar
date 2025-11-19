@@ -1,3 +1,7 @@
+
+
+*.pro.user
+
 # Prerequisites
 *.d
 
@@ -37,3 +41,7 @@ qrc_*
 *.app
 
 build/
+debug/
+release/
+.qtc_clangd/
+.qtcreator/
