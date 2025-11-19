@@ -207,6 +207,8 @@ bool czy_wolno_uruchomic(char * arg0)
 
 }
 //************************************************************************************
+QTranslator translator;
+//************************************************************************************
 int main(int argc, char *argv[])
 {
 
@@ -224,7 +226,7 @@ int main(int argc, char *argv[])
     ifstream file(pathed_nazwa_pliku_z_opcjami);
     file >> nr_jezyka ;
     file.close();
-    cout << "wczytany nr jezyka = " << nr_jezyka << endl;
+    cout << "wczytany z pliku nr jezyka = " << nr_jezyka << endl;
 
     //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
 
@@ -232,7 +234,6 @@ int main(int argc, char *argv[])
     while(1) {
         QApplication a(argc, argv);
 
-        QTranslator t;
 
         switch (nr_jezyka)
         {
@@ -246,11 +247,11 @@ int main(int argc, char *argv[])
             QString nazwa_jezyka = ":/polski2.qm";
             qDebug() << "Wybrany język: " << nazwa_jezyka;
 
-            bool rezultat = t.load(nazwa_jezyka);
+            bool rezultat = translator.load(nazwa_jezyka);
             qDebug() << "Wynik wczytania: " << rezultat;
 
             if (rezultat)
-                a.installTranslator(&t);
+                a.installTranslator(&translator);
             break;
         }
         }

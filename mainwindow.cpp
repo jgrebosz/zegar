@@ -47,7 +47,7 @@
 #include "tpreferred_hands.h"
 
 
-#define  KRZYZE_PROWADZACE      true  // false //
+#define  KRZYZE_PROWADZACE      false //   true  //
 
 #define COTO  ;  cout << "File = " << __FILE__ << "Linia = " << __LINE__ << endl;
 
@@ -120,7 +120,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //  setWindowFlag(Qt::Tool , true);
     //     setWindowFlag(Qt::SplashScreen , true);
-// COTO ;
+    // COTO ;
     ui->setupUi(this);
 
 
@@ -136,7 +136,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trayIcon->show();
 
 
-// COTO;
+    // COTO;
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(1000);
@@ -156,7 +156,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle("Alarm clock");    // nie tłumaczymy, bo nie bedzie widac
 
-// COTO;
+    // COTO;
 
     QDir dir;
     sciezka = QDir::currentPath().toStdString() + "/";
@@ -235,7 +235,7 @@ jeszcze_raz:
 
     //    setMouseTracking(true);
 
-// COTO;
+    // COTO;
 }
 //***************************************************************************************
 MainWindow::~MainWindow()
@@ -249,7 +249,7 @@ MainWindow::~MainWindow()
 bool MainWindow::wybor_cyferblatu(string nazwa)
 {
     cout << __PRETTY_FUNCTION__ << endl;
-flag_random_tarcza = false;
+    flag_random_tarcza = false;
     for(uint i = 0 ; i < cyferblat.size() ; ++i)
     {
         if(cyferblat[i].nazwa == nazwa)
@@ -635,9 +635,9 @@ bool MainWindow::czy_nazwa_naprawde_bitmapowa(string nazwa)
 //************************************************************************************************************************
 bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
 {
-//          cout << __func__  << " tarcza nr " << nr
-//                << "  (z argumentem trybu wskazowek  [recent = 0 , ulubione = 1, fabryczne=2] -->"
-//                << int (tryb) << ")"<< endl;
+    //          cout << __func__  << " tarcza nr " << nr
+    //                << "  (z argumentem trybu wskazowek  [recent = 0 , ulubione = 1, fabryczne=2] -->"
+    //                << int (tryb) << ")"<< endl;
 
     nr_tarczy= nr;
 
@@ -686,7 +686,7 @@ bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
         {
             if(entry.clock_face_name == cyf.nazwa)    // czy jest zapis ulubionych wskazowek dla tego cyferbaltu?
             {
-//                                 cout << "Znalezione entry favourites dla tarczy " << cyf.nazwa << endl;
+                //                                 cout << "Znalezione entry favourites dla tarczy " << cyf.nazwa << endl;
                 flag_znalezione = true;
 
                 // novum: jest tam też skala zoom
@@ -863,8 +863,8 @@ bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
 
     if(tryb == tryb_wskazowek::fabryczne)
     {
-//                       cout << "Wgrywam skazowki  fabryczne------------------ " << endl;
-//               cout << __func__ <<  " 2  cyf.wsk_minutowa.flag_bitmapowa  " << boolalpha <<  cyf.wsk_minutowa.flag_bitmapowa  << endl;
+        //                       cout << "Wgrywam skazowki  fabryczne------------------ " << endl;
+        //               cout << __func__ <<  " 2  cyf.wsk_minutowa.flag_bitmapowa  " << boolalpha <<  cyf.wsk_minutowa.flag_bitmapowa  << endl;
 
         wgraj_wskazowke_fabryczna(cyf.bitmapa_godzinowa, vect_godzinowych,
                                   & cyf.wsk_godzinowa.flag_bitmapowa,
@@ -1010,7 +1010,7 @@ bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
         //                     << endl;
 
 
-COTO;
+        COTO;
 
         // sek -----------------
 
@@ -1461,13 +1461,13 @@ COTO;
 
     this->move(obliczona_pozycja_x_rogu, poz_zegara_y);
 
-//        cout << __func__ << ", obliczona pozycja x rogu= "
-//             <<  obliczona_pozycja_x_rogu
-//              << ", bo pozycja poz_srodka_zegara_x = " << poz_srodka_zegara_x
-//                  << ", width  " << (width() )
-//              << ", gskala = " << gskala
-//              << ", width / 2 = " << (width() / 2.0 )
-//              << endl;
+    //        cout << __func__ << ", obliczona pozycja x rogu= "
+    //             <<  obliczona_pozycja_x_rogu
+    //              << ", bo pozycja poz_srodka_zegara_x = " << poz_srodka_zegara_x
+    //                  << ", width  " << (width() )
+    //              << ", gskala = " << gskala
+    //              << ", width / 2 = " << (width() / 2.0 )
+    //              << endl;
 
 
     update();
@@ -1550,7 +1550,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
     }
 
 
-//        cout << "KOniec funkcji " <<  __PRETTY_FUNCTION__ << endl;
+    //        cout << "KOniec funkcji " <<  __PRETTY_FUNCTION__ << endl;
 }
 //***************************************************************************************
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
@@ -1747,10 +1747,10 @@ void MainWindow::paintEvent(QPaintEvent *)
             }
 
             auto full_date =
-                " " +
-                (flag_juz_jest ? "" : QLocale().toString(date, "dddd, ")) +  // dzień tygodnia w lokalnym języku
-                QLocale().toString(date, QLocale::LongFormat)
-                + " ";
+                    " " +
+                    (flag_juz_jest ? "" : QLocale().toString(date, "dddd, ")) +  // dzień tygodnia w lokalnym języku
+                    QLocale().toString(date, QLocale::LongFormat)
+                    + " ";
 
 
 
@@ -2454,9 +2454,71 @@ void MainWindow::wywolanie_okna_alarmow()
 {
     cout << "wyolanie okna alarmow " << endl;
     Alarmy *dlg = new Alarmy(this, pathed_nazwa_pliku_z_alarmami);
+    smart_positioning(dlg);
+
     dlg->exec();
     delete dlg;
     cout << "Skonczone wywolanie    "   << __PRETTY_FUNCTION__ << endl;
+}
+//*********************************************************************************************************
+void  MainWindow::smart_positioning(QDialog  *dlg)
+{
+    dlg->adjustSize();
+
+    QRect parentRect = this->geometry();
+    QRect screenRect = QApplication::primaryScreen()->availableGeometry();
+
+    int dx = 50;
+    int dy = 50;
+
+    int newX, newY;
+
+    // --- X position ---------------------------------------------------------
+
+    if (parentRect.left() - dx - dlg->width() > screenRect.left()) {
+        // miejsce po lewej
+        newX = parentRect.left() - dlg->width() - dx;
+    }
+    else if (parentRect.right() + dx + dlg->width() < screenRect.right()) {
+        // miejsce po prawej
+        newX = parentRect.right() + dx;
+    }
+    else {
+        // brak miejsca — centrowanie
+        newX = parentRect.center().x() - dlg->width() / 2;
+    }
+
+    // --- Y position ---------------------------------------------------------
+
+    if (parentRect.top() - dy - dlg->height() > screenRect.top()) {
+        // miejsce nad rodzicem
+        newY = parentRect.top() - dlg->height() - dy;
+    }
+    else if (parentRect.bottom() + dy + dlg->height() < screenRect.bottom()) {
+        // miejsce pod rodzicem
+        newY = parentRect.bottom() + dy;
+    }
+    else {
+        // brak miejsca — centrowanie
+        newY = parentRect.center().y() - dlg->height() / 2;
+    }
+
+    // --- Ostateczne zabezpieczenie przed wyjściem poza ekran ----------------
+
+    // clamp X
+    if (newX < screenRect.left())
+        newX = screenRect.left();
+    if (newX + dlg->width() > screenRect.right())
+        newX = screenRect.right() - dlg->width();
+
+    // clamp Y
+    if (newY < screenRect.top())
+        newY = screenRect.top();
+    if (newY + dlg->height() > screenRect.bottom())
+        newY = screenRect.bottom() - dlg->height();
+
+    dlg->move(newX, newY);
+
 }
 //*********************************************************************************************************
 void MainWindow::wywolanie_okna_opcji()
@@ -2466,6 +2528,7 @@ void MainWindow::wywolanie_okna_opcji()
     bool flaga__byl_tryb_random =  flag_random_tarcza;
     auto *dlg = new Topcje_dlg(this);
 
+    smart_positioning(dlg);
 
     if(dlg->exec() == QDialog::Accepted)
     {
@@ -2485,7 +2548,7 @@ void MainWindow::wywolanie_okna_opcji()
     // COTO;
     this->setWindowOpacity(przezroczystosc/255.0);
 
-//        cout << "Po dialogu opcji jezyk nr  " << nr_jezyka << endl;
+    //        cout << "Po dialogu opcji jezyk nr  " << nr_jezyka << endl;
 
     if(flag_na_wierzchu != wstepne_flag_na_wierzchu
             ||
@@ -2496,7 +2559,7 @@ void MainWindow::wywolanie_okna_opcji()
         cout << "zamkniecie okna opcji z restartem  (przed close )" << endl;
         close();
     }
-   // COTO;
+    // COTO;
 }
 
 //*********************************************************************************************************
@@ -2721,7 +2784,7 @@ int MainWindow::znajdz_int_item(string txt, string keyword)
 
 void MainWindow::wstepne_wpisanie_cyferblatow()
 {
-//   cout <<  __PRETTY_FUNCTION__<< endl;
+    //   cout <<  __PRETTY_FUNCTION__<< endl;
 
     cyferblat.push_back(
                 Tdane_cyferblatu  {
@@ -6042,8 +6105,8 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                 Tdane_cyferblatu  {   // konstruktor z ksiezycem
                                       "Lunascope GrebMeister",
                                       ":/new/prefix1/content/Lunascope_greb.png",
-                                      ":/new/prefix1/content/geizmont_wsk_hours_h.png",
-                                      ":/new/prefix1/content/geizmont_wsk_minut_h.png",
+                                      ":/new/prefix1/content/morgan_hours.png",
+                                      ":/new/prefix1/content/morgan_minutes.png",
                                       "0",                      //  ":/new/prefix1/content/neon_sekundnik.png",
                                       ":/new/prefix1/content/center.png",
 
@@ -6089,7 +6152,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                 );
 
 
-//cout << __LINE__ << " <------TUTAS 0 ---------" << endl;
+    //cout << __LINE__ << " <------TUTAS 0 ---------" << endl;
     //############################################
 
     cyferblat.push_back(
@@ -6142,7 +6205,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                 }
                 );
 
-//cout << __LINE__ << " <------TUTAS 1 ---------" << endl;
+    //cout << __LINE__ << " <------TUTAS 1 ---------" << endl;
 
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_dni_miesiaca,
@@ -6237,7 +6300,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       ":/new/prefix1/content/wtla-chronoswiss-sekundnik.png",
                                       ":/new/prefix1/content/center.png",
 
-                                       0.0001,  0.015,
+                                      0.0001,  0.015,
                                       0.10 ,  0.72, // os godzinowej, skala
                                       QColor(66, 21, 2),   // kolor wskaz godzinowej
 
@@ -6525,12 +6588,12 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       "0",                      //  ":/new/prefix1/content/neon_sekundnik.png",
                                       ":/new/prefix1/content/center.png",
 
-                                     0.0001,
-                                     0.115,    // XY mimosrod wektorowej wskazowki
+                                      0.0001,
+                                      0.115,    // XY mimosrod wektorowej wskazowki
                                       0.01 ,  0.65, // os godzinowej, skala
                                       QColor(66, 21, 2),   // kolor wskaz godzinowej
 
-                                        0,    0.06, // XY mimosrod wektorowej wskazowki
+                                      0,    0.06, // XY mimosrod wektorowej wskazowki
                                       0.01,  0.9,// szer i dlug minutowej
                                       QColor(66, 21, 2),   // kolor wskaz minutowej
 
@@ -8464,7 +8527,7 @@ void MainWindow::zapis_opcji_na_dysku()
 
 
 
-        cerr << "Po zapisie " << nazwa_pliku_z_opcjami << endl;
+    cerr << "Po zapisie " << nazwa_pliku_z_opcjami << endl;
 }
 //***************************************************************************************************************
 int  MainWindow::id_linux_czy_windows_version()
@@ -8517,7 +8580,7 @@ int  MainWindow::id_linux_czy_windows_version()
 void MainWindow::wczytanie_opcji_z_dysku()
 {
     // rozpoznanie typu systemu operacyjnego. Jeśli to LInux, to powinien istniec katalog  ~/.configure
-// 	cout << __PRETTY_FUNCTION__ <<  __LINE__ << endl;
+    // 	cout << __PRETTY_FUNCTION__ <<  __LINE__ << endl;
 
     id_linux_czy_windows_version();
 
@@ -8598,7 +8661,7 @@ void MainWindow::wczytanie_opcji_z_dysku()
     if(gskala < 0.01) gskala = 1;   // in case something was stored wrong
     gskala = 1;   // CHWILOWO
 
-//    cout << __PRETTY_FUNCTION__ <<  __LINE__ << endl;
+    //    cout << __PRETTY_FUNCTION__ <<  __LINE__ << endl;
 }
 
 
@@ -9058,15 +9121,15 @@ void MainWindow::odczytaj_ulubione_wskazowki_z_dysku()
         auto dmies = znajdz_txt_item(one, "monthdays_hand");
         auto zoom = znajdz_int_item(one, "zoom");
 
-//        cout << "Jedno entry nr " << entry << " ma tresc " << one << endl;
-//        cout << "tarcza " << tarcza
-//                //                     << " | godz = " << godzinowa
-//                //                     << " | min "  << minutowa
-//                //                     << " | sek "  << sek
-//                //                     << " | tyg "  << tyg
-//                //                     << " | dmies "  << dmies
-//             << " zoom = " << zoom
-//             << endl;
+        //        cout << "Jedno entry nr " << entry << " ma tresc " << one << endl;
+        //        cout << "tarcza " << tarcza
+        //                //                     << " | godz = " << godzinowa
+        //                //                     << " | min "  << minutowa
+        //                //                     << " | sek "  << sek
+        //                //                     << " | tyg "  << tyg
+        //                //                     << " | dmies "  << dmies
+        //             << " zoom = " << zoom
+        //             << endl;
 
         vec_pref_hands.push_back(
                     Tpreferred_hands(
@@ -9153,7 +9216,7 @@ Tdane_cyferblatu::Tdane_cyferblatu(string nazwa_, string bitmapa_tarcza_,
       uskok_cienia(uskok_cienia_),
       tlo_AM_PM (tlo_AM_PM_)
 {
-//     cout << "dziala konstruktor" << __PRETTY_FUNCTION__<< endl;
+    //     cout << "dziala konstruktor" << __PRETTY_FUNCTION__<< endl;
 
     wsk_sekundowa.poz_x = odrebna_os_x_;
     wsk_sekundowa.poz_y = odrebna_os_y_;
@@ -9271,8 +9334,8 @@ Tdane_cyferblatu::Tdane_cyferblatu(string nazwa_, string bitmapa_tarcza_,
       uskok_cienia(uskok_cienia_),
       tlo_AM_PM(tlo_AM_PM_)
 {
-//     cout << "dziala konstruktor z ksiezycem " << endl;
-//         cout << "dziala konstruktor" << __PRETTY_FUNCTION__<< endl;
+    //     cout << "dziala konstruktor z ksiezycem " << endl;
+    //         cout << "dziala konstruktor" << __PRETTY_FUNCTION__<< endl;
 
     wsk_sekundowa.poz_x = odrebna_os_x_;
     wsk_sekundowa.poz_y = odrebna_os_y_;
@@ -9383,7 +9446,7 @@ void Tdane_cyferblatu::dodaj_extra_wskazowke(
 //**********************************************************************************************************
 void Tdane_cyferblatu::zapis_danych_o_cyferblacie()
 {
-string q = "\"";
+    string q = "\"";
     cout
             << q << nazwa << q << ", \t// nazwa cyferblatu \n"
             << q << bitmapa_tarcza << q << ",  \t// nazwa bitmapy_tarczy \n"
@@ -9396,31 +9459,31 @@ string q = "\"";
              << os_y_center << " ,  \t// srodek tarczy na bitmapie  x, y \n"
              << promien_tarczy << " , \t// promien tarczy (liczony do rozmiarow sekund) \n"
 
-            <<  mimosrod_x_wektorowej_godzinowej << " , \t// X mimosrod wektorowej wskazowki_godzinowej  \n"
-             << mimosrod_y_wektorowej_godzinowej << " , \t// Y mimosrod wektorowej wskazowki_godzinowej \n"
-             << szer_x_godzinowej  << ",  \t// szerokosc wsk godzinowej (w %)\n"
-             << dlugosc_godzinowej  << ",  \t// dlugosc wsk godzinowej (w %)\n"
-             << kolor_godzinowej.red() << ", "
-             << kolor_godzinowej.green()  << ", "
-             << kolor_godzinowej.blue()  << ",  \t// kolor_wsk_godzinowej ( RGB) \n\n"
+             <<  mimosrod_x_wektorowej_godzinowej << " , \t// X mimosrod wektorowej wskazowki_godzinowej  \n"
+              << mimosrod_y_wektorowej_godzinowej << " , \t// Y mimosrod wektorowej wskazowki_godzinowej \n"
+              << szer_x_godzinowej  << ",  \t// szerokosc wsk godzinowej (w %)\n"
+              << dlugosc_godzinowej  << ",  \t// dlugosc wsk godzinowej (w %)\n"
+              << kolor_godzinowej.red() << ", "
+              << kolor_godzinowej.green()  << ", "
+              << kolor_godzinowej.blue()  << ",  \t// kolor_wsk_godzinowej ( RGB) \n\n"
 
-             <<  mimosrod_x_wektorowej_minutowej <<" , \t// X mimosrod wektorowej wskazowki_minutowej \n"
-              << mimosrod_y_wektorowej_minutowej << " , \t// Y mimosrod wektorowej wskazowki_minutowej  \n"
-              << szer_x_minutowej  << ",  \t// szerokosc wsk minutowej (w %)\n"
-              << dlugosc_minutowej  << ",  \t// dlugosc wsk minutowej (w %)\n"
-              << kolor_minutowej.red() << ", "
-              << kolor_minutowej.green()  << ", "
-              << kolor_minutowej.blue()  << ",  \t// kolor_wsk_minutowej ( RGB) \n\n"
+              <<  mimosrod_x_wektorowej_minutowej <<" , \t// X mimosrod wektorowej wskazowki_minutowej \n"
+               << mimosrod_y_wektorowej_minutowej << " , \t// Y mimosrod wektorowej wskazowki_minutowej  \n"
+               << szer_x_minutowej  << ",  \t// szerokosc wsk minutowej (w %)\n"
+               << dlugosc_minutowej  << ",  \t// dlugosc wsk minutowej (w %)\n"
+               << kolor_minutowej.red() << ", "
+               << kolor_minutowej.green()  << ", "
+               << kolor_minutowej.blue()  << ",  \t// kolor_wsk_minutowej ( RGB) \n\n"
 
 
 
                <<  mimosrod_x_wektorowego_sekundnika <<" , \t// X mimosrod wektorowej wskazowki_sekundowej (w %)\n"
-               << mimosrod_y_wektorowego_sekundnika <<" , \t// X mimosrod wektorowej wskazowki_sekundowej (w %)\n"
-               << szerokosc_x_sekundnika  << ",  \t// szerokosc wsk sekundnika (w %) \n"
-               << dlugosc_y_sekundnika  << ",  \t// dlugosc wsk sekundnika (w %)\n"
-               << kolor_sekundnika.red() << ", "
-               << kolor_sekundnika.green()  << ", "
-               << kolor_sekundnika.blue()  << ",  \t// kolor_wsk_sekundnika ( RGB) \n\n"
+                << mimosrod_y_wektorowego_sekundnika <<" , \t// X mimosrod wektorowej wskazowki_sekundowej (w %)\n"
+                << szerokosc_x_sekundnika  << ",  \t// szerokosc wsk sekundnika (w %) \n"
+                << dlugosc_y_sekundnika  << ",  \t// dlugosc wsk sekundnika (w %)\n"
+                << kolor_sekundnika.red() << ", "
+                << kolor_sekundnika.green()  << ", "
+                << kolor_sekundnika.blue()  << ",  \t// kolor_wsk_sekundnika ( RGB) \n\n"
 
 
                    // zaślepka osi
@@ -9480,14 +9543,14 @@ string q = "\"";
 
 
                           << uskok_cienia <<  " ,   \t// Uskok cienia wskazowek \n"
-                          // KSIEZYC
+                             // KSIEZYC
                           << flaga_ksiezyc <<  " ,  \t// flaga_ksiezyc \n"
                           <<  x_ksiezyc <<  ", "
-                             <<  y_ksiezyc <<  ",  \t// pozycja x y ksiezyca \n"
-                             << skala_ksiezyc  <<  ",  \t//  wsp skali bitmapy ksiezyca \n"
+                           <<  y_ksiezyc <<  ",  \t// pozycja x y ksiezyca \n"
+                            << skala_ksiezyc  <<  ",  \t//  wsp skali bitmapy ksiezyca \n"
 
-                          << endl;
-//         cout << "KOniec konstruktora " << __PRETTY_FUNCTION__<< endl;
+                            << endl;
+    //         cout << "KOniec konstruktora " << __PRETTY_FUNCTION__<< endl;
 }
 //**********************************************************************************************************
 void MainWindow::make_shutdown()
@@ -9538,9 +9601,9 @@ void MainWindow::wybierz_obrazek_ksiezyca()
     // obliczenie faza, czyli ile dni po ostatnim nowiu
     double faza =( (100 * days_from_newmoon) % orbit) / 100.0;
 
-//        cout
-//                << "days_from_newmoon = " << days_from_newmoon
-//                << ", Dni po nowiu (faza) = " << faza  << endl;
+    //        cout
+    //                << "days_from_newmoon = " << days_from_newmoon
+    //                << ", Dni po nowiu (faza) = " << faza  << endl;
 
 
     int faza_int =  faza  +0.5 ;
@@ -9561,24 +9624,24 @@ void MainWindow::wybierz_obrazek_ksiezyca()
     nr_biezacej_fazy_ksiezyca = faza_int;
 
     //--------------
-//        COTO;
-//    cout << " faza_int = " << faza_int << endl;
-//    cout << "rozmaira kaltki_faz = " << klatki_faz.size() << endl;
-//     cout << " modulo = "  << (faza_int % 29) << endl;
-//    COTO;
+    //        COTO;
+    //    cout << " faza_int = " << faza_int << endl;
+    //    cout << "rozmaira kaltki_faz = " << klatki_faz.size() << endl;
+    //     cout << " modulo = "  << (faza_int % 29) << endl;
+    //    COTO;
 
-        auto nr_obrazka = klatki_faz[faza_int % 29] ;   // % zeby nie przekroczyc rozmiaru tablicy
+    auto nr_obrazka = klatki_faz[faza_int % 29] ;   // % zeby nie przekroczyc rozmiaru tablicy
     //string  nazwa = (string)(":/new/prefix1/content/Moon_day_" )+ nr_obrazka + ".png";
     string  nazwa = (string)(":/new/prefix1/content/moon_" )+ nr_obrazka + ".png";
 
 
-//    cout << ", Dni po nowiu = " << faza
-//                     << ", faza_int = "
-//                     << faza_int
-//                    << " nr_obrazka = " <<  nr_obrazka
-//                     << endl;
+    //    cout << ", Dni po nowiu = " << faza
+    //                     << ", faza_int = "
+    //                     << faza_int
+    //                    << " nr_obrazka = " <<  nr_obrazka
+    //                     << endl;
 
-//             cout << ", Potrzebny plik " << nazwa  << endl;
+    //             cout << ", Potrzebny plik " << nazwa  << endl;
 
     ksiezyc.load(nazwa.c_str());
 

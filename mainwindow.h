@@ -701,6 +701,8 @@ private:
     int szer_ekranu_windows = 800;
     int wys_ekranu_windows = 600;
 
+    void  smart_positioning(QDialog * dlg);
+
 };
 
 #endif // MAINWINDOW_H

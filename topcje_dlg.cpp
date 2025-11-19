@@ -77,6 +77,8 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
     ui->comboBox_language->insertItems(0, list_jezykow);
     ui->comboBox_language->setCurrentIndex(nr_jezyka);
 
+    qDebug() << "current język = " << nr_jezyka ;
+
     ui->checkBox_zoom->setChecked(flag_gskala_active);
 
     ui->checkBox_dispaly_sekundnik->setChecked( flag_show_sekundnik);
@@ -365,6 +367,7 @@ void Topcje_dlg::on_buttonBox_accepted()
     flag_pozwalam_na_kilka_kopii_program = ui->checkBox_kilka_kopii->isChecked();
 
     nr_jezyka = ui->comboBox_language->currentIndex();
+     qDebug() << "current język = " << nr_jezyka ;
 
     flag_show_AM_PM  = ui->checkBox_AM_PM->isChecked();
     flag_show_full_date =  ui->checkBox_full_date->isChecked();
