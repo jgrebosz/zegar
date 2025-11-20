@@ -50,12 +50,9 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
     ui(new Ui::Topcje_dlg)
 {
 
+    ui->setupUi(this);
     setModal(Qt::NonModal);
     zegar = parent;
-
-
-
-    ui->setupUi(this);
 
     ui->groupBox_preferences->setVisible(false);
     ui->checkBox_na_wierzchu->setChecked( flag_na_wierzchu);

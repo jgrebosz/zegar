@@ -231,6 +231,8 @@ int main(int argc, char *argv[])
     //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
 
 
+
+    nr_jezyka = 1;
     while(1) {
         QApplication a(argc, argv);
 
