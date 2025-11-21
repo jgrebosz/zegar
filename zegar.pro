@@ -8,8 +8,7 @@ QT       += core gui
 QT += multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += staticlib
-CONFIG += static
+
 
 #QMAKE_CXXFLAGS += -std=c++17 -g
 QMAKE_CXXFLAGS += -std=c++17
