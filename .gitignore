@@ -40,8 +40,14 @@ qrc_*
 *.out
 *.app
 
+<<<<<<< Updated upstream
 build/
 debug/
 release/
 .qtc_clangd/
 .qtcreator/
+=======
+*.pro.user
+
+build/
+>>>>>>> Stashed changes
