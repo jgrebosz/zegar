@@ -11,6 +11,7 @@
 #include <QTableWidgetItem>
 #include <QProcess>
 #include <QDir>
+#include <QTranslator>
 
 #include "mainwindow.h"
 #include "tpreferred_hands.h"
@@ -53,6 +54,7 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
     ui->setupUi(this);
     setModal(Qt::NonModal);
     zegar = parent;
+    // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
 
     ui->groupBox_preferences->setVisible(false);
     ui->checkBox_na_wierzchu->setChecked( flag_na_wierzchu);
@@ -61,20 +63,30 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
 
     ui->label_transparency->setNum(przezroczystosc);
     ui->horizontalSlider_przezroczystosc->setValue(przezroczystosc);
-
+    // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
 
     //ui->checkBox_uruchom_z_linuxem->setChecked(flag_uruchom_z_linuxem);
     ui->checkBox_uruchom_przy_logowaniu->setChecked(flag_uruchom_przy_logowaniu);
+     // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
     ui->checkBox_kilka_kopii->setChecked(flag_pozwalam_na_kilka_kopii_program);
-
+     // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
     ui->horizontalSlider_zoom->setValue(gskala * 100);
-
-    ui->comboBox_language->clear();
+    // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
+    // ui->comboBox_language->clear();
     QStringList list_jezykow = { "English", "Polish"};
-    ui->comboBox_language->insertItems(0, list_jezykow);
-    ui->comboBox_language->setCurrentIndex(nr_jezyka);
 
-    qDebug() << "current język = " << nr_jezyka ;
+    // ui->comboBox_language->addItem ("ENGLISH");
+    // ui->comboBox_language->addItem ("POLISH");
+    // ui->comboBox_language->insertItems(0, list_jezykow);
+        // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
+    // ui->comboBox_language->setCurrentIndex(nr_jezyka);
+        if(nr_jezyka ==1)
+        ui->radioButton_polish->setChecked (true);
+        else {
+             ui->radioButton_english->setChecked (true);
+        }
+
+    // qDebug() << "wstepnie przy otwarciu options current język = " << nr_jezyka ;
 
     ui->checkBox_zoom->setChecked(flag_gskala_active);
 
@@ -127,7 +139,7 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
 
         //zoneDateTime = localTime;
     }
-
+    show();
 
     // zbudowanie listy nazw stref ----------------------------------
     // z ustawieniem wybranej linijki na bieżąco obowiązującej strefie czasowej
@@ -363,7 +375,7 @@ void Topcje_dlg::on_buttonBox_accepted()
     flag_uruchom_przy_logowaniu = ui->checkBox_uruchom_przy_logowaniu->isChecked();
     flag_pozwalam_na_kilka_kopii_program = ui->checkBox_kilka_kopii->isChecked();
 
-    nr_jezyka = ui->comboBox_language->currentIndex();
+    // nr_jezyka = ui->comboBox_language->currentIndex();
      qDebug() << "current język = " << nr_jezyka ;
 
     flag_show_AM_PM  = ui->checkBox_AM_PM->isChecked();
@@ -593,7 +605,7 @@ int Topcje_dlg::indeks_favourites_dla_tarczy(string nazwa_tarczy)
 void Topcje_dlg::info_o_faworytach(string /*nazwa_cyf*/ )
 {
 
-    COTO;
+    // COTO;
     auto w = zegar;
     // tekst na okoliczność użycia innych wskazowek niż fabryczne
 
@@ -1164,18 +1176,18 @@ void Topcje_dlg::on_tableWidget_cyferblaty_itemClicked(QTableWidgetItem *item)
 //**************************************************************************************************************
 void Topcje_dlg::on_tableWidget_cyferblaty_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *  /*previous*/ )
 {
-    COTO;
+    // COTO;
     auto nazwa = current->text().toStdString();
-       cout  << __PRETTY_FUNCTION__ << " ZmianWybrany  cyferblatt na " << nazwa << endl;
-    COTO       ;
+       // cout  << __PRETTY_FUNCTION__ << " ZmianWybrany  cyferblatt na " << nazwa << endl;
+    // COTO       ;
     zegar->wybor_cyferblatu(nazwa);
-    cout  << __PRETTY_FUNCTION__ << " Zmiana cyferblatu na " << nazwa << endl;
+    // cout  << __PRETTY_FUNCTION__ << " Zmiana cyferblatu na " << nazwa << endl;
     info_o_faworytach(nazwa);
-      COTO;
+      // COTO;
     zmiana_ikony_przy_edycji();
-    COTO;
+    // COTO;
     set_zoom(gskala);
-COTO;
+// COTO;
 }
 //**************************************************************************************************************
 
@@ -1197,14 +1209,14 @@ void Topcje_dlg::on_tableWidget_cyferblaty_cellClicked(int row  [[ maybe_unused]
 //**************************************************************************************************************
 void Topcje_dlg::zmiana_ikony_przy_edycji()
 {
-COTO;
+// COTO;
     int nr = zegar->nr_tarczy;
     // QString nazwa_ikony =
     QPixmap ikona_tarczy (zegar->cyferblat[nr].bitmapa_tarcza.c_str());
-    COTO;
+    // COTO;
     ui->checkBox_favourites->setIcon(ikona_tarczy);
     ui->checkBox_favourites->setIconSize(QSize(40,40));
-    COTO;
+    // COTO;
 }
 //**************************************************************************************************************
 
@@ -1261,7 +1273,6 @@ void Topcje_dlg::on_pushButton_sciezka_clicked()
                              );
 }
 //***********************************************************************************************************
-
 void Topcje_dlg::on_checkBox_uruchom_przy_logowaniu_stateChanged(int arg1)
 {
 #ifdef Q_OS_WINDOWS
@@ -1475,4 +1486,73 @@ void Topcje_dlg::on_radioButton_sec_vector_type_clicked(bool checked)
 
 }
 //*********************************************************************************
+void Topcje_dlg::zmiana_jezyka(int jezyk)
+{
+
+    nr_jezyka =jezyk;
+    // cout << __PRETTY_FUNCTION__ << " zmiana jezyka na nr = " << nr_jezyka << endl;
+
+
+    extern QTranslator translator;   // globalny lub przekazywany
+    extern QApplication *app;
+    app->removeTranslator(&translator);
+
+    switch(nr_jezyka)
+    {
+
+    default:
+    case 0:
+        // default (angielski)
+        //  qWarning() << " case 0, czyli angielski STO ";
+       // nr_jezyka = 0;
+        break;
+
+    case 1:
+        bool ok = translator.load(":/polski2.qm");
+        if (!ok) {
+            cerr << "Nie można zaladować tlumaczenia polski2.qm\n";
+        }else{
+           // nr_jezyka = 1;
+            //  qWarning() << "Sukces zaladowania tlumaczenia polski2.qm";
+            app->installTranslator(&translator);
+        }
+        break;
+
+    }
+
+    // cout << __PRETTY_FUNCTION__ << " koniec funkcji" << endl;
+
+}
+//*********************************************************************************
+void Topcje_dlg::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);  // odświeża wszystkie teksty z .ui
+
+        // updateTexts();            // jeśli masz teksty ustawiane ręcznie
+    }
+
+    QDialog::changeEvent(event);  // WAŻNE!
+}
+//*********************************************************************************
+void Topcje_dlg::updateTexts()
+{
+
+}
+//*********************************************************************************
+void Topcje_dlg::on_radioButton_english_toggled(bool checked)
+{
+    if(checked) nr_jezyka = 0;
+
+    // cout << __PRETTY_FUNCTION__ << nr_jezyka << endl;
+    zmiana_jezyka(nr_jezyka);
+}
+//*********************************************************************************
+void Topcje_dlg::on_radioButton_polish_toggled(bool checked)
+{
+    if(checked) nr_jezyka = 1;
+    // cout << __PRETTY_FUNCTION__ << nr_jezyka << endl;
+     zmiana_jezyka(nr_jezyka);
+}
 

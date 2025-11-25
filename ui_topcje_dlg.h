@@ -63,7 +63,8 @@ public:
     QVBoxLayout *verticalLayout_4;
     QGroupBox *groupBox_4;
     QVBoxLayout *verticalLayout_2;
-    QComboBox *comboBox_language;
+    QRadioButton *radioButton_english;
+    QRadioButton *radioButton_polish;
     QSpacerItem *verticalSpacer_3;
     QWidget *tab_Clock_face;
     QGridLayout *gridLayout_3;
@@ -156,14 +157,14 @@ public:
         gridLayout->setObjectName("gridLayout");
         buttonBox = new QDialogButtonBox(Topcje_dlg);
         buttonBox->setObjectName("buttonBox");
-        buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok);
+        buttonBox->setOrientation(Qt::Orientation::Horizontal);
+        buttonBox->setStandardButtons(QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Help|QDialogButtonBox::StandardButton::Ok);
 
         gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
 
         tabWidget = new QTabWidget(Topcje_dlg);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setTabPosition(QTabWidget::North);
+        tabWidget->setTabPosition(QTabWidget::TabPosition::North);
         tab_General = new QWidget();
         tab_General->setObjectName("tab_General");
         horizontalLayout = new QHBoxLayout(tab_General);
@@ -180,16 +181,16 @@ public:
         horizontalSlider_przezroczystosc->setMaximum(255);
         horizontalSlider_przezroczystosc->setPageStep(50);
         horizontalSlider_przezroczystosc->setValue(255);
-        horizontalSlider_przezroczystosc->setOrientation(Qt::Horizontal);
+        horizontalSlider_przezroczystosc->setOrientation(Qt::Orientation::Horizontal);
         horizontalSlider_przezroczystosc->setInvertedControls(true);
-        horizontalSlider_przezroczystosc->setTickPosition(QSlider::TicksBelow);
+        horizontalSlider_przezroczystosc->setTickPosition(QSlider::TickPosition::TicksBelow);
         horizontalSlider_przezroczystosc->setTickInterval(10);
 
         verticalLayout_7->addWidget(horizontalSlider_przezroczystosc);
 
         label_transparency = new QLabel(groupBox);
         label_transparency->setObjectName("label_transparency");
-        label_transparency->setAlignment(Qt::AlignCenter);
+        label_transparency->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_7->addWidget(label_transparency);
 
@@ -259,12 +260,15 @@ public:
         groupBox_4->setObjectName("groupBox_4");
         verticalLayout_2 = new QVBoxLayout(groupBox_4);
         verticalLayout_2->setObjectName("verticalLayout_2");
-        comboBox_language = new QComboBox(groupBox_4);
-        comboBox_language->addItem(QString());
-        comboBox_language->addItem(QString());
-        comboBox_language->setObjectName("comboBox_language");
+        radioButton_english = new QRadioButton(groupBox_4);
+        radioButton_english->setObjectName("radioButton_english");
 
-        verticalLayout_2->addWidget(comboBox_language);
+        verticalLayout_2->addWidget(radioButton_english);
+
+        radioButton_polish = new QRadioButton(groupBox_4);
+        radioButton_polish->setObjectName("radioButton_polish");
+
+        verticalLayout_2->addWidget(radioButton_polish);
 
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
@@ -292,7 +296,7 @@ public:
         verticalLayout_11->setObjectName("verticalLayout_11");
         label_infor_mode = new QLabel(groupBox_6);
         label_infor_mode->setObjectName("label_infor_mode");
-        label_infor_mode->setTextFormat(Qt::RichText);
+        label_infor_mode->setTextFormat(Qt::TextFormat::RichText);
 
         verticalLayout_11->addWidget(label_infor_mode);
 
@@ -328,7 +332,7 @@ public:
 
         tableWidget_cyferblaty = new QTableWidget(tab_Clock_face);
         tableWidget_cyferblaty->setObjectName("tableWidget_cyferblaty");
-        tableWidget_cyferblaty->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tableWidget_cyferblaty->setEditTriggers(QAbstractItemView::EditTrigger::NoEditTriggers);
 
         verticalLayout_15->addWidget(tableWidget_cyferblaty);
 
@@ -390,7 +394,7 @@ public:
         checkBox_remember__scale = new QCheckBox(groupBox_preferences);
         checkBox_remember__scale->setObjectName("checkBox_remember__scale");
 
-        verticalLayout_12->addWidget(checkBox_remember__scale, 0, Qt::AlignRight);
+        verticalLayout_12->addWidget(checkBox_remember__scale, 0, Qt::AlignmentFlag::AlignRight);
 
         pushButton_assign_preferred_hands = new QPushButton(groupBox_preferences);
         pushButton_assign_preferred_hands->setObjectName("pushButton_assign_preferred_hands");
@@ -414,7 +418,7 @@ public:
         label_inf_czy_fabryczne = new QLabel(groupBox_preferences);
         label_inf_czy_fabryczne->setObjectName("label_inf_czy_fabryczne");
         label_inf_czy_fabryczne->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 127);"));
-        label_inf_czy_fabryczne->setTextFormat(Qt::RichText);
+        label_inf_czy_fabryczne->setTextFormat(Qt::TextFormat::RichText);
 
         verticalLayout_12->addWidget(label_inf_czy_fabryczne);
 
@@ -483,15 +487,15 @@ public:
         horizontalSlider_zoom->setSingleStep(25);
         horizontalSlider_zoom->setPageStep(25);
         horizontalSlider_zoom->setSliderPosition(100);
-        horizontalSlider_zoom->setOrientation(Qt::Horizontal);
-        horizontalSlider_zoom->setTickPosition(QSlider::TicksBelow);
+        horizontalSlider_zoom->setOrientation(Qt::Orientation::Horizontal);
+        horizontalSlider_zoom->setTickPosition(QSlider::TickPosition::TicksBelow);
         horizontalSlider_zoom->setTickInterval(50);
 
         verticalLayout->addWidget(horizontalSlider_zoom);
 
         label_zoom = new QLabel(groupBox_5);
         label_zoom->setObjectName("label_zoom");
-        label_zoom->setAlignment(Qt::AlignCenter);
+        label_zoom->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout->addWidget(label_zoom);
 
@@ -674,7 +678,7 @@ public:
         verticalLayout_10->setObjectName("verticalLayout_10");
         label_5 = new QLabel(tab_about);
         label_5->setObjectName("label_5");
-        label_5->setAlignment(Qt::AlignCenter);
+        label_5->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_10->addWidget(label_5);
 
@@ -687,8 +691,7 @@ public:
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, Topcje_dlg, qOverload<>(&QDialog::accept));
         QObject::connect(buttonBox, &QDialogButtonBox::rejected, Topcje_dlg, qOverload<>(&QDialog::reject));
 
-        tabWidget->setCurrentIndex(1);
-        comboBox_language->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Topcje_dlg);
@@ -709,10 +712,8 @@ public:
         checkBox_uruchom_przy_logowaniu->setText(QCoreApplication::translate("Topcje_dlg", "Start during login (not working yet)", nullptr));
         pushButton_start_with_login->setText(QCoreApplication::translate("Topcje_dlg", "Start this program during loging", nullptr));
         groupBox_4->setTitle(QCoreApplication::translate("Topcje_dlg", "Language", nullptr));
-        comboBox_language->setItemText(0, QCoreApplication::translate("Topcje_dlg", "jeszcze nie dziala", nullptr));
-        comboBox_language->setItemText(1, QCoreApplication::translate("Topcje_dlg", "nadal nie dzia\305\202a", nullptr));
-
-        comboBox_language->setCurrentText(QCoreApplication::translate("Topcje_dlg", "jeszcze nie dziala", nullptr));
+        radioButton_english->setText(QCoreApplication::translate("Topcje_dlg", "English", nullptr));
+        radioButton_polish->setText(QCoreApplication::translate("Topcje_dlg", "Polish", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_General), QCoreApplication::translate("Topcje_dlg", "General", nullptr));
         groupBox_6->setTitle(QCoreApplication::translate("Topcje_dlg", "Choose a mode for clock hands:", nullptr));
         label_infor_mode->setText(QCoreApplication::translate("Topcje_dlg", "<html><head/><body><p>While changing the clock face (by clicking on table below), <br/>such clock-hands will be used:</p></body></html>", nullptr));

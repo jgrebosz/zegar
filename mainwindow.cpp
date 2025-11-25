@@ -58,8 +58,8 @@ using namespace  std;
 
 extern bool flag_ma_byc_restart;
 bool wstepne_flag_na_wierzchu;
-int wstepne_nr_jezyka;
-int nr_obecnie_zainstalowanego_jezyka;
+// int wstepne_nr_jezyka;
+// int nr_obecnie_zainstalowanego_jezyka;
 std::string nazwa_pliku_z_opcjami { "zegar_options.dat"};
 std::string pathed_nazwa_pliku_z_opcjami ;
 
@@ -248,7 +248,7 @@ MainWindow::~MainWindow()
 //***************************************************************************************
 bool MainWindow::wybor_cyferblatu(string nazwa)
 {
-    cout << __PRETTY_FUNCTION__ << endl;
+    // cout << __PRETTY_FUNCTION__ << endl;
     flag_random_tarcza = false;
     for(uint i = 0 ; i < cyferblat.size() ; ++i)
     {
@@ -635,9 +635,9 @@ bool MainWindow::czy_nazwa_naprawde_bitmapowa(string nazwa)
 //************************************************************************************************************************
 bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
 {
-    //          cout << __func__  << " tarcza nr " << nr
-    //                << "  (z argumentem trybu wskazowek  [recent = 0 , ulubione = 1, fabryczne=2] -->"
-    //                << int (tryb) << ")"<< endl;
+             // cout << __func__  << " tarcza nr " << nr
+             //       << "  (z argumentem trybu wskazowek  [recent = 0 , ulubione = 1, fabryczne=2] -->"
+             //       << int (tryb) << ")"<< endl;
 
     nr_tarczy= nr;
 
@@ -1010,7 +1010,7 @@ bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
         //                     << endl;
 
 
-        COTO;
+        // COTO;
 
         // sek -----------------
 
@@ -2523,7 +2523,8 @@ void  MainWindow::smart_positioning(QDialog  *dlg)
 //*********************************************************************************************************
 void MainWindow::wywolanie_okna_opcji()
 {
-    wstepne_nr_jezyka = nr_jezyka;
+
+    // cout <<__PRETTY_FUNCTION__ << "nr jezyka = " << nr_jezyka << endl;
 
     bool flaga__byl_tryb_random =  flag_random_tarcza;
     auto *dlg = new Topcje_dlg(this);
@@ -2548,12 +2549,9 @@ void MainWindow::wywolanie_okna_opcji()
     // COTO;
     this->setWindowOpacity(przezroczystosc/255.0);
 
-    //        cout << "Po dialogu opcji jezyk nr  " << nr_jezyka << endl;
+           cout << "Po dialogu opcji jezyk nr  " << nr_jezyka << endl;
 
-    if(flag_na_wierzchu != wstepne_flag_na_wierzchu
-            ||
-            wstepne_nr_jezyka != nr_jezyka
-            )
+    if(flag_na_wierzchu != wstepne_flag_na_wierzchu   )
     {
         flag_ma_byc_restart = true;
         cout << "zamkniecie okna opcji z restartem  (przed close )" << endl;
@@ -8650,13 +8648,13 @@ void MainWindow::wczytanie_opcji_z_dysku()
 
     zmiana_opcji_on_top(flag_na_wierzchu);
 
-    if(nr_jezyka != nr_obecnie_zainstalowanego_jezyka)
-    {
-        zmiana_jezyka(nr_jezyka);
-        flag_ma_byc_restart = true;
-        cout << "ma byc restart z powodu zmiany jezyka w we wczytanych opcjach (przed close )" << endl;
-        close();
-    }
+    // if(nr_jezyka != nr_obecnie_zainstalowanego_jezyka)
+    // {
+    //     zmiana_jezyka(nr_jezyka);
+    //     flag_ma_byc_restart = true;
+    //     cout << "ma byc restart z powodu zmiany jezyka w we wczytanych opcjach (przed close )" << endl;
+    //     close();
+    // }
 
     if(gskala < 0.01) gskala = 1;   // in case something was stored wrong
     gskala = 1;   // CHWILOWO
@@ -9446,6 +9444,8 @@ void Tdane_cyferblatu::dodaj_extra_wskazowke(
 //**********************************************************************************************************
 void Tdane_cyferblatu::zapis_danych_o_cyferblacie()
 {
+    return;
+
     string q = "\"";
     cout
             << q << nazwa << q << ", \t// nazwa cyferblatu \n"

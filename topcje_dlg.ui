@@ -20,20 +20,20 @@
    <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Help|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="tabPosition">
-      <enum>QTabWidget::North</enum>
+      <enum>QTabWidget::TabPosition::North</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -63,13 +63,13 @@
                <number>255</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="invertedControls">
                <bool>true</bool>
               </property>
               <property name="tickPosition">
-               <enum>QSlider::TicksBelow</enum>
+               <enum>QSlider::TickPosition::TicksBelow</enum>
               </property>
               <property name="tickInterval">
                <number>10</number>
@@ -82,7 +82,7 @@
                <string>255</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignCenter</set>
+               <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -119,7 +119,7 @@
             <item>
              <spacer name="verticalSpacer_2">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -183,29 +183,23 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QComboBox" name="comboBox_language">
-              <property name="currentText">
-               <string>jeszcze nie dziala</string>
+             <widget class="QRadioButton" name="radioButton_english">
+              <property name="text">
+               <string>English</string>
               </property>
-              <property name="currentIndex">
-               <number>0</number>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_polish">
+              <property name="text">
+               <string>Polish</string>
               </property>
-              <item>
-               <property name="text">
-                <string>jeszcze nie dziala</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>nadal nie działa</string>
-               </property>
-              </item>
              </widget>
             </item>
             <item>
              <spacer name="verticalSpacer_3">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -249,7 +243,7 @@
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While changing the clock face (by clicking on table below), &lt;br/&gt;such clock-hands will be used:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="textFormat">
-                 <enum>Qt::RichText</enum>
+                 <enum>Qt::TextFormat::RichText</enum>
                 </property>
                </widget>
               </item>
@@ -265,7 +259,7 @@
                 <item>
                  <spacer name="horizontalSpacer_3">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -299,7 +293,7 @@
          <item>
           <widget class="QTableWidget" name="tableWidget_cyferblaty">
            <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
+            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
            </property>
           </widget>
          </item>
@@ -364,7 +358,7 @@
             <item>
              <spacer name="verticalSpacer_5">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -381,7 +375,7 @@
               </property>
              </widget>
             </item>
-            <item alignment="Qt::AlignRight">
+            <item alignment="Qt::AlignmentFlag::AlignRight">
              <widget class="QCheckBox" name="checkBox_remember__scale">
               <property name="text">
                <string>Remember also a current scale (zoom) factor</string>
@@ -429,7 +423,7 @@
                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#001fea;&quot;&gt;You can return to the factory settings&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="textFormat">
-               <enum>Qt::RichText</enum>
+               <enum>Qt::TextFormat::RichText</enum>
               </property>
              </widget>
             </item>
@@ -446,7 +440,7 @@
          <item>
           <spacer name="verticalSpacer_6">
            <property name="orientation">
-            <enum>Qt::Vertical</enum>
+            <enum>Qt::Orientation::Vertical</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -480,7 +474,7 @@
               <item>
                <spacer name="horizontalSpacer_2">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -564,10 +558,10 @@
                <number>100</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="tickPosition">
-               <enum>QSlider::TicksBelow</enum>
+               <enum>QSlider::TickPosition::TicksBelow</enum>
               </property>
               <property name="tickInterval">
                <number>50</number>
@@ -580,7 +574,7 @@
                <string>procent</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignCenter</set>
+               <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -592,7 +586,7 @@
        <item row="1" column="0">
         <spacer name="horizontalSpacer">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -786,7 +780,7 @@
        <item>
         <spacer name="verticalSpacer_4">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -827,7 +821,7 @@
        <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -850,7 +844,7 @@
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;This freeware clock-reminder program &lt;br/&gt;is made specially for LINUX users &lt;br/&gt;by &lt;br/&gt;Jerzy Grębosz &lt;br/&gt;and &lt;br/&gt;Krzysztof Grębosz&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;We were inspired by a famous Windows program: ClocX&lt;br/&gt;written by Ing. Bohdan Rylko&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br/&gt;In this clock-reminder program you can choose some clock-faces designed by us, &lt;br/&gt;some other - which we found in internet public domain.&lt;br/&gt;&lt;br/&gt;However, there are also some pictures of clocks made by world-famous producers. &lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:12pt; color:#d89000;&quot;&gt;We dared to &amp;quot;quote&amp;quot; them in this freeware program, &lt;br/&gt;because we are really impressed by their excusive beauty.&lt;br/&gt;We would be very proud if you also admire their work so much, &lt;br/&gt;that some day you will buy a real clock of these producers.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
        </item>

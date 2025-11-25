@@ -127,6 +127,11 @@ private slots:
 
 
 
+    // void on_comboBox_language_currentIndexChanged(int index);
+
+void on_radioButton_english_toggled(bool checked);
+void on_radioButton_polish_toggled(bool checked);
+
 private:
     Ui::Topcje_dlg *ui;
 
@@ -180,6 +185,9 @@ private:
     void laduj_tablice_cyferblatow();
     void zmiana_ikony_przy_edycji();
     void set_zoom( double g);
+    void changeEvent(QEvent *event)  ;
+    void updateTexts();
+    void zmiana_jezyka(int jezyk);
 
 
 };

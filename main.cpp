@@ -12,8 +12,8 @@ bool flag_ma_byc_restart;
 extern bool flag_na_wierzchu;
 extern bool wstepne_flag_na_wierzchu;
 extern int nr_jezyka;
-extern int wstepne_nr_jezyka;
-extern int nr_obecnie_zainstalowanego_jezyka;
+// extern int wstepne_nr_jezyka;
+// extern int nr_obecnie_zainstalowanego_jezyka;
 string nazwa_pliku_sygnalizujacego_prace {"zegar_is_active.dat" } ;
 const int CO_ILE_SEK_SPRAWDZENIE_AKTYWNOSCI { 10 };
 string sciezka;
@@ -227,12 +227,13 @@ int main(int argc, char *argv[])
     file >> nr_jezyka ;
     file.close();
     cout << "wczytany z pliku nr jezyka = " << nr_jezyka << endl;
+    if(nr_jezyka < 0 ) nr_jezyka = 0 ;
 
     //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
 
 
 
-    nr_jezyka = 1;
+    // nr_jezyka = 1;
     while(1) {
         QApplication a(argc, argv);
 
@@ -240,7 +241,7 @@ int main(int argc, char *argv[])
         switch (nr_jezyka)
         {
         case 0:
-            qDebug() << "Język nr 0 (domyślny, angielski)";
+            qDebug() << "Jezyk nr 0 (domyslny, angielski)";
             break;
 
         case 1:
@@ -259,7 +260,7 @@ int main(int argc, char *argv[])
         }
 
 
-        nr_obecnie_zainstalowanego_jezyka = nr_jezyka;
+        // nr_obecnie_zainstalowanego_jezyka = nr_jezyka;
 
         MainWindow w;
         w.show();
