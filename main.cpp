@@ -7,7 +7,7 @@
 
 #include <string>
 
-bool flag_ma_byc_restart;
+// bool flag_ma_byc_restart;
 
 extern bool flag_na_wierzchu;
 extern bool wstepne_flag_na_wierzchu;
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
     ifstream file(pathed_nazwa_pliku_z_opcjami);
     file >> nr_jezyka ;
     file.close();
-    cout << "wczytany z pliku nr jezyka = " << nr_jezyka << endl;
+    // cout << "wczytany z pliku nr jezyka = " << nr_jezyka << endl;
     if(nr_jezyka < 0 ) nr_jezyka = 0 ;
 
     //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
@@ -237,11 +237,10 @@ int main(int argc, char *argv[])
     while(1) {
         QApplication a(argc, argv);
 
-
         switch (nr_jezyka)
         {
         case 0:
-            qDebug() << "Jezyk nr 0 (domyslny, angielski)";
+            // qDebug() << "Jezyk nr 0 (domyslny, angielski)";
             break;
 
         case 1:
@@ -267,23 +266,23 @@ int main(int argc, char *argv[])
         //        cout << __LINE__ << " przed w.exec() " << endl;
         int answer = a.exec();
         //  cout << __LINE__ << " PO w.exec() " << endl;
-        cout << "main,  flag_ma_byc_restart = "<< boolalpha
-             << flag_ma_byc_restart << endl;
-        if(flag_ma_byc_restart )
-        {
-            cout << "[main.c ] Powtorne pokazanie okna, z opcją flag_ma_byc_restart,   oraz  flag_na_wierzchu= "
-                 << flag_na_wierzchu
-                 << " i jezykiem nr " << nr_jezyka << endl;
+        // cout << "main,  flag_ma_byc_restart = "<< boolalpha
+        //      << flag_ma_byc_restart << endl;
+        // if(flag_ma_byc_restart )
+        // {
+        //     cout << "[main.c ] Powtorne pokazanie okna, z opcją flag_ma_byc_restart,   oraz  flag_na_wierzchu= "
+        //          << flag_na_wierzchu
+        //          << " i jezykiem nr " << nr_jezyka << endl;
 
-            w.setWindowFlag(Qt::WindowStaysOnTopHint, flag_na_wierzchu );
-            w.setWindowFlag(Qt::X11BypassWindowManagerHint, flag_na_wierzchu);
+        //     w.setWindowFlag(Qt::WindowStaysOnTopHint, flag_na_wierzchu );
+        //     w.setWindowFlag(Qt::X11BypassWindowManagerHint, flag_na_wierzchu);
 
 
-            w.setWindowState(w.windowState() ^ Qt::WindowNoState);
-            flag_ma_byc_restart = false;
-            // kontynuuj nieskonczona petle
-        }
-        else
+        //     w.setWindowState(w.windowState() ^ Qt::WindowNoState);
+        //     flag_ma_byc_restart = false;
+        //     // kontynuuj nieskonczona petle
+        // }
+        // else
         {
             cout << "Usuwam plik sygnalizacyjny " << nazwa_pliku_sygnalizujacego_prace << endl;
             dir.remove(nazwa_pliku_sygnalizujacego_prace.c_str());

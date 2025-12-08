@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'topcje_dlg.ui'
 **
-** Created by: Qt User Interface Compiler version 6.8.1
+** Created by: Qt User Interface Compiler version 6.10.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -42,7 +42,7 @@ public:
     QDialogButtonBox *buttonBox;
     QTabWidget *tabWidget;
     QWidget *tab_General;
-    QHBoxLayout *horizontalLayout;
+    QGridLayout *gridLayout_4;
     QVBoxLayout *verticalLayout_8;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout_7;
@@ -57,14 +57,13 @@ public:
     QGroupBox *groupBox__uruchom_z_Linuxem;
     QVBoxLayout *verticalLayout_3;
     QPushButton *pushButton_sciezka;
-    QPushButton *pushButton_shutdown;
-    QCheckBox *checkBox_uruchom_przy_logowaniu;
     QPushButton *pushButton_start_with_login;
+    QVBoxLayout *verticalLayout_18;
     QVBoxLayout *verticalLayout_4;
     QGroupBox *groupBox_4;
     QVBoxLayout *verticalLayout_2;
-    QRadioButton *radioButton_english;
     QRadioButton *radioButton_polish;
+    QRadioButton *radioButton_english;
     QSpacerItem *verticalSpacer_3;
     QWidget *tab_Clock_face;
     QGridLayout *gridLayout_3;
@@ -151,7 +150,7 @@ public:
     {
         if (Topcje_dlg->objectName().isEmpty())
             Topcje_dlg->setObjectName("Topcje_dlg");
-        Topcje_dlg->resize(733, 719);
+        Topcje_dlg->resize(820, 647);
         Topcje_dlg->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         gridLayout = new QGridLayout(Topcje_dlg);
         gridLayout->setObjectName("gridLayout");
@@ -164,20 +163,35 @@ public:
 
         tabWidget = new QTabWidget(Topcje_dlg);
         tabWidget->setObjectName("tabWidget");
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy);
         tabWidget->setTabPosition(QTabWidget::TabPosition::North);
         tab_General = new QWidget();
         tab_General->setObjectName("tab_General");
-        horizontalLayout = new QHBoxLayout(tab_General);
-        horizontalLayout->setObjectName("horizontalLayout");
+        gridLayout_4 = new QGridLayout(tab_General);
+        gridLayout_4->setObjectName("gridLayout_4");
         verticalLayout_8 = new QVBoxLayout();
         verticalLayout_8->setObjectName("verticalLayout_8");
         groupBox = new QGroupBox(tab_General);
         groupBox->setObjectName("groupBox");
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy1);
         groupBox->setCheckable(false);
         verticalLayout_7 = new QVBoxLayout(groupBox);
         verticalLayout_7->setObjectName("verticalLayout_7");
         horizontalSlider_przezroczystosc = new QSlider(groupBox);
         horizontalSlider_przezroczystosc->setObjectName("horizontalSlider_przezroczystosc");
+        QSizePolicy sizePolicy2(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(horizontalSlider_przezroczystosc->sizePolicy().hasHeightForWidth());
+        horizontalSlider_przezroczystosc->setSizePolicy(sizePolicy2);
         horizontalSlider_przezroczystosc->setMaximum(255);
         horizontalSlider_przezroczystosc->setPageStep(50);
         horizontalSlider_przezroczystosc->setValue(255);
@@ -199,20 +213,31 @@ public:
 
         groupBox_3 = new QGroupBox(tab_General);
         groupBox_3->setObjectName("groupBox_3");
+        sizePolicy1.setHeightForWidth(groupBox_3->sizePolicy().hasHeightForWidth());
+        groupBox_3->setSizePolicy(sizePolicy1);
         verticalLayout_6 = new QVBoxLayout(groupBox_3);
         verticalLayout_6->setObjectName("verticalLayout_6");
         checkBox_na_wierzchu = new QCheckBox(groupBox_3);
         checkBox_na_wierzchu->setObjectName("checkBox_na_wierzchu");
+        QSizePolicy sizePolicy3(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(checkBox_na_wierzchu->sizePolicy().hasHeightForWidth());
+        checkBox_na_wierzchu->setSizePolicy(sizePolicy3);
 
         verticalLayout_6->addWidget(checkBox_na_wierzchu);
 
         checkBox_blokuj_pozycje_na_ekranie = new QCheckBox(groupBox_3);
         checkBox_blokuj_pozycje_na_ekranie->setObjectName("checkBox_blokuj_pozycje_na_ekranie");
+        sizePolicy3.setHeightForWidth(checkBox_blokuj_pozycje_na_ekranie->sizePolicy().hasHeightForWidth());
+        checkBox_blokuj_pozycje_na_ekranie->setSizePolicy(sizePolicy3);
 
         verticalLayout_6->addWidget(checkBox_blokuj_pozycje_na_ekranie);
 
         checkBox_kilka_kopii = new QCheckBox(groupBox_3);
         checkBox_kilka_kopii->setObjectName("checkBox_kilka_kopii");
+        sizePolicy3.setHeightForWidth(checkBox_kilka_kopii->sizePolicy().hasHeightForWidth());
+        checkBox_kilka_kopii->setSizePolicy(sizePolicy3);
 
         verticalLayout_6->addWidget(checkBox_kilka_kopii);
 
@@ -222,26 +247,21 @@ public:
 
         groupBox__uruchom_z_Linuxem = new QGroupBox(groupBox_3);
         groupBox__uruchom_z_Linuxem->setObjectName("groupBox__uruchom_z_Linuxem");
+        sizePolicy1.setHeightForWidth(groupBox__uruchom_z_Linuxem->sizePolicy().hasHeightForWidth());
+        groupBox__uruchom_z_Linuxem->setSizePolicy(sizePolicy1);
         verticalLayout_3 = new QVBoxLayout(groupBox__uruchom_z_Linuxem);
         verticalLayout_3->setObjectName("verticalLayout_3");
         pushButton_sciezka = new QPushButton(groupBox__uruchom_z_Linuxem);
         pushButton_sciezka->setObjectName("pushButton_sciezka");
+        sizePolicy1.setHeightForWidth(pushButton_sciezka->sizePolicy().hasHeightForWidth());
+        pushButton_sciezka->setSizePolicy(sizePolicy1);
 
         verticalLayout_3->addWidget(pushButton_sciezka);
 
-        pushButton_shutdown = new QPushButton(groupBox__uruchom_z_Linuxem);
-        pushButton_shutdown->setObjectName("pushButton_shutdown");
-        pushButton_shutdown->setEnabled(false);
-
-        verticalLayout_3->addWidget(pushButton_shutdown);
-
-        checkBox_uruchom_przy_logowaniu = new QCheckBox(groupBox__uruchom_z_Linuxem);
-        checkBox_uruchom_przy_logowaniu->setObjectName("checkBox_uruchom_przy_logowaniu");
-
-        verticalLayout_3->addWidget(checkBox_uruchom_przy_logowaniu);
-
         pushButton_start_with_login = new QPushButton(groupBox__uruchom_z_Linuxem);
         pushButton_start_with_login->setObjectName("pushButton_start_with_login");
+        sizePolicy1.setHeightForWidth(pushButton_start_with_login->sizePolicy().hasHeightForWidth());
+        pushButton_start_with_login->setSizePolicy(sizePolicy1);
 
         verticalLayout_3->addWidget(pushButton_start_with_login);
 
@@ -252,34 +272,52 @@ public:
         verticalLayout_8->addWidget(groupBox_3);
 
 
-        horizontalLayout->addLayout(verticalLayout_8);
+        gridLayout_4->addLayout(verticalLayout_8, 0, 0, 1, 1);
 
+        verticalLayout_18 = new QVBoxLayout();
+        verticalLayout_18->setObjectName("verticalLayout_18");
         verticalLayout_4 = new QVBoxLayout();
         verticalLayout_4->setObjectName("verticalLayout_4");
+
+        verticalLayout_18->addLayout(verticalLayout_4);
+
         groupBox_4 = new QGroupBox(tab_General);
         groupBox_4->setObjectName("groupBox_4");
+        QSizePolicy sizePolicy4(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(groupBox_4->sizePolicy().hasHeightForWidth());
+        groupBox_4->setSizePolicy(sizePolicy4);
+        groupBox_4->setMinimumSize(QSize(80, 0));
         verticalLayout_2 = new QVBoxLayout(groupBox_4);
         verticalLayout_2->setObjectName("verticalLayout_2");
-        radioButton_english = new QRadioButton(groupBox_4);
-        radioButton_english->setObjectName("radioButton_english");
-
-        verticalLayout_2->addWidget(radioButton_english);
-
         radioButton_polish = new QRadioButton(groupBox_4);
         radioButton_polish->setObjectName("radioButton_polish");
+        sizePolicy1.setHeightForWidth(radioButton_polish->sizePolicy().hasHeightForWidth());
+        radioButton_polish->setSizePolicy(sizePolicy1);
 
         verticalLayout_2->addWidget(radioButton_polish);
 
-        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+        radioButton_english = new QRadioButton(groupBox_4);
+        radioButton_english->setObjectName("radioButton_english");
+        sizePolicy1.setHeightForWidth(radioButton_english->sizePolicy().hasHeightForWidth());
+        radioButton_english->setSizePolicy(sizePolicy1);
+        radioButton_english->setMinimumSize(QSize(0, 0));
+
+        verticalLayout_2->addWidget(radioButton_english);
+
+        verticalSpacer_3 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_3);
 
 
-        verticalLayout_4->addWidget(groupBox_4);
+        verticalLayout_18->addWidget(groupBox_4);
 
 
-        horizontalLayout->addLayout(verticalLayout_4);
+        gridLayout_4->addLayout(verticalLayout_18, 0, 1, 1, 1);
 
+        gridLayout_4->setColumnStretch(0, 3);
+        gridLayout_4->setColumnStretch(1, 1);
         tabWidget->addTab(tab_General, QString());
         tab_Clock_face = new QWidget();
         tab_Clock_face->setObjectName("tab_Clock_face");
@@ -452,11 +490,11 @@ public:
 
         pushButton_zoom50 = new QPushButton(groupBox_5);
         pushButton_zoom50->setObjectName("pushButton_zoom50");
-        QSizePolicy sizePolicy(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
-        sizePolicy.setHorizontalStretch(1);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(pushButton_zoom50->sizePolicy().hasHeightForWidth());
-        pushButton_zoom50->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy5(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
+        sizePolicy5.setHorizontalStretch(1);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(pushButton_zoom50->sizePolicy().hasHeightForWidth());
+        pushButton_zoom50->setSizePolicy(sizePolicy5);
         pushButton_zoom50->setMinimumSize(QSize(50, 0));
         pushButton_zoom50->setMaximumSize(QSize(16777215, 40));
 
@@ -708,12 +746,10 @@ public:
         checkBox_kilka_kopii->setText(QCoreApplication::translate("Topcje_dlg", "Allow to run many copies of this program (in particular directory)", nullptr));
         groupBox__uruchom_z_Linuxem->setTitle(QCoreApplication::translate("Topcje_dlg", "Some other options for testing", nullptr));
         pushButton_sciezka->setText(QCoreApplication::translate("Topcje_dlg", "Test path and OS", nullptr));
-        pushButton_shutdown->setText(QCoreApplication::translate("Topcje_dlg", "Shutdown now", nullptr));
-        checkBox_uruchom_przy_logowaniu->setText(QCoreApplication::translate("Topcje_dlg", "Start during login (not working yet)", nullptr));
-        pushButton_start_with_login->setText(QCoreApplication::translate("Topcje_dlg", "Start this program during loging", nullptr));
+        pushButton_start_with_login->setText(QCoreApplication::translate("Topcje_dlg", "How to start this program during loging", nullptr));
         groupBox_4->setTitle(QCoreApplication::translate("Topcje_dlg", "Language", nullptr));
-        radioButton_english->setText(QCoreApplication::translate("Topcje_dlg", "English", nullptr));
         radioButton_polish->setText(QCoreApplication::translate("Topcje_dlg", "Polish", nullptr));
+        radioButton_english->setText(QCoreApplication::translate("Topcje_dlg", "English", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_General), QCoreApplication::translate("Topcje_dlg", "General", nullptr));
         groupBox_6->setTitle(QCoreApplication::translate("Topcje_dlg", "Choose a mode for clock hands:", nullptr));
         label_infor_mode->setText(QCoreApplication::translate("Topcje_dlg", "<html><head/><body><p>While changing the clock face (by clicking on table below), <br/>such clock-hands will be used:</p></body></html>", nullptr));

@@ -25,8 +25,8 @@ extern bool flag_blokuj_na_ekranie;
 extern int przezroczystosc;
 extern int przezroczystosc_dla_kursora;
 
-extern bool flag_uruchom_z_loginem;
-extern bool flag_uruchom_przy_logowaniu;
+// extern bool flag_uruchom_z_loginem;
+// extern bool flag_uruchom_przy_logowaniu;
 extern bool flag_pozwalam_na_kilka_kopii_program;
 extern int nr_jezyka;
 extern double gskala;
@@ -66,7 +66,7 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
     // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
 
     //ui->checkBox_uruchom_z_linuxem->setChecked(flag_uruchom_z_linuxem);
-    ui->checkBox_uruchom_przy_logowaniu->setChecked(flag_uruchom_przy_logowaniu);
+    // ui->checkBox_uruchom_przy_logowaniu->setChecked(flag_uruchom_przy_logowaniu);
      // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
     ui->checkBox_kilka_kopii->setChecked(flag_pozwalam_na_kilka_kopii_program);
      // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
@@ -374,7 +374,7 @@ void Topcje_dlg::on_buttonBox_accepted()
     //flag_ograniczenie_pozycji = ui->checkBox_ogranicz_pozycje->isChecked();
 
     //flag_uruchom_z_linuxem = ui->checkBox_uruchom_z_linuxem->isChecked();
-    flag_uruchom_przy_logowaniu = ui->checkBox_uruchom_przy_logowaniu->isChecked();
+    // flag_uruchom_przy_logowaniu = ui->checkBox_uruchom_przy_logowaniu->isChecked();
     flag_pozwalam_na_kilka_kopii_program = ui->checkBox_kilka_kopii->isChecked();
 
     // nr_jezyka = ui->comboBox_language->currentIndex();
@@ -533,7 +533,7 @@ void Topcje_dlg::zapamientanie_stanu()
     pam_flag_na_wierzchu  = flag_na_wierzchu;
     pam_flag_blokuj_na_ekranie = flag_blokuj_na_ekranie;
     pam_przezroczystosc = przezroczystosc;
-    pam_flag_uruchom_przy_logowaniu = flag_uruchom_przy_logowaniu;
+    // pam_flag_uruchom_przy_logowaniu = flag_uruchom_przy_logowaniu;
     pam_flag__kilka_kopii = flag_pozwalam_na_kilka_kopii_program;
     pam_gskala = gskala;
     pam_nr_jezyka = nr_jezyka;
@@ -566,7 +566,7 @@ void Topcje_dlg::odpamientanie_stanu()
     flag_na_wierzchu  =pam_flag_na_wierzchu;
     flag_blokuj_na_ekranie = pam_flag_blokuj_na_ekranie;
     przezroczystosc = pam_przezroczystosc;
-    flag_uruchom_przy_logowaniu =pam_flag_uruchom_przy_logowaniu;
+    // flag_uruchom_przy_logowaniu =pam_flag_uruchom_przy_logowaniu;
     flag_pozwalam_na_kilka_kopii_program =pam_flag__kilka_kopii;
     gskala = pam_gskala;
     nr_jezyka = pam_nr_jezyka;
@@ -1167,7 +1167,7 @@ void Topcje_dlg::on_checkBox_favourites_clicked(bool checked)
 
 void Topcje_dlg::on_tableWidget_cyferblaty_itemClicked(QTableWidgetItem *item)
 {
-     cout << __PRETTY_FUNCTION__ << endl;
+     // cout << __PRETTY_FUNCTION__ << endl;
     auto nazwa = item->text().toStdString();
     zegar->wybor_cyferblatu(nazwa);
     set_zoom(gskala);
@@ -1274,53 +1274,7 @@ void Topcje_dlg::on_pushButton_sciezka_clicked()
     QMessageBox::information(this, "Plik sygnalizujacy prace to: ", nazwa_pliku_sygnalizujacego_prace.c_str()
                              );
 }
-//***********************************************************************************************************
-void Topcje_dlg::on_checkBox_uruchom_przy_logowaniu_stateChanged(int arg1)
-{
-#ifdef Q_OS_WINDOWS
-
-    int wersja = zegar->id_linux_czy_windows_version();
-    cout << "System to jest Windows " << wersja
-            //         << ". Uruchamianie z loginem na razie nie dziala, nie wiem jak to zrobic"
-         << endl;
-
-    if(arg1 == Qt::Unchecked)
-    {
-        flag_uruchom_z_loginem = false;
-    }
-    else if ( arg1 == Qt::Checked){
-        flag_uruchom_z_loginem = true;
-    }
-
-
-#elif defined      Q_OS_LINUX
-    if(arg1 == Qt::Unchecked)
-    {
-        flag_uruchom_z_loginem = false;
-    }
-    else if ( arg1 == Qt::Checked){
-        flag_uruchom_z_loginem = true;
-
-        //        QMessageBox::information(this, "how to make it",
-        //                                 "Create file called:\n\t ~/.config/zegar.desktop\n"
-        //                                 "with a following context:\n\"
-        //                                 "[Desktop Entry]\n"
-        //                                 "Exec=zro/zegar/zegar"
-        //                                 );
-        /*-------------
-         * Zrobić plik ~/.config/zegar.desktop a w nim:
-        [Desktop Entry]
-        Exec=zro/zegar/zegar
-
-    -------------*/
-    }
-
-    // wlasciwe wykonanie tej komendy w funkcji Accept
-
-#endif
-}
-
-
+//****************************************************************************
 //****************************************************************************
 void Topcje_dlg::set_zoom( double g)
 {

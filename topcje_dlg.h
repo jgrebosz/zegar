@@ -97,7 +97,6 @@ private slots:
 
 	void on_pushButton_sciezka_clicked();
 
-    void on_checkBox_uruchom_przy_logowaniu_stateChanged(int arg1);
 
     void on_pushButton_zoom100_clicked();
 
@@ -140,7 +139,7 @@ private:
     bool pam_flag_na_wierzchu;
     bool pam_flag_blokuj_na_ekranie;
     int pam_przezroczystosc;
-    bool pam_flag_uruchom_przy_logowaniu;
+    // bool pam_flag_uruchom_przy_logowaniu;
     bool pam_flag__kilka_kopii;
     int pam_gskala;
     int pam_nr_jezyka;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1060</width>
+    <width>820</width>
     <height>647</height>
    </rect>
   </property>
@@ -45,7 +45,7 @@
       <attribute name="title">
        <string>General</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_4">
+      <layout class="QGridLayout" name="gridLayout_4" columnstretch="3,1">
        <item row="0" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
@@ -197,35 +197,6 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_shutdown">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Shutdown now</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="checkBox_uruchom_przy_logowaniu">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Start during login (not working yet)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QPushButton" name="pushButton_start_with_login">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -234,7 +205,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Start this program during loging</string>
+                  <string>How to start this program during loging</string>
                  </property>
                 </widget>
                </item>
@@ -247,7 +218,10 @@
         </layout>
        </item>
        <item row="0" column="1">
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_18">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_4"/>
+         </item>
          <item>
           <widget class="QGroupBox" name="groupBox_4">
            <property name="sizePolicy">
@@ -267,6 +241,19 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
+             <widget class="QRadioButton" name="radioButton_polish">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Polish</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QRadioButton" name="radioButton_english">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -284,35 +271,6 @@
                <string>English</string>
               </property>
              </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_polish">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Polish</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Policy::Preferred</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>10</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
             <item>
              <spacer name="verticalSpacer_3">

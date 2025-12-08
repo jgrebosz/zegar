@@ -56,7 +56,7 @@ using namespace  std;
 
 
 
-extern bool flag_ma_byc_restart;
+// extern bool flag_ma_byc_restart;
 bool wstepne_flag_na_wierzchu;
 // int wstepne_nr_jezyka;
 // int nr_obecnie_zainstalowanego_jezyka;
@@ -86,7 +86,7 @@ bool flag_ograniczenie_pozycji = false;
 bool flag_blokuj_na_ekranie = false;
 
 bool flag_uruchom_z_loginem = false;
-bool flag_uruchom_przy_logowaniu = true;
+// bool flag_uruchom_przy_logowaniu = true;
 bool flag_pozwalam_na_kilka_kopii_program = false;
 int nr_jezyka = 0;
 
@@ -2452,13 +2452,13 @@ void MainWindow::rysuj_wskaz_wektorowa(QPainter & painter, int nr, double x, dou
 //*********************************************************************************************************
 void MainWindow::wywolanie_okna_alarmow()
 {
-    cout << "wyolanie okna alarmow " << endl;
+    // cout << "wywolanie okna alarmow " << endl;
     Alarmy *dlg = new Alarmy(this, pathed_nazwa_pliku_z_alarmami);
     smart_positioning(dlg);
 
     dlg->exec();
     delete dlg;
-    cout << "Skonczone wywolanie    "   << __PRETTY_FUNCTION__ << endl;
+    // cout << "Skonczone wywolanie    "   << __PRETTY_FUNCTION__ << endl;
 }
 //*********************************************************************************************************
 void  MainWindow::smart_positioning(QDialog  *dlg)
@@ -2549,14 +2549,14 @@ void MainWindow::wywolanie_okna_opcji()
     // COTO;
     this->setWindowOpacity(przezroczystosc/255.0);
 
-           cout << "Po dialogu opcji jezyk nr  " << nr_jezyka << endl;
+    // cout << "Po dialogu opcji jezyk nr  " << nr_jezyka << endl;
 
-    if(flag_na_wierzchu != wstepne_flag_na_wierzchu   )
-    {
-        flag_ma_byc_restart = true;
-        cout << "zamkniecie okna opcji z restartem  (przed close )" << endl;
-        close();
-    }
+    // if(flag_na_wierzchu != wstepne_flag_na_wierzchu   )
+    // {
+    //     flag_ma_byc_restart = true;
+    //     cout << "zamkniecie okna opcji z restartem  (przed close )" << endl;
+    //     close();
+    // }
     // COTO;
 }
 
@@ -8498,8 +8498,8 @@ void MainWindow::zapis_opcji_na_dysku()
             << flag_na_wierzchu << "\n"
             <<  flag_ograniczenie_pozycji << "\n"
              <<  flag_blokuj_na_ekranie << "\n"
-              <<  flag_uruchom_z_loginem << "\n"
-               <<  flag_uruchom_przy_logowaniu<< "\n"
+              // <<  flag_uruchom_z_loginem << "\n"
+               // <<  flag_uruchom_przy_logowaniu<< "\n"
                 << flag_pozwalam_na_kilka_kopii_program<< "\n"
                 << flag_gskala_active << '\n'
                 <<  gskala  << '\n'
@@ -8601,8 +8601,8 @@ void MainWindow::wczytanie_opcji_z_dysku()
             >> flag_na_wierzchu
             >>  flag_ograniczenie_pozycji   // nie uzywamy
             >>  flag_blokuj_na_ekranie
-            >>  flag_uruchom_z_loginem  // ???
-            >>  flag_uruchom_przy_logowaniu // ???
+            // >>  flag_uruchom_z_loginem  // ???
+            // >>  flag_uruchom_przy_logowaniu // ???
             >> flag_pozwalam_na_kilka_kopii_program
             >> flag_gskala_active
             >>  gskala
