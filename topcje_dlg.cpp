@@ -103,7 +103,9 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
     ui->radioButton_factory_favourite->setChecked( ! flaga_wskazowki_poprzednie_a_nie_fabryczne);
 
     on_horizontalSlider_zoom_valueChanged(gskala* 100);
-
+    ui->tabWidget->setCurrentIndex(1);
+    // ui->tabWidget->set horizontalLayout
+    //     "QHBoxLayout" name="horizontalLayout" stretch="3,2">
     //---------------------------------------
     QDateTime localTime = QDateTime::currentDateTime();
     QDateTime zoneDateTime = localTime;

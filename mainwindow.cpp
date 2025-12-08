@@ -47,7 +47,7 @@
 #include "tpreferred_hands.h"
 
 
-#define  KRZYZE_PROWADZACE      false //   true  //
+#define  KRZYZE_PROWADZACE     false //  true  //
 
 #define COTO  ;  cout << "File = " << __FILE__ << "Linia = " << __LINE__ << endl;
 
@@ -5162,16 +5162,16 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       1,  // dlugosc sekundnika (w % promienia tarczy)
                                       QColor(250, 10, 10),   // kolor wskaz sekundnika
 
-                                      167, 200,  // pozycja srodka tarczy    // 167, 293,  // pozycja srodka tarczy
+                                      177, 200,  // pozycja srodka tarczy    // 167, 293,  // pozycja srodka tarczy
                                       0.005,  0.005,   // skalowanie zaślepki
                                       139,  // promien_ tarczy
 
                                       0, 0,  // translacja do odrebnej osi sekundnika (x,y w % promienia)
 
-                                      0, -0.68, // pozycja księzyca
+                                      0, -0.72, // pozycja księzyca
                                       0.11 ,        // i wsp skali jego bitmapy
 
-                                      QPoint(0, 65),    // pozycja AM_PM ( % z dlug promienia)
+                                      QPoint(0, 75),    // pozycja AM_PM ( % z dlug promienia)
                                       QColor(120, 120, 120),   // kolor AM_PM
                                       QPoint(0, 125),    // pozycja pełnej daty ( % z dlug promienia)
                                       QColor(240, 120, 0),   // kolor pełnej daty
@@ -5192,7 +5192,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_dni_tygodnia,
                 Rola_wskazowki::wsk_full_date,
-                -80,  // x pozycja osi  na tarczy
+                -85,  // x pozycja osi  na tarczy
                 -0, // y pozycja osi  na tarczy
                 "extra: iwc_hours",
                 ":/new/prefix1/content/iwc_hours.png",
@@ -5218,8 +5218,8 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_dni_miesiaca,
                 Rola_wskazowki::wsk_dzien_miesiaca,
-                80,  // x pozycja osi  na tarczy
-                -2, // y pozycja osi  na tarczy
+                85,  // x pozycja osi  na tarczy
+                -0, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/iwc_hours.png",
                 0, // os_x    mimosrod       // w %
@@ -5250,8 +5250,8 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                 80, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/iwc_hours.png",
-                0, // os_x    mimosrod       // w %
-                0.12, //  os_y;  mimosrod       // w %
+                -6, // os_x    mimosrod       // w %
+                0.20, //  os_y;  mimosrod       // w %
                 0.01, // skala_x (grubosc dla wsk wektorowej),
                 0.26, // % dlugosc wsk (wekt i bitmapowej)
                 &pix_wskazowka_miesiaca,
@@ -5294,16 +5294,16 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       1,  // dlugosc sekundnika (w % promienia tarczy)
                                       QColor(250, 10, 10),   // kolor wskaz sekundnika
 
-                                      167, 200,  // pozycja srodka tarczy    // 167, 293,  // pozycja srodka tarczy
+                                      177, 200,  // pozycja srodka tarczy    // 167, 293,  // pozycja srodka tarczy
                                       0.005,  0.005,   // skalowanie zaślepki
                                       139,  // promien_ tarczy
 
                                       0, 0,  // translacja do odrebnej osi sekundnika (x,y w % promienia)
 
-                                      0, -0.7, // pozycja księzyca
+                                      0, -0.72, // pozycja księzyca
                                       0.11 ,        // i wsp skali jego bitmapy
 
-                                      QPoint(0, 65),    // pozycja AM_PM ( % z dlug promienia)
+                                      QPoint(0, 75),    // pozycja AM_PM ( % z dlug promienia)
                                       QColor(120, 120, 120),   // kolor AM_PM
                                       QPoint(0, 125),    // pozycja pełnej daty ( % z dlug promienia)
                                       QColor(240, 120, 0),   // kolor pełnej daty
@@ -5324,7 +5324,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_dni_tygodnia,
                 Rola_wskazowki::wsk_full_date,
-                -80,  // x pozycja osi  na tarczy
+                -85,  // x pozycja osi  na tarczy
                 -0, // y pozycja osi  na tarczy
                 "extra: iwc_hours",
                 ":/new/prefix1/content/iwc_hours.png",
@@ -5350,8 +5350,8 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_dni_miesiaca,
                 Rola_wskazowki::wsk_dzien_miesiaca,
-                80,  // x pozycja osi  na tarczy
-                0, // y pozycja osi  na tarczy
+                85,  // x pozycja osi  na tarczy
+                -0, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/iwc_hours.png",
                 0, // os_x    mimosrod       // w %
@@ -5382,8 +5382,8 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                 80, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/iwc_hours.png",
-                0, // os_x    mimosrod       // w %
-                0.12, //  os_y;  mimosrod       // w %
+                -6, // os_x    mimosrod       // w %
+                0.20, //  os_y;  mimosrod       // w %
                 0.01, // skala_x (grubosc dla wsk wektorowej),
                 0.26, // % dlugosc wsk (wekt i bitmapowej)
                 &pix_wskazowka_miesiaca,
@@ -5402,6 +5402,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
         return wynik;
     }
     );
+
     //---------------------------------------------------------
 #if 0
     //---------------------------------------------------------
@@ -6308,23 +6309,23 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
 
                                       0,    0.0,
                                       0.01,  // grubosc sekundnika
-                                      1,  // dlugosc sekundnika (w % promienia tarczy)
+                                      1.1,  // dlugosc sekundnika (w % promienia tarczy)
                                       QColor(250, 10, 10),   // kolor wskaz sekundnika
 
 
-                                      189, 189,  // pozycja srodka tarczy
+                                      181, 181,  // pozycja srodka tarczy
                                       0.05,  0.05,   // skalowanie zaślepki
-                                      150,  // promien_ tarczy
+                                      135,  // promien_ tarczy
 
                                       0, 0,  // -70, 0,  // translacja do odrebnej osi sekundnika (x,y w % promienia)
 
-                                      0.50, -0.15, // pozycja księzyca
+                                      0.57, -0.17, // pozycja księzyca
                                       0.09 ,        // i wsp skali jego bitmapy
 
                                       QPoint(0, 38),    // pozycja AM_PM ( % z dlug promienia)
                                       QColor(250,250, 250),   // kolor AM_PM
-                                      QPoint(0, 120),    // pozycja pełnej daty ( % z dlug promienia)
-                                      QColor(250, 40, 40, 190),   // kolor pełnej daty
+                                      QPoint(0, 128),    // pozycja pełnej daty ( % z dlug promienia)
+                                      QColor(250, 40, 40, 215),   // kolor pełnej daty
 
                                       QPoint(-15, 110),    // pozycja datownika % z dlug promienia
                                       0,   // szer okienka w % dlugosci promienia  // nie chcemy wyswietlac
@@ -6332,7 +6333,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
 
                                       QColor(100,10,10),   // kolor daty
                                       QColor(110, 110, 0, 150),   // kolor ramki_daty
-                                      QColor(0, 0, 40, 100),   // kolor tla_daty
+                                      QColor(0, 0, 40, 180),   // kolor tla_daty
                                       QColor(0, 0, 0, 120) ,  // kolor cienia
                                       5 ,    // uskok cienia,
                                       QColor(250,250,250,0)    //  tlo_AM_PM_
@@ -6350,7 +6351,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                              0, // os_x    mimosrod       // w %
                                              0.05, //  os_y;  mimosrod       // w %
                                              0.01, // skala_x (grubosc dla wsk wektorowej),
-                                             1.08, // % dlugosc wsk (wekt i bitmapowej)
+                                             1.18, // % dlugosc wsk (wekt i bitmapowej)
                                              &pix_wskazowka_dni_miesiaca,
                                              QColor(255, 0, 0),  //  QColor kolor;
                                              false, //  flag_bitmapa_moze_byc_kolorowana;
@@ -6369,7 +6370,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(   // SEKUNDNIK DODATKOWY
                                               &  cyferblat.back().wsk_sekundnik_dodatkowy,
                                               Rola_wskazowki::wsk_sekundnik_dodatkowy,
-                                              -78,  // x pozycja osi  na tarczy
+                                              -75,  // x pozycja osi  na tarczy
                                               0, // y pozycja osi  na tarczy
                                               "extra: chronoswiss-sekundnik_maly",
                                               ":/new/prefix1/content/wtla-chronoswiss-sekundnik_maly.png",
@@ -6400,7 +6401,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                                &  cyferblat.back().wsk_miesiaca,
                                                Rola_wskazowki::wsk_miesiaca,
                                                0,  // x pozycja osi  na tarczy
-                                               73, // y pozycja osi  na tarczy
+                                               74, // y pozycja osi  na tarczy
                                                "noname",
                                                ":/new/prefix1/content/wtla-chronoswiss-miesiace.png",
                                                0, // os_x    mimosrod       // w %
@@ -6426,7 +6427,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                 &  cyferblat.back().wsk_dni_tygodnia,   //MONDAY, TUESDAY...
                 Rola_wskazowki::wsk_full_date,
                 0,  // x pozycja osi  na tarczy
-                -77, // y pozycja osi  na tarczy
+                -74, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/wtla-chronoswiss-miesiace.png",
                 0, // os_x    mimosrod       // w %
@@ -6460,11 +6461,11 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
 
                                       0.0001,
                                       0.115,  // XY mimosrod wektorowej wskazowki
-                                      0.01 ,  0.65, // os godzinowej, skala
+                                      0.01 ,  0.9, // os godzinowej, skala
                                       QColor(66, 21, 2),   // kolor wskaz godzinowej
 
                                       -0.0001,    0.06, // XY mimosrod wektorowej wskazowki
-                                      0.01,  0.9,// os minutowej
+                                      0.01,  1,// os minutowej
                                       QColor(66, 21, 2),   // kolor wskaz minutowej
 
                                       0,    0.1,
@@ -6472,13 +6473,13 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       1,  // dlugosc sekundnika (w % promienia tarczy)
                                       QColor(250, 10, 10),   // kolor wskaz sekundnika
 
-                                      216, 249,  // pozycja srodka tarczy
+                                      176, 200,  // pozycja srodka tarczy
                                       0.5,  0.5,   // skalowanie zaślepki
-                                      163,  // promien_ tarczy
+                                      132,  // promien_ tarczy
 
                                       -0, -0,  // translacja do odrebnej osi sekundnika (x,y w % promienia)
 
-                                      0, 0.43, // pozycja księzyca (w % promienia tarczy)
+                                      0, 0.45, // pozycja księzyca (w % promienia tarczy)
                                       0.2 ,        // i wsp skali jego bitmapy
 
                                       QPoint(0, -30),    // pozycja AM_PM ( % z dlug promienia)
@@ -6502,7 +6503,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_dni_tygodnia,
                 Rola_wskazowki::wsk_full_date,
-                -72,  // x pozycja osi  na tarczy
+                -60,  // x pozycja osi  na tarczy
                 -0, // y pozycja osi  na tarczy
                 "extra: iwc_hours",
                 ":/new/prefix1/content/iwc_hours.png",
@@ -6552,7 +6553,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_miesiaca,
                 Rola_wskazowki::wsk_miesiaca,
-                72,  // x pozycja osi  na tarczy
+                60,  // x pozycja osi  na tarczy
                 0, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/iwc_hours.png",
@@ -7458,7 +7459,7 @@ void MainWindow::wstepne_wpisanie_wskazowek_godzinowych()
                                   "Geizmont",
                                   ":/new/prefix1/content/geizmont_wsk_hours.png",
                                   0,     0.19,     // os w stosunku do p-tu centralnego (w % prom tarczy)
-                                  0.04,         // szer w  % promienia tarczy
+                                  0.004,         // szer w  % promienia tarczy
                                   QColor(0, 200, 200), // kolor wskazowki
                                   false    // wolno podkolorowac bitmape ?
                 });
@@ -8138,7 +8139,7 @@ void MainWindow::wstepne_wpisanie_wskazowek_minutowych()
                                   "Geizmont",
                                   ":/new/prefix1/content/geizmont_wsk_minut.png",
                                   0,     0.18,     // os w stosunku do p-tu centralnego (w % prom tarczy)
-                                  0.02,         // szer w  % promienia tarczy
+                                  0.002,         // szer w  % promienia tarczy
                                   QColor(0, 200, 200), // kolor wskazowki
                                   false    // wolno podkolorowac bitmape ?
                 });
