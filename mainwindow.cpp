@@ -114,7 +114,7 @@ MainWindow::MainWindow(QWidget *parent) :
                 Qt::Tool   // to dla Linuksa działa
                 ),
     ui(new Ui::MainWindow)
-{   
+{
     setAttribute(Qt::WA_TranslucentBackground);
     setWindowFlag(Qt::FramelessWindowHint, flag_dialog_bez_ramki);
 
@@ -164,6 +164,8 @@ MainWindow::MainWindow(QWidget *parent) :
     pathed_nazwa_pliku_z_opcjami = sciezka + nazwa_pliku_z_opcjami;
     pathed_nazwa_pliku_z_alarmami = sciezka + nazwa_pliku_z_alarmami ;
     pathed_nazwa_pliku_z_faworytami = sciezka + nazwa_pliku_z_faworytami;
+    pathed_nazwa_pliku_ostatniego_sprawdzenia_alarmow =
+            sciezka + nazwa_pliku_ostatniego_sprawdzenia_alarmow;
 
     nazwa_strefy_czasowej = "*";   // this means it should be recognised
 
@@ -225,6 +227,7 @@ jeszcze_raz:
 
 
     wstepne_zaladowanie_tablicy_alarmow();
+    sprawdz_pominiete_alarmy_przy_starcie();
 
     //    string komenda = R"(C:\Program Files (x86)\FreeTime\FormatFactory\FormatFactory.exe)";
     //    //                system(al.nazwa_programu.c_str());
@@ -2714,6 +2717,90 @@ void MainWindow::wstepne_zaladowanie_tablicy_alarmow() {
     //                                                         false  // czy wylaczyc komputer
     //                                           });
 
+}
+//*********************************************************************************************************
+void MainWindow::zapisz_czas_ostatniego_sprawdzenia_alarmow(const QDateTime &when)
+{
+    ofstream plik(pathed_nazwa_pliku_ostatniego_sprawdzenia_alarmow);
+    if (plik)
+        plik << when.toSecsSinceEpoch();
+}
+//*********************************************************************************************************
+QDateTime MainWindow::odczytaj_czas_ostatniego_sprawdzenia_alarmow()
+{
+    ifstream plik(pathed_nazwa_pliku_ostatniego_sprawdzenia_alarmow);
+    if (!plik)
+        return {};
+
+    qint64 secs = 0;
+    plik >> secs;
+    if (secs <= 0)
+        return {};
+
+    return QDateTime::fromSecsSinceEpoch(secs);
+}
+//*********************************************************************************************************
+void MainWindow::sprawdz_pominiete_alarmy_przy_starcie()
+{
+    const QDateTime now = QDateTime::currentDateTime();
+    const QDateTime last = odczytaj_czas_ostatniego_sprawdzenia_alarmow();
+
+    if (!last.isValid() || last >= now) {
+        zapisz_czas_ostatniego_sprawdzenia_alarmow(now);
+        return;
+    }
+
+    QDateTime from = last.addSecs(1);
+    const QDateTime max_lookback = now.addDays(-30);
+    bool obciety_zakres = false;
+    if (from < max_lookback) {
+        from = max_lookback;
+        obciety_zakres = true;
+    }
+
+    QDateTime cursor(from.date(), QTime(from.time().hour(), from.time().minute(), 0));
+    if (cursor < from)
+        cursor = cursor.addSecs(60);
+
+    QStringList pominiete;
+    while (cursor <= now) {
+        for (auto &al : tablica_alarmow) {
+            if (!al.flag_enable)
+                continue;
+
+            if (spr_rozne_typy_alarmu(al, cursor.time(), cursor.date())) {
+                pominiete << QString("%1 — %2")
+                                 .arg(QString::fromStdString(al.nazwa),
+                                      cursor.toString("yyyy-MM-dd HH:mm"));
+            }
+        }
+        cursor = cursor.addSecs(60);
+    }
+
+    zapisz_czas_ostatniego_sprawdzenia_alarmow(now);
+
+    if (pominiete.isEmpty())
+        return;
+
+    pominiete.removeDuplicates();
+
+    constexpr int max_wierszy = 25;
+    QString tresc;
+    if (pominiete.size() > max_wierszy) {
+        tresc = pominiete.mid(0, max_wierszy).join("\n")
+                + tr("\n... and %1 more").arg(pominiete.size() - max_wierszy);
+    } else {
+        tresc = pominiete.join("\n");
+    }
+
+    if (obciety_zakres)
+        tresc = tr("(Only alarms from the last 30 days are shown.)\n\n") + tresc;
+
+    QMessageBox::information(
+                this,
+                tr("Missed alarms"),
+                tr("The following alarms occurred while the program was not running:\n\n%1")
+                    .arg(tresc));
 }
 //***************************************************************************************************************
 Tjeden_alarm MainWindow::wyjecie_itemow(string one)
@@ -9034,6 +9121,8 @@ void MainWindow::sygnalizacja_pracujacego_programu()
         cerr << "blad otwarcia pliku do pisania: " << nazwa_pliku_sygnalizujacego_prace << endl;
 
     }
+
+    zapisz_czas_ostatniego_sprawdzenia_alarmow(QDateTime::currentDateTime());
 }
 //********************************************************************************************************************
 void MainWindow::zapisz_ulubione_wskazowki_na_dysku()
@@ -9591,61 +9680,22 @@ void MainWindow::make_shutdown()
 
 void MainWindow::wybierz_obrazek_ksiezyca()
 {
-    static int orbit = 2953;   // 29.530 pomnożone przez 100 żeby możliwa była operacja modulo
+    constexpr double synodic_month = 29.530588853;
+    QDate new_moon_epoch(2024, 1, 11);
 
-    //    QDate day_of_newmon(2020, 4, 23);  // Jul 5, 2020 - was a new moon
-    //QDate day_of_newmon(2020, 9, 17);  // Sep, 17  2020 (13:00) - was a new moon
-    QDate day_of_newmon(2024, 01, 11);
+    const int days_since_new_moon = new_moon_epoch.daysTo(now_today);
+    double phase = days_since_new_moon - synodic_month * qFloor(days_since_new_moon / synodic_month);
+    if (phase < 0)
+        phase += synodic_month;
 
-    int days_from_newmoon = day_of_newmon.daysTo(now_today);          // returns days from some known newmoon
+    const int phase_day = static_cast<int>(phase + 0.5);
+    if (phase_day == nr_biezacej_fazy_ksiezyca)
+        return;
 
-    // obliczenie faza, czyli ile dni po ostatnim nowiu
-    double faza =( (100 * days_from_newmoon) % orbit) / 100.0;
+    nr_biezacej_fazy_ksiezyca = phase_day;
 
-    //        cout
-    //                << "days_from_newmoon = " << days_from_newmoon
-    //                << ", Dni po nowiu (faza) = " << faza  << endl;
-
-
-    int faza_int =  faza  +0.5 ;
-
-    // nr_biezacej_fazy_ksiezyca <--- czyli dotychczas wyświetlanej  !
-
-
-    //    static int nday;
-    //    faza_int = (nday++) % 29;
-    //    COTO;
-    //        cout
-    //                << "nr_biezacej_fazy_ksiezyca = " << nr_biezacej_fazy_ksiezyca
-    //                << ", faza_int = " << faza_int  << endl;
-
-    if(faza_int == nr_biezacej_fazy_ksiezyca)
-        return ; // nie trzeba zmieniać bitmapy księzyca
-
-    nr_biezacej_fazy_ksiezyca = faza_int;
-
-    //--------------
-    //        COTO;
-    //    cout << " faza_int = " << faza_int << endl;
-    //    cout << "rozmaira kaltki_faz = " << klatki_faz.size() << endl;
-    //     cout << " modulo = "  << (faza_int % 29) << endl;
-    //    COTO;
-
-    auto nr_obrazka = klatki_faz[faza_int % 29] ;   // % zeby nie przekroczyc rozmiaru tablicy
-    //string  nazwa = (string)(":/new/prefix1/content/Moon_day_" )+ nr_obrazka + ".png";
-    string  nazwa = (string)(":/new/prefix1/content/moon_" )+ nr_obrazka + ".png";
-
-
-    //    cout << ", Dni po nowiu = " << faza
-    //                     << ", faza_int = "
-    //                     << faza_int
-    //                    << " nr_obrazka = " <<  nr_obrazka
-    //                     << endl;
-
-    //             cout << ", Potrzebny plik " << nazwa  << endl;
-
-    ksiezyc.load(nazwa.c_str());
-
+    const auto& frame = klatki_faz[phase_day % klatki_faz.size()];
+    ksiezyc.load(QString(":/new/prefix1/content/moon_%1.png").arg(QString::fromStdString(frame)));
 }
 //**********************************************************************************************************
 void MainWindow::sortowanie_warstw()

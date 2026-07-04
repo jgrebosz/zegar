@@ -74,7 +74,8 @@ RESOURCES += \
 
 
 DISTFILES += polski2.qm \
-                content/*.png
+                content/*.png \
+                ttt
 
 
 DISTFILES += \

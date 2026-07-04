@@ -8,6 +8,7 @@
 #include <QMediaPlayer>
 //#include <QRubberBand>
 #include <QDate>
+#include <QDateTime>
 #include <QTime>
 
 
@@ -523,6 +524,9 @@ private:
     //-------------
 
     void wstepne_zaladowanie_tablicy_alarmow();
+    void sprawdz_pominiete_alarmy_przy_starcie();
+    void zapisz_czas_ostatniego_sprawdzenia_alarmow(const QDateTime &when);
+    QDateTime odczytaj_czas_ostatniego_sprawdzenia_alarmow();
     Tjeden_alarm wyjecie_itemow(std::string one);
     std::string znajdz_txt_item(std::string txt, std::string keyword);
     int znajdz_int_item(std::string txt, std::string keyword);
@@ -536,6 +540,8 @@ private:
 
     std::string nazwa_pliku_z_alarmami { "user_alarms.dat"};
     std::string pathed_nazwa_pliku_z_alarmami ;
+    std::string nazwa_pliku_ostatniego_sprawdzenia_alarmow { "zegar_last_alarm_check.dat" };
+    std::string pathed_nazwa_pliku_ostatniego_sprawdzenia_alarmow;
     std::string  nazwa_pliku_z_faworytami { "favorites.dat" };
     std::string  pathed_nazwa_pliku_z_faworytami;
 
