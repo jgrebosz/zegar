@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1147</width>
-    <height>767</height>
+    <width>806</width>
+    <height>776</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -337,6 +337,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="checkBox_skipped_alarms">
+     <property name="text">
+      <string>Notify if this alarm was skipped while Zegar was not running</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Task to do during an alarm</string>
@@ -351,6 +358,9 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,5">
+        <property name="spacing">
+         <number>6</number>
+        </property>
         <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
@@ -366,6 +376,9 @@
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="spacing">
+           <number>3</number>
+          </property>
           <item>
            <widget class="QLabel" name="label_5">
             <property name="text">
@@ -493,7 +506,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="dialogButtonBox">
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
@@ -507,7 +520,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>dialogButtonBox</sender>
    <signal>accepted()</signal>
    <receiver>Tedytor_alarmow_dlg</receiver>
    <slot>accept()</slot>
@@ -523,7 +536,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>dialogButtonBox</sender>
    <signal>rejected()</signal>
    <receiver>Tedytor_alarmow_dlg</receiver>
    <slot>reject()</slot>

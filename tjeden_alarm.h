@@ -39,6 +39,7 @@ public:   // jeśli coś dodasz do tej listy, to pamietaj, ze trzeba to też wcz
     bool flag_program = false;
     std::string  nazwa_programu;
     bool  flag_wylacz_komputer = false;
+    bool  flag_przypominac_przeskoczony_alarm = false;
 
     bool flag_alarm_jest_na_ekranie = false;
     Togloszenie_alarmu *dlg = nullptr;
@@ -102,6 +103,7 @@ public:   // jeśli coś dodasz do tej listy, to pamietaj, ze trzeba to też wcz
                    << xm(flag_program)
                    << xm(nazwa_programu)
                    << xm(flag_wylacz_komputer)
+                    << xm(flag_przypominac_przeskoczony_alarm)
                << "</alarm>\n"
                 << endl;
 
@@ -159,7 +161,8 @@ public:
             bool loop_,
             bool flag_program_,
             std::string nazwa_programu_,
-            bool flag_wylacz_komputer_);
+            bool flag_wylacz_komputer_,
+            bool flag_notify_if_skipped_ = false);
 };
 
 #endif // TJEDEN_ALARM_H

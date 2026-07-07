@@ -1258,10 +1258,10 @@ void Topcje_dlg::on_pushButton_reset_to_factory_clicked()
     laduj_tablice_cyferblatow();
 }
 //***********************************************************************************************************
-void Topcje_dlg::on_pushButton_shutdown_clicked()
-{
-    zegar->make_shutdown();
-}
+// void Topcje_dlg::on_pushButton_shutdown_clicked()
+// {
+//     zegar->make_shutdown();
+// }
 //***********************************************************************************************************
 void Topcje_dlg::on_pushButton_sciezka_clicked()
 {

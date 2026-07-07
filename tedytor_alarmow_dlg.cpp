@@ -141,6 +141,8 @@ void Tedytor_alarmow_dlg::rozlozenie_po_kontrolkach()
         ui->checkBox_flag_uruchom_program->setCheckState(al.flag_program== true ? Qt::Checked : Qt::Unchecked );
         ui->lineEdit_nazwa_programu->setText(al.nazwa_programu.c_str());
         ui->checkBox_wylacz_komputer->setCheckState(al.flag_wylacz_komputer== true ? Qt::Checked : Qt::Unchecked );
+
+        ui->checkBox_skipped_alarms ->setCheckState(al.flag_przypominac_przeskoczony_alarm== true ? Qt::Checked : Qt::Unchecked );
     }
     ui->frame_dni_tygodnia->adjustSize();
 
@@ -405,7 +407,7 @@ void Tedytor_alarmow_dlg::on_pushButton_today_clicked()
 //******************************************************************************************************************
 void Tedytor_alarmow_dlg::on_buttonBox_accepted()
 {
-    // cout<< __PRETTY_FUNCTION__ << endl;
+     //  cout<< __PRETTY_FUNCTION__ << endl;
 
     // zapisanie biezącego stanu okna do tablicy
     // inaczej dla sytuacji new a inaczej dla edit
@@ -446,7 +448,7 @@ void Tedytor_alarmow_dlg::on_buttonBox_accepted()
 
 
     al.godzina = ui->timeEdit_godzina->text().toStdString();
-    //    cout << "zapisana data  = " << al.data<< endl;
+       // cout << "zapisana data  = " << al.data<< endl;
 
     al.flag_okno = ui->checkBox_pokaz_okno->checkState() == Qt::Checked? true : false;
     al.interwal = ui->spinBox_interwal->value();
@@ -461,6 +463,7 @@ void Tedytor_alarmow_dlg::on_buttonBox_accepted()
     al.flag_program = ui->checkBox_flag_uruchom_program->isChecked();
     al.nazwa_programu = ui->lineEdit_nazwa_programu->text().toStdString();
     al.flag_wylacz_komputer = ui->checkBox_wylacz_komputer->checkState() ==  Qt::Checked? true : false;
+    al.flag_przypominac_przeskoczony_alarm =  ui->checkBox_skipped_alarms  ->checkState() ==  Qt::Checked? true : false;
 
     // nie zapisujemy, bo inaczej dla sytuacji new a inaczej dla edit
 
@@ -516,3 +519,15 @@ void Tedytor_alarmow_dlg::on_radioButton_odd_clicked(bool checked)
     mod_co_2tygodnie();
 
 }
+//*******************************************************************************************************************
+void Tedytor_alarmow_dlg::on_checkBox_skipped_alarms_stateChanged(int arg1)
+{
+    al.flag_przypominac_przeskoczony_alarm = arg1;
+}
+//*******************************************************************************************************************
+void Tedytor_alarmow_dlg::on_dialogButtonBox_accepted()
+{
+    //  cout << __PRETTY_FUNCTION__ << endl;
+    on_buttonBox_accepted();
+}
+

@@ -93,7 +93,7 @@ private slots:
 
     void on_pushButton_delete_preference_clicked();
 
-    void on_pushButton_shutdown_clicked();
+    // void on_pushButton_shutdown_clicked();
 
 	void on_pushButton_sciezka_clicked();
 

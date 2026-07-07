@@ -26,6 +26,8 @@ Alarmy::Alarmy(QWidget *parent, string fname) :
     nazwa_pliku_z_alarmami(fname)
 {
 
+
+
     // setWindowFlag(Qt::SplashScreen , false);
     //  setModal(true);   // chyba nie działa
 
@@ -59,22 +61,24 @@ Alarmy::~Alarmy()
     delete ui;
 }
 //****************************************************************************************
-//void  Alarmy::on_buttonBox_accepted()
-//{
-//    cout << "wcisniete OK" << endl;
-//}
+// void  Alarmy::on_buttonBox_accepted()
+// {
+//     cout << "wcisniete OK" << endl;
+// }
 //****************************************************************************************
 //****************************************************************************************
 
 void Alarmy::redisplay_table()
 {
-//    cout<< __PRETTY_FUNCTION__ << endl;
+    cout<< __PRETTY_FUNCTION__ << endl;
     auto nr_rows = (int) tablica_alarmow.size();
     ui->tableWidget->setRowCount (nr_rows);
 
+       cout << "nr_rows = " << nr_rows << endl;
+
     // creating row widgets ---------------------------------------
     int nr_columns = ui->tableWidget->columnCount ();
-//    cout << "nr_columns = " << nr_columns << endl;
+    //    cout << "nr_columns = " << nr_columns << endl;
 
     for(long r = 0 ; r < nr_rows ; r++)
         for(long c = 0 ; c < nr_columns ; c++)
@@ -103,6 +107,9 @@ void Alarmy::redisplay_table()
     constexpr int kol_czestotliwosci = 4;
     constexpr int kol_daty = 3;
 
+    const QStringList czestotliwosci = Tjeden_alarm::list_czestotliwosc();
+
+
     for (int j = 0; j < nr_rows; ++j )
     {
         ui->tableWidget->setItem(j, 0, new QTableWidgetItem( ""));
@@ -113,7 +120,7 @@ void Alarmy::redisplay_table()
         ui->tableWidget->item(j, 0)->setCheckState(tablica_alarmow[j].flag_enable?
                                                        Qt::Checked : Qt::Unchecked);
 
-//         cout << j << ") tablica alarmow - nazwa   = " << tablica_alarmow[j].nazwa << flush;
+        //         cout << j << ") tablica alarmow - nazwa   = " << tablica_alarmow[j].nazwa << flush;
 
         ui->tableWidget->item(j, 1) -> setText(tablica_alarmow[j].nazwa.c_str() );
 
@@ -122,15 +129,18 @@ void Alarmy::redisplay_table()
 
         ui->tableWidget->item(j, 2) -> setText(tablica_alarmow[j].godzina.c_str()) ;
 
-//        cout << "  j = " << j << ", of  nr_rows = " << nr_rows << flush ;
-//        cout << ",  tablica_alarmow[j].czestotliwosc = [" <<  tablica_alarmow[j].czestotliwosc
-//             << "]" << endl;
-//        cout << ", a  Tjeden_alarm::list_czestotliwosc.size = "
-//             <<  Tjeden_alarm::list_czestotliwosc.size() << endl;
+        //        cout << "  j = " << j << ", of  nr_rows = " << nr_rows << flush ;
+        //        cout << ",  tablica_alarmow[j].czestotliwosc = [" <<  tablica_alarmow[j].czestotliwosc
+        //             << "]" << endl;
+        //        cout << ", a  Tjeden_alarm::list_czestotliwosc.size = "
+        //             <<  Tjeden_alarm::list_czestotliwosc.size() << endl;
 
-        ui->tableWidget->item(j, kol_czestotliwosci) -> setText(
-                    Tjeden_alarm::list_czestotliwosc()[ tablica_alarmow[j].czestotliwosc]
-                ) ;
+        // ui->tableWidget->item(j, kol_czestotliwosci) -> setText(
+        //     Tjeden_alarm::list_czestotliwosc().at(tablica_alarmow[j].czestotliwosc)
+        //     ) ;
+
+        ui->tableWidget->item(j, kol_czestotliwosci)->setText(
+            czestotliwosci.at(tablica_alarmow[j].czestotliwosc));
 
 
         // kolumna 3 to data, ale czasem dni tygodnia
@@ -160,8 +170,8 @@ void Alarmy::redisplay_table()
             };
 
             string txt =
-                    tablica_alarmow[j].data.substr(8,2) + " " +
-                    mies[ tablica_alarmow[j].data.substr(5,2) ].toStdString();
+                tablica_alarmow[j].data.substr(8,2) + " " +
+                mies[ tablica_alarmow[j].data.substr(5,2) ].toStdString();
             ui->tableWidget->item(j, kol_daty) -> setText(txt.c_str())  ;
             break;
         }
@@ -169,10 +179,10 @@ void Alarmy::redisplay_table()
 
         case case_czestotliwosc::co_miesiac:  {              // co miesiac
             string txt =
-                    tablica_alarmow[j].data.substr(8,2) + tr(". day in month").toStdString();
+                tablica_alarmow[j].data.substr(8,2) + tr(". day in month").toStdString();
             ui->tableWidget->item(j, kol_daty) -> setText(txt.c_str())  ;
         }
-            break;
+        break;
         case case_czestotliwosc::codziennie:   // codziennie
             break; // nic nie wypelniamy
 
@@ -183,12 +193,12 @@ void Alarmy::redisplay_table()
         {
             std::vector<QString> tyg {
                 QObject::tr("Mon"),
-                        QObject::tr("Tue"),
-                        QObject::tr("Wed"),
-                        QObject::tr("Thu"),
-                        QObject::tr("Fri"),
-                        QObject::tr("Sat"),
-                        QObject::tr("Sun")
+                QObject::tr("Tue"),
+                QObject::tr("Wed"),
+                QObject::tr("Thu"),
+                QObject::tr("Fri"),
+                QObject::tr("Sat"),
+                QObject::tr("Sun")
             };
 
             QString rezultat;
@@ -199,11 +209,11 @@ void Alarmy::redisplay_table()
                 }
             }
             ui->tableWidget->item(j, kol_daty) -> setText(rezultat) ;
-//            cout  << "wypis dla co tydzien. tabl.dni =  "
-//                  <<   tablica_alarmow[j].dni_tygodnia
-//                    << ", a rezultat = "
-//                    << rezultat.toStdString()
-//                    << endl;
+            //            cout  << "wypis dla co tydzien. tabl.dni =  "
+            //                  <<   tablica_alarmow[j].dni_tygodnia
+            //                    << ", a rezultat = "
+            //                    << rezultat.toStdString()
+            //                    << endl;
             break;
         }
 
@@ -213,14 +223,14 @@ void Alarmy::redisplay_table()
         case case_czestotliwosc::co_iles_minut: // minuty
 
             ui->tableWidget->item(j, kol_daty) -> setText(
-                        tr("%1, ").arg
-                        (    tablica_alarmow[j].interwal)
-                        ) ;
+                tr("%1, ").arg
+                (    tablica_alarmow[j].interwal)
+                ) ;
             break;
         } // switch
 
         char buff[250] = {  };
-        int liczba = tablica_alarmow[j].nr_entry;
+        int liczba = tablica_alarmow[j].nr_entry = j;
         sprintf(buff, "%d", liczba);
         ui->tableWidget->item(j, 5) -> setText( buff )   ;  // będzie potrzebne, bo może tabela została posortowana i nr entry nie jest tożsamy z nr wiersza
 
@@ -269,8 +279,8 @@ void Alarmy::zapisanie_tablicy_na_dysku()
     if(!plik)
     {
         cerr <<
-                tr("Error while opening file with user-defined alarms  ").toStdString()
-                << nazwa_pliku_z_alarmami << endl;
+            tr("Error while opening file with user-defined alarms  ").toStdString()
+             << nazwa_pliku_z_alarmami << endl;
         return;
     }
     for(auto x : tablica_alarmow)
@@ -298,7 +308,6 @@ void Alarmy::on_pushButton_usun_rzad_clicked()
     // cout<< __PRETTY_FUNCTION__ << endl;
     //    cout << "Operacja usuwania rzedu nr" << endl;
 
-
     QList<QTableWidgetSelectionRange> range = ui->tableWidget->selectedRanges() ;
 
     // cout << "Selection has " << range.count() << " ranges" << endl;
@@ -316,7 +325,7 @@ void Alarmy::on_pushButton_usun_rzad_clicked()
                                         "called  : %2\n"
                                         "hour: %3\n"
                                         "date: %4\n"
-                                        "polygon : %5\n\n"
+                                        "frequency : %5\n\n"
                                         "Are you sure?")
                                         .arg(
                                             QString::number(row + 1),
@@ -338,7 +347,7 @@ void Alarmy::on_pushButton_usun_rzad_clicked()
             switch (reply) {
             case QMessageBox::Yes:
                 tablica_alarmow.erase(tablica_alarmow.begin() + row);
-                redisplay_table();
+
                 break;
 
             case QMessageBox::No:
@@ -353,7 +362,14 @@ void Alarmy::on_pushButton_usun_rzad_clicked()
 
         } // for row
     } // for sel
+
+
     zapisanie_tablicy_na_dysku();
+
+
+
+   // owner->  wstepne_zaladowanie_tablicy_alarmow() ;
+    redisplay_table();
 }
 //***************************************************************************************************************
 void Alarmy::on_tableWidget_cellClicked(int row, int column)
@@ -374,10 +390,10 @@ void Alarmy::on_tableWidget_cellClicked(int row, int column)
         auto ile = ui->tableWidget->columnCount();
         //        cout << "select inne kolumy - to select till column " << ile  << endl;
         ui->tableWidget->setRangeSelected(
-                    QTableWidgetSelectionRange(row, 1, row,
-                                               ile-1
-                                               ),
-                    true );
+            QTableWidgetSelectionRange(row, 1, row,
+                                       ile-1
+                                       ),
+            true );
     }
 }
 //***************************************************************************************************************
@@ -408,7 +424,7 @@ void Alarmy::on_pushButton_nowy_clicked()
 void Alarmy::on_pushButton_edytuj_clicked()
 {
 
-//    cout<< __PRETTY_FUNCTION__ << endl;
+    //    cout<< __PRETTY_FUNCTION__ << endl;
     Tedytor_alarmow_dlg  * dlg = new Tedytor_alarmow_dlg();
 
     // sprawdzenie ktory wiersz w tabliycy jest selected
@@ -417,27 +433,27 @@ void Alarmy::on_pushButton_edytuj_clicked()
     //    jako ze można sortować wiersze tabeli wg roznych kolumn
     // który to alarm (wiersz lub entry)
     auto range_list = ui->tableWidget->selectedRanges();
-//    cout << "selected range list size = ", range_list.size();
+    //    cout << "selected range list size = ", range_list.size();
     if(range_list.empty())     // jesli zaden, to error message
     {
-            QMessageBox::warning
+        QMessageBox::warning
             ( this,
-                               tr("No alarm entry selected"),
-                               tr( "At first select some alarm by clicking on its name "),
-                               QMessageBox::Ok);
-       delete dlg;
-       return;
+             tr("No alarm entry selected"),
+             tr( "At first select some alarm by clicking on its name "),
+             QMessageBox::Ok);
+        delete dlg;
+        return;
     }
 
     // sprawdzamy nr_entry wybranego alarmu
     int wiersz = range_list[0].topRow();
 
-     auto txt = ui->tableWidget->item(wiersz, 5)->text().toStdString();
+    auto txt = ui->tableWidget->item(wiersz, 5)->text().toStdString();
     int nr_entry = stoi(txt.c_str());      // przeliczamy na
     // int nr_entry = wiersz; //    stoi(txt.c_str());
 
-   // int nr_entry =  ui->tableWidget->item(wiersz, 5)->text().toInt();
-//         cout << "znaleziony nr_entry =" << nr_entry << endl;
+    // int nr_entry =  ui->tableWidget->item(wiersz, 5)->text().toInt();
+    //         cout << "znaleziony nr_entry =" << nr_entry << endl;
 
     dlg->ustaw_alarm_do_edycji(tablica_alarmow[nr_entry]); // bo numeracja jest od 0
 
@@ -489,7 +505,7 @@ void Alarmy::on_pushButton_test_clicked()
 //***************************************************************************************************************
 void Alarmy::on_pushButton_clicked()
 {
-//         cout<< __PRETTY_FUNCTION__ << " - Wywolanie f. redisplay table " << endl;
-        redisplay_table();
+    //         cout<< __PRETTY_FUNCTION__ << " - Wywolanie f. redisplay table " << endl;
+    redisplay_table();
 }
 //***************************************************************************************************************

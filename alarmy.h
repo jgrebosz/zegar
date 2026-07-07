@@ -5,12 +5,15 @@
 #include <vector>
 #include "tjeden_alarm.h"
 
+
+
+
 enum  case_czestotliwosc { raz, codziennie, co_tydzien,
-                           co_2_tygodnie,   //  <---- OBSOLATE
-                           co_miesiac, co_rok, co_iles_minut,
-                           co_PARZYSTE_tygodnie,
-                           co_NIEPARZYSTE_tygodnie
-                            };
+                          co_2_tygodnie,   //  <---- OBSOLATE
+                          co_miesiac, co_rok, co_iles_minut,
+                          co_PARZYSTE_tygodnie,
+                          co_NIEPARZYSTE_tygodnie
+};
 
 namespace Ui {
 class Alarmy;
@@ -27,9 +30,9 @@ public:
 
 
 private slots:
-   // void on_buttonBox_accepted();
-	void on_pushButton_usun_rzad_clicked();
-	void on_tableWidget_cellClicked(int row, int column);
+    // void on_buttonBox_accepted();
+    void on_pushButton_usun_rzad_clicked();
+    void on_tableWidget_cellClicked(int row, int column);
     void on_pushButton_nowy_clicked();
     void on_pushButton_edytuj_clicked();
     void on_pushButton_OK_clicked();
@@ -43,15 +46,15 @@ private slots:
 private:
     Ui::Alarmy *ui;
 
-	void redisplay_table();
-	void table_value_changed();
-	void on_checkBox_AND_gates_clicked(bool checked);
+    void redisplay_table();
+    void table_value_changed();
+    void on_checkBox_AND_gates_clicked(bool checked);
     string nazwa_pliku_z_alarmami ; // ustawiane przez konstruktor
-//	void wstepne_zaladowanie_tablicy();
+    //	void wstepne_zaladowanie_tablicy();
     void zapisanie_tablicy_na_dysku();
-//    Tjeden_alarm wyjecie_itemow(string one);
-//    string znajdz_txt_item(string txt, string keyword);
-//    int znajdz_int_item(string txt, string keyword);
+    //    Tjeden_alarm wyjecie_itemow(string one);
+    //    string znajdz_txt_item(string txt, string keyword);
+    //    int znajdz_int_item(string txt, string keyword);
 };
 
 #endif // ALARMY_H

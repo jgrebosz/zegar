@@ -116,7 +116,7 @@ bool czy_wolno_uruchomic(char * arg0)
     //! w podkatalogu Release lub Debug.
     //! Na wszelki wypadek to sprawdzam także
 
-    cout << "Nazwa programu ze sciezka "<< arg0 << endl;
+    // cout << "Nazwa programu ze sciezka "<< arg0 << endl;
     string nazwa_programu_ze_sciezka { arg0};
     string sama_nazwa_programu;
     string slesz =   // w windosach i linuxie są różne
@@ -284,7 +284,7 @@ int main(int argc, char *argv[])
         // }
         // else
         {
-            cout << "Usuwam plik sygnalizacyjny " << nazwa_pliku_sygnalizujacego_prace << endl;
+            // cout << "Usuwam plik sygnalizacyjny " << nazwa_pliku_sygnalizujacego_prace << endl;
             dir.remove(nazwa_pliku_sygnalizujacego_prace.c_str());
             return answer;   // zwykle opuszczenie programu
         }

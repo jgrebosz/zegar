@@ -2654,8 +2654,8 @@ void MainWindow::player_position_upadate(qint64 position)
 }
 
 //*********************************************************************************************************
-void MainWindow::wstepne_zaladowanie_tablicy_alarmow() {
-
+void MainWindow::wstepne_zaladowanie_tablicy_alarmow()
+{
     tablica_alarmow.clear();
     ifstream plik(pathed_nazwa_pliku_z_alarmami);
     if(!plik)
@@ -2765,12 +2765,12 @@ void MainWindow::sprawdz_pominiete_alarmy_przy_starcie()
     QStringList pominiete;
     while (cursor <= now) {
         for (auto &al : tablica_alarmow) {
-            if (!al.flag_enable)
+            if (!al.flag_enable || !al.flag_przypominac_przeskoczony_alarm)
                 continue;
 
             if (spr_rozne_typy_alarmu(al, cursor.time(), cursor.date())) {
                 pominiete << QString("%1 — %2")
-                                 .arg(QString::fromStdString(al.nazwa),
+                                 .arg(QString::fromStdString(al.nazwa + " " + al.dodatkowy_opis),
                                       cursor.toString("yyyy-MM-dd HH:mm"));
             }
         }
@@ -2828,7 +2828,7 @@ Tjeden_alarm MainWindow::wyjecie_itemow(string one)
     a.flag_program = znajdz_int_item(one, "flag_program");
     a.nazwa_programu = znajdz_txt_item(one, "nazwa_programu");
     a.flag_wylacz_komputer = znajdz_int_item(one, "flag_wylacz_komputer");
-
+    // a.flag_przypominac_przeskoczony_alarm = znajdz_int_item(one, "flag_przypominac_przeskoczony_alarm");
     return a;
 }
 //***************************************************************************************************************
@@ -8613,7 +8613,7 @@ void MainWindow::zapis_opcji_na_dysku()
 
 
 
-    cerr << "Po zapisie " << nazwa_pliku_z_opcjami << endl;
+    // cerr << "Po zapisie " << nazwa_pliku_z_opcjami << endl;
 }
 //***************************************************************************************************************
 int  MainWindow::id_linux_czy_windows_version()
@@ -8814,10 +8814,10 @@ bool MainWindow::spr_rozne_typy_alarmu(Tjeden_alarm & al, QTime time, QDate date
 
     if( (al.godzina + ":00")  == time.toString().toStdString() )
     {
-        cout << "bezacy miesiac " << date.month();
-        cout << ", czestotliwosc  " << al.czestotliwosc << endl;
-        cout << ", al.data  " << al.data << endl;
-        cout << ", date.toString().toStdString() =  " << date.toString().toStdString()  << endl;
+        // cout << "bezacy miesiac " << date.month();
+        // cout << ", czestotliwosc  " << al.czestotliwosc << endl;
+        // cout << ", al.data  " << al.data << endl;
+        // cout << ", date.toString().toStdString() =  " << date.toString().toStdString()  << endl;
 
         switch (al.czestotliwosc){
         case case_czestotliwosc::codziennie:    // codziennie

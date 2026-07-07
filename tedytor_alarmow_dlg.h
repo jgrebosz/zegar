@@ -43,7 +43,6 @@ private slots:
 
     void on_pushButton_today_clicked();
 
-    void on_buttonBox_accepted();
 
     void on_toolButton_wybor_pliku_muz_clicked();
 
@@ -54,6 +53,11 @@ private slots:
     void on_radioButton_even_clicked(bool checked);
 
     void on_radioButton_odd_clicked(bool checked);
+
+
+    void on_checkBox_skipped_alarms_stateChanged(int arg1);
+
+    void on_dialogButtonBox_accepted();
 
 private:
     Ui::Tedytor_alarmow_dlg *ui;
@@ -69,6 +73,7 @@ private:
     void rozlozenie_po_kontrolkach();
     void adjust_even_odd_to_combo();
 
+    void on_buttonBox_accepted();
 
 };
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
