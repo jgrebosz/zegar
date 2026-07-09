@@ -6386,12 +6386,12 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       ":/new/prefix1/content/wtla-chronoswiss-sekundnik.png",
                                       ":/new/prefix1/content/center.png",
 
-                                      0.0001,  0.015,
-                                      0.10 ,  0.72, // os godzinowej, skala
+                                      0.0,  0.0,
+                                      0.10 , 0.72, // os godzinowej, skala
                                       QColor(66, 21, 2),   // kolor wskaz godzinowej
 
-                                      -0.0001,    0.06,
-                                      0.01,  0.88,// os minutowej
+                                      0.0,    0.00,
+                                      0.01, 0.9,               // os minutowej
                                       QColor(66, 21, 2),   // kolor wskaz minutowej
 
                                       0,    0.0,
@@ -6400,14 +6400,14 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                       QColor(250, 10, 10),   // kolor wskaz sekundnika
 
 
-                                      181, 181,  // pozycja srodka tarczy
-                                      0.05,  0.05,   // skalowanie zaślepki
-                                      135,  // promien_ tarczy
+                                      190, 189,  // pozycja srodka tarczy
+                                       0.15,  0.15,   // skalowanie zaślepki
+                                      142,  // promien_ tarczy
 
                                       0, 0,  // -70, 0,  // translacja do odrebnej osi sekundnika (x,y w % promienia)
 
-                                      0.57, -0.17, // pozycja księzyca
-                                      0.09 ,        // i wsp skali jego bitmapy
+                                      0.55, -0.10, // pozycja księzyca
+                                      0.15 ,        // i wsp skali jego bitmapy
 
                                       QPoint(0, 38),    // pozycja AM_PM ( % z dlug promienia)
                                       QColor(250,250, 250),   // kolor AM_PM
@@ -6436,9 +6436,9 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                              "noname",
                                              ":/new/prefix1/content/wtla-chronoswiss-days.png",
                                              0, // os_x    mimosrod       // w %
-                                             0.05, //  os_y;  mimosrod       // w %
+                                             0, // 0.05, //  os_y;  mimosrod       // w %
                                              0.01, // skala_x (grubosc dla wsk wektorowej),
-                                             1.18, // % dlugosc wsk (wekt i bitmapowej)
+                                             1.14, // % dlugosc wsk (wekt i bitmapowej)
                                              &pix_wskazowka_dni_miesiaca,
                                              QColor(255, 0, 0),  //  QColor kolor;
                                              false, //  flag_bitmapa_moze_byc_kolorowana;
@@ -6457,7 +6457,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(   // SEKUNDNIK DODATKOWY
                                               &  cyferblat.back().wsk_sekundnik_dodatkowy,
                                               Rola_wskazowki::wsk_sekundnik_dodatkowy,
-                                              -75,  // x pozycja osi  na tarczy
+                                              -81,  // x pozycja osi  na tarczy
                                               0, // y pozycja osi  na tarczy
                                               "extra: chronoswiss-sekundnik_maly",
                                               ":/new/prefix1/content/wtla-chronoswiss-sekundnik_maly.png",
@@ -6488,7 +6488,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                                                &  cyferblat.back().wsk_miesiaca,
                                                Rola_wskazowki::wsk_miesiaca,
                                                0,  // x pozycja osi  na tarczy
-                                               74, // y pozycja osi  na tarczy
+                                               78, // y pozycja osi  na tarczy
                                                "noname",
                                                ":/new/prefix1/content/wtla-chronoswiss-miesiace.png",
                                                0, // os_x    mimosrod       // w %
@@ -6514,7 +6514,7 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
                 &  cyferblat.back().wsk_dni_tygodnia,   //MONDAY, TUESDAY...
                 Rola_wskazowki::wsk_full_date,
                 0,  // x pozycja osi  na tarczy
-                -74, // y pozycja osi  na tarczy
+                -79, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/wtla-chronoswiss-miesiace.png",
                 0, // os_x    mimosrod       // w %

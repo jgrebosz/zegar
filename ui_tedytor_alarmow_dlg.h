@@ -86,6 +86,7 @@ public:
     QRadioButton *radioButton_odd;
     QLabel *label__current_week_nr;
     QLabel *label__info;
+    QCheckBox *checkBox_skipped_alarms;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout_8;
     QCheckBox *checkBox_pokaz_okno;
@@ -108,13 +109,13 @@ public:
     QLineEdit *lineEdit_nazwa_programu;
     QToolButton *toolButton_nazwy_programu;
     QCheckBox *checkBox_wylacz_komputer;
-    QDialogButtonBox *buttonBox;
+    QDialogButtonBox *dialogButtonBox;
 
     void setupUi(QDialog *Tedytor_alarmow_dlg)
     {
         if (Tedytor_alarmow_dlg->objectName().isEmpty())
             Tedytor_alarmow_dlg->setObjectName("Tedytor_alarmow_dlg");
-        Tedytor_alarmow_dlg->resize(1147, 767);
+        Tedytor_alarmow_dlg->resize(806, 776);
         Tedytor_alarmow_dlg->setMaximumSize(QSize(16777215, 902));
         Tedytor_alarmow_dlg->setLocale(QLocale(QLocale::English, QLocale::UnitedKingdom));
         verticalLayout_11 = new QVBoxLayout(Tedytor_alarmow_dlg);
@@ -366,6 +367,11 @@ public:
 
         verticalLayout_11->addWidget(label__info);
 
+        checkBox_skipped_alarms = new QCheckBox(Tedytor_alarmow_dlg);
+        checkBox_skipped_alarms->setObjectName("checkBox_skipped_alarms");
+
+        verticalLayout_11->addWidget(checkBox_skipped_alarms);
+
         groupBox = new QGroupBox(Tedytor_alarmow_dlg);
         groupBox->setObjectName("groupBox");
         verticalLayout_8 = new QVBoxLayout(groupBox);
@@ -376,12 +382,14 @@ public:
         verticalLayout_8->addWidget(checkBox_pokaz_okno);
 
         horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName("horizontalLayout_2");
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_2->addItem(horizontalSpacer);
 
         verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setSpacing(3);
         verticalLayout_6->setObjectName("verticalLayout_6");
         label_5 = new QLabel(groupBox);
         label_5->setObjectName("label_5");
@@ -485,17 +493,17 @@ public:
 
         verticalLayout_11->addWidget(groupBox);
 
-        buttonBox = new QDialogButtonBox(Tedytor_alarmow_dlg);
-        buttonBox->setObjectName("buttonBox");
-        buttonBox->setOrientation(Qt::Orientation::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok);
+        dialogButtonBox = new QDialogButtonBox(Tedytor_alarmow_dlg);
+        dialogButtonBox->setObjectName("dialogButtonBox");
+        dialogButtonBox->setOrientation(Qt::Orientation::Horizontal);
+        dialogButtonBox->setStandardButtons(QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok);
 
-        verticalLayout_11->addWidget(buttonBox);
+        verticalLayout_11->addWidget(dialogButtonBox);
 
 
         retranslateUi(Tedytor_alarmow_dlg);
-        QObject::connect(buttonBox, &QDialogButtonBox::accepted, Tedytor_alarmow_dlg, qOverload<>(&QDialog::accept));
-        QObject::connect(buttonBox, &QDialogButtonBox::rejected, Tedytor_alarmow_dlg, qOverload<>(&QDialog::reject));
+        QObject::connect(dialogButtonBox, &QDialogButtonBox::accepted, Tedytor_alarmow_dlg, qOverload<>(&QDialog::accept));
+        QObject::connect(dialogButtonBox, &QDialogButtonBox::rejected, Tedytor_alarmow_dlg, qOverload<>(&QDialog::reject));
 
         QMetaObject::connectSlotsByName(Tedytor_alarmow_dlg);
     } // setupUi
@@ -524,6 +532,7 @@ public:
         radioButton_odd->setText(QCoreApplication::translate("Tedytor_alarmow_dlg", "ODD", nullptr));
         label__current_week_nr->setText(QCoreApplication::translate("Tedytor_alarmow_dlg", "TextLabel", nullptr));
         label__info->setText(QCoreApplication::translate("Tedytor_alarmow_dlg", "TextLabel_INFO", nullptr));
+        checkBox_skipped_alarms->setText(QCoreApplication::translate("Tedytor_alarmow_dlg", "Notify if this alarm was skipped while Zegar was not running", nullptr));
         groupBox->setTitle(QCoreApplication::translate("Tedytor_alarmow_dlg", "Task to do during an alarm", nullptr));
         checkBox_pokaz_okno->setText(QCoreApplication::translate("Tedytor_alarmow_dlg", "Show alarm window", nullptr));
         label_5->setText(QCoreApplication::translate("Tedytor_alarmow_dlg", "Message in the alarm window", nullptr));
