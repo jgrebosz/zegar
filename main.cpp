@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include <QCoreApplication>
 #include <QTranslator>
 #include <QDir>
-#include <QProcess>
 #include <fstream>
 
 #include <string>
@@ -18,88 +18,21 @@ string nazwa_pliku_sygnalizujacego_prace {"zegar_is_active.dat" } ;
 const int CO_ILE_SEK_SPRAWDZENIE_AKTYWNOSCI { 10 };
 string sciezka;
 //********************************************************************************
+// Qt nie ma funkcji do przeglądania innych procesów (ani na Windows, ani na
+// Linuxie, ani na macOS). Da się odczytać tylko tę kopię: pid, katalog roboczy
+// i ścieżkę pliku. Wołać po utworzeniu QApplication, inaczej ścieżka pliku jest pusta.
+// Inna kopia w tym samym katalogu jest sprawdzana w czy_wolno_uruchomic()
+// przez plik zegar_is_active.dat.
 void system_srodowsko()
 {
-    // cout << "srodowisko " << endl;
+    const qint64 pid = QCoreApplication::applicationPid();
+    const QString katalog = QDir::currentPath();
+    const QString plik = QCoreApplication::applicationFilePath();
 
-    //! UWAGA: Nawet jeśli dowiem się ile kopii programu właśnie
-    //! się wykonuje, to nie powinno mi przeszkadzać jeśli są one
-    //! w róznycha katalogoach.
-    //! Tylko jak dowiedzieć się w którym katalogu która kopia pracuje?
-    //!
-    //!
-    //!
-    //!
-    //!
-
-
-    //--------------------
-
-    const QString &processname {"zegar*"};
-    //    {"Av*"};    // wykryje Avasty
-
-    QProcess tasklist;
-
-#ifdef Q_OS_WINDOWS
-
-    // TAK JEST DLA WINDOWS
-    tasklist.start(
-        "tasklist",
-        QStringList() << "/NH"
-                      << "/FO"
-                      << "CSV"
-                      << "/FI"
-                      << QString("IMAGENAME eq %1").arg(processname)
-        )
-
-        ;
-#elif defined      Q_OS_LINUX
-
-    //       ps axco pid,command
-
-    tasklist.start(
-        "ps",
-        QStringList() << "/NH"
-                      << "/FO"
-                      << "CSV"
-                      << "/FI"
-                      << QString("IMAGENAME eq %1").arg(processname));
-#endif
-    tasklist.waitForFinished();
-    QString output = tasklist.readAllStandardOutput();
-
-    auto wynik = output.startsWith(QString("\"%1").arg(processname));
-    cout << "output = " << output.toStdString()
-         << "\nwynik..." << wynik << endl;
-
-
-
-    //      Do you want to do this on Windows or Linux or a combination of operating systems?
-    //      The basic approach is to search the list of active processes for your executable.
-    //      For Windows use:
-    //      tasklist /fo csv /nh
-
-    //      For Linux use:
-    //      ps axco pid,command
-
-    //      You would need to parse the results correctly for the particular OS.
-
-    //--------------------
-    // !
-    // !ambershark Moderators 2 mar 2017, 03:51
-
-
-    //=========================================
-    //!      @Heryon For windows you can use this api
-    //! call https://msdn.microsoft.com/en-us/library/windows/desktop/ms682623(v=vs.85).aspx.
-
-    // !     And for linux I would recommend going straight to /proc rather than using ps.
-    //! Using ps is fine, don't get me wrong, it's just having to allocate
-    //! and run another process rather than just using the filesystem.
-    //! Takes a lot more resources and time. There are open source libraries to help you
-    //!  read /proc if you don't want to do it yourself. Something like http://procps.sourceforge.net.
-    //!  I've never used that, just the first thing I found in google.
-
+    cout << "pid " << pid
+         << "\nkatalog " << katalog.toStdString()
+         << "\nplik " << plik.toStdString()
+         << endl;
 }
 //********************************************************************************
 bool czy_wolno_uruchomic(char * arg0)
@@ -119,13 +52,13 @@ bool czy_wolno_uruchomic(char * arg0)
     // cout << "Nazwa programu ze sciezka "<< arg0 << endl;
     string nazwa_programu_ze_sciezka { arg0};
     string sama_nazwa_programu;
-    string slesz =   // w windosach i linuxie są różne
+    string slesz =
 #ifdef Q_OS_WINDOWS
         "\\";
-#elif defined      Q_OS_LINUX
+#elif defined(Q_OS_LINUX) || defined(Q_OS_MACOS)
         "/";
-#else   // nie windows (a co z Mac-iem)
-#error "Oparating system not recognised "
+#else
+#error "Operating system not recognised"
 #endif
 
     size_t pozycja = nazwa_programu_ze_sciezka.rfind(slesz);  // może backslash?
@@ -231,63 +164,70 @@ int main(int argc, char *argv[])
 
     //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
 
+    // Restart całego QApplication (zmiana języka / flagi "zawsze na wierzchu")
+    // jest zakomentowany niżej. Pętla while(1) i tak wychodziła przy pierwszym return,
+    // więc program startuje raz.
+    QApplication a(argc, argv);
+
+    // MainWindow jest oknem Qt::Tool (patrz konstruktor). Okno narzędziowe
+    // nie liczy się jako okno trzymające proces przy życiu. Dialog opcji
+    // (Topcje_dlg) jest zwykłym Qt::Dialog z WA_QuitOnClose, więc accept()
+    // i reject() z buttonBox zamykają ostatnie „prawdziwe” okno i Qt
+    // wychodzi z a.exec() — program kończy się w return poniżej.
+    // Zegar ma żyć dalej (wyjście jest jawne w koniec_programu() / tray Quit).
+    a.setQuitOnLastWindowClosed(false);
+
+    switch (nr_jezyka)
+    {
+    case 0:
+        // qDebug() << "Jezyk nr 0 (domyslny, angielski)";
+        break;
+
+    case 1:
+    default:
+    {
+        QString nazwa_jezyka = ":/polski2.qm";
+        qDebug() << "Wybrany język: " << nazwa_jezyka;
+
+        qDebug() << "Zasób istnieje:" << QFile(":/polski2.qm").exists();
+        bool rezultat = translator.load(nazwa_jezyka);
+        qDebug() << "Wynik wczytania: " << rezultat;
+
+        if (rezultat)
+            a.installTranslator(&translator);
+        break;
+    }
+    }
 
 
-    // nr_jezyka = 1;
-    while(1) {
-        QApplication a(argc, argv);
+    // nr_obecnie_zainstalowanego_jezyka = nr_jezyka;
 
-        switch (nr_jezyka)
-        {
-        case 0:
-            // qDebug() << "Jezyk nr 0 (domyslny, angielski)";
-            break;
+    MainWindow w;
+    w.show();
+    //        cout << __LINE__ << " przed w.exec() " << endl;
+    int answer = a.exec();
+    //  cout << __LINE__ << " PO w.exec() " << endl;
+    // cout << "main,  flag_ma_byc_restart = "<< boolalpha
+    //      << flag_ma_byc_restart << endl;
+    // if(flag_ma_byc_restart )
+    // {
+    //     cout << "[main.c ] Powtorne pokazanie okna, z opcją flag_ma_byc_restart,   oraz  flag_na_wierzchu= "
+    //          << flag_na_wierzchu
+    //          << " i jezykiem nr " << nr_jezyka << endl;
 
-        case 1:
-        default:
-        {
-            QString nazwa_jezyka = ":/polski2.qm";
-            qDebug() << "Wybrany język: " << nazwa_jezyka;
-
-            bool rezultat = translator.load(nazwa_jezyka);
-            qDebug() << "Wynik wczytania: " << rezultat;
-
-            if (rezultat)
-                a.installTranslator(&translator);
-            break;
-        }
-        }
+    //     w.setWindowFlag(Qt::WindowStaysOnTopHint, flag_na_wierzchu );
+    //     w.setWindowFlag(Qt::X11BypassWindowManagerHint, flag_na_wierzchu);
 
 
-        // nr_obecnie_zainstalowanego_jezyka = nr_jezyka;
-
-        MainWindow w;
-        w.show();
-        //        cout << __LINE__ << " przed w.exec() " << endl;
-        int answer = a.exec();
-        //  cout << __LINE__ << " PO w.exec() " << endl;
-        // cout << "main,  flag_ma_byc_restart = "<< boolalpha
-        //      << flag_ma_byc_restart << endl;
-        // if(flag_ma_byc_restart )
-        // {
-        //     cout << "[main.c ] Powtorne pokazanie okna, z opcją flag_ma_byc_restart,   oraz  flag_na_wierzchu= "
-        //          << flag_na_wierzchu
-        //          << " i jezykiem nr " << nr_jezyka << endl;
-
-        //     w.setWindowFlag(Qt::WindowStaysOnTopHint, flag_na_wierzchu );
-        //     w.setWindowFlag(Qt::X11BypassWindowManagerHint, flag_na_wierzchu);
-
-
-        //     w.setWindowState(w.windowState() ^ Qt::WindowNoState);
-        //     flag_ma_byc_restart = false;
-        //     // kontynuuj nieskonczona petle
-        // }
-        // else
-        {
-            // cout << "Usuwam plik sygnalizacyjny " << nazwa_pliku_sygnalizujacego_prace << endl;
-            dir.remove(nazwa_pliku_sygnalizujacego_prace.c_str());
-            return answer;   // zwykle opuszczenie programu
-        }
-    }  // kon while(1)
+    //     w.setWindowState(w.windowState() ^ Qt::WindowNoState);
+    //     flag_ma_byc_restart = false;
+    //     // kontynuuj nieskonczona petle
+    // }
+    // else
+    {
+        // cout << "Usuwam plik sygnalizacyjny " << nazwa_pliku_sygnalizujacego_prace << endl;
+        dir.remove(nazwa_pliku_sygnalizujacego_prace.c_str());
+        return answer;   // zwykle opuszczenie programu
+    }
 
 }

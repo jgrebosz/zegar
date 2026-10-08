@@ -2,14 +2,12 @@
 #include "ui_alarmy.h"
 
 #include <QMessageBox>
-#include <QTranslator>
-#include "tjeden_alarm.h"
 #include "tedytor_alarmow_dlg.h"
 
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <stdlib.h>
+#include <map>
 #include <bitset>
 using namespace  std;
 // NOTE: Do not allow to sort table of alarms on screen, because
@@ -81,8 +79,10 @@ void Alarmy::redisplay_table()
     //    cout << "nr_columns = " << nr_columns << endl;
 
     for(long r = 0 ; r < nr_rows ; r++)
-        for(long c = 0 ; c < nr_columns ; c++)
+        for(long c = 1 ; c < nr_columns ; c++)
         {
+            // Kolumna 0 powstaje niżej, razem ze stanem checkboxa.
+            // Drugie setItem() na tę samą komórkę kasowało właśnie utworzony item.
             ui->tableWidget->setItem(r,c, new QTableWidgetItem("") );
             ui->tableWidget->item(r, c)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
         }
@@ -109,10 +109,38 @@ void Alarmy::redisplay_table()
 
     const QStringList czestotliwosci = Tjeden_alarm::list_czestotliwosc();
 
+    // Nazwy miesięcy raz na całe odświeżenie, nie przy każdym alarmie rocznym.
+    map<string, QString> mies {
+        {"01", tr("Jan")} ,
+        {"02", tr("Feb") },
+        {"03", tr("Mar") },
+        { "04", tr("Apr")  },
+        { "05", tr("May")  },
+        { "06", tr("Jun")  },
+        { "07", tr("Jul")  },
+        { "08", tr("Aug")  },
+        { "09", tr("Sep")  },
+        { "10", tr("Oct")  },
+        { "11", tr("Nov")  },
+        { "12", tr("Dec")}
+    };
+
+
+    const std::vector<QString> tyg {
+        QObject::tr("Mon"),
+        QObject::tr("Tue"),
+        QObject::tr("Wed"),
+        QObject::tr("Thu"),
+        QObject::tr("Fri"),
+        QObject::tr("Sat"),
+        QObject::tr("Sun")
+    };
 
     for (int j = 0; j < nr_rows; ++j )
     {
-        ui->tableWidget->setItem(j, 0, new QTableWidgetItem( ""));
+        auto *kolumna_enable = new QTableWidgetItem("");
+        kolumna_enable->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable);
+        ui->tableWidget->setItem(j, 0, kolumna_enable);
         //                                     tablica_alarmow[j].flag_enable?
         //                                                                  "":
         //                                                                  "") );
@@ -154,21 +182,6 @@ void Alarmy::redisplay_table()
         case case_czestotliwosc::co_rok:                        // co rok
         {              // ("yyyy-MM-dd")
 
-            map<string, QString> mies {
-                {"01", tr("Jan")} ,
-                {"02", tr("Feb") },
-                {"03", tr("Mar") },
-                { "04", tr("Apr")  },
-                { "05", tr("May")  },
-                { "06", tr("Jun")  },
-                { "07", tr("Jul")  },
-                { "08", tr("Aug")  },
-                { "09", tr("Sep")  },
-                { "10", tr("Oct")  },
-                { "11", tr("Nov")  },
-                { "12", tr("Dec")}
-            };
-
             string txt =
                 tablica_alarmow[j].data.substr(8,2) + " " +
                 mies[ tablica_alarmow[j].data.substr(5,2) ].toStdString();
@@ -191,16 +204,6 @@ void Alarmy::redisplay_table()
         case case_czestotliwosc::co_PARZYSTE_tygodnie:   // i co parzyste tygodnie
         case case_czestotliwosc::co_NIEPARZYSTE_tygodnie:   // i co parzyste tygodnie
         {
-            std::vector<QString> tyg {
-                QObject::tr("Mon"),
-                QObject::tr("Tue"),
-                QObject::tr("Wed"),
-                QObject::tr("Thu"),
-                QObject::tr("Fri"),
-                QObject::tr("Sat"),
-                QObject::tr("Sun")
-            };
-
             QString rezultat;
             bitset<8>  dni = tablica_alarmow[j].dni_tygodnia;
             for(int i = 0 ; i < 7 ;++i){
@@ -229,17 +232,15 @@ void Alarmy::redisplay_table()
             break;
         } // switch
 
-        char buff[250] = {  };
-        int liczba = tablica_alarmow[j].nr_entry = j;
-        sprintf(buff, "%d", liczba);
-        ui->tableWidget->item(j, 5) -> setText( buff )   ;  // będzie potrzebne, bo może tabela została posortowana i nr entry nie jest tożsamy z nr wiersza
-
-#if 1    // dać 0 gdy potrzebne do debugowania
-        //----------- Do moich celów (usuwania alarmow), user nie musi tego widziec
-        ui->tableWidget->hideColumn(5);
-#endif
+        tablica_alarmow[j].nr_entry = j;
+        ui->tableWidget->item(j, 5) -> setText(QString::number(j));  // będzie potrzebne, bo może tabela została posortowana i nr entry nie jest tożsamy z nr wiersza
 
     }
+
+#if 1    // dać 0 gdy potrzebne do debugowania
+    //----------- Do moich celów (usuwania alarmow), user nie musi tego widziec
+    ui->tableWidget->hideColumn(5);
+#endif
 
     ui->tableWidget->resizeColumnsToContents();
 
@@ -315,10 +316,11 @@ void Alarmy::on_pushButton_usun_rzad_clicked()
     for(int s = range.count()-1; s >=0 ; s--)    // can be many separated ranges on this list
     {
         cout << "range[s].bottomRow()= " << range[s].bottomRow() << ", range[s].topRow()= " <<  range[s].topRow() << endl;
-        for(unsigned int row = range[s].bottomRow() ; row >= (unsigned int) range[s].topRow() ; row--)
+        // int, nie unsigned: po wierszu 0 dekrementacja unsigned owija się i pętla nie kończy.
+        for(int row = range[s].bottomRow() ; row >= range[s].topRow() ; --row)
         {
             //  unsigned row = ui->tableWidget->selectRow();    ro sel currentRow() ;
-            if(row >= tablica_alarmow.size() ) return ;
+            if(row < 0 || static_cast<unsigned>(row) >= tablica_alarmow.size() ) return ;
 
             QString mess_usuwanie = tr(
                                         "You are going to remove the alarm = nr %1\n\n"

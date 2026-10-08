@@ -6,8 +6,7 @@
 
 #include <QStringList>
 #include <QObject>
-#include <QMediaPlayer>
-#include <QAudioOutput>
+#include <QTime>
 
 using namespace  std;
 
@@ -15,6 +14,7 @@ using namespace  std;
 
 class Togloszenie_alarmu;
 class QMediaPlayer;
+class QAudioOutput;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Tjeden_alarm
 {
@@ -44,8 +44,25 @@ public:   // jeśli coś dodasz do tej listy, to pamietaj, ze trzeba to też wcz
     bool flag_alarm_jest_na_ekranie = false;
     Togloszenie_alarmu *dlg = nullptr;
     QMediaPlayer *player = nullptr;
-    QAudioOutput *audioOutput;
+    QAudioOutput *audioOutput = nullptr;
     bool flag_test_alarm_now = false;
+
+    // Godzina z pliku/edytora jest tekstem. Parsujemy ją raz, dopóki tekst się nie zmieni,
+    // bo sprawdzenie alarmów chodzi co sekundę.
+    mutable QTime cache_godziny;
+    mutable std::string cache_godziny_zrodlo;
+
+    QTime czas_godziny() const
+    {
+        if (cache_godziny_zrodlo != godzina) {
+            cache_godziny_zrodlo = godzina;
+            const QString tekst = QString::fromStdString(godzina);
+            cache_godziny = QTime::fromString(tekst, QStringLiteral("hh:mm"));
+            if (!cache_godziny.isValid())
+                cache_godziny = QTime::fromString(tekst, QStringLiteral("hh:mm:ss"));
+        }
+        return cache_godziny;
+    }
 
 
   //static  QStringList list_czestotliwosc ;

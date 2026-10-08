@@ -14,19 +14,16 @@
 #include "togloszenie_alarmu.h"
 
 #include <QMenu>
+#include <QGuiApplication>
+#include <QWindow>
 #include <QTimer>
 #include <QTime>
 #include <QTimeZone>
 #include <QPainter>
 #include <QPixmap>
-#include <QBitmap>
-#include <QGraphicsPixmapItem>
 #include <QtMath>
-//#include <QSound>
 #include <QMediaPlayer>
-#include <QPair>
 #include <QDir>
-#include <QFileInfoList>
 #include <QOperatingSystemVersion>
 #include <QProcess>
 #include <QScreen>
@@ -37,11 +34,9 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include <QProcess>
-#include <QTranslator>
+#include <algorithm>
 #include <QMessageBox>
-#include  <random>
-#include <QMediaPlayer>
+#include <random>
 #include <QAudioOutput>
 
 #include "tpreferred_hands.h"
@@ -137,19 +132,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // COTO;
+    // Jedna sekunda odświeża tarczę i sprawdza alarmy.
+    // Wcześniej były dwa timery o tym samym okresie.
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(timer, &QTimer::timeout, this, [this] {
+        update();
+        sprawdzenie_alarmow();
+    });
     timer->start(1000);
-
-    QTimer *timer_sprawdzania_alarmow = new QTimer(this);
-    connect(timer_sprawdzania_alarmow, SIGNAL(timeout()),
-            this, SLOT(sprawdzenie_alarmow()));
-    timer_sprawdzania_alarmow->start(1000);
 
 
     timer_sprawdzania_pracy_programu =  new QTimer(this);
-    connect(timer_sprawdzania_pracy_programu, SIGNAL(timeout()),
-            this, SLOT(sygnalizacja_pracujacego_programu()));
+    connect(timer_sprawdzania_pracy_programu, &QTimer::timeout,
+            this, &MainWindow::sygnalizacja_pracujacego_programu);
     timer_sprawdzania_pracy_programu->
             start(1000 * CO_ILE_SEK_SPRAWDZENIE_AKTYWNOSCI);
 
@@ -354,17 +349,6 @@ void MainWindow::przelicz_wskazowke(int nr_wybranej_wsk_any,
 
 
 
-        // podkolorowanie bitmapy dostosowane życzenia  tarczy
-        if(cyf_kolor_any != QColor(0,0,0,0) && flag_wolno_kolorowac)
-        {
-            QPixmap n = anyowa;
-            //            n.fill(cyf_kolor_any);
-            //            auto maska = anyowa.createMaskFromColor(Qt::transparent);
-            //            n.setMask( maska ) ;
-            //            anyowa = n;
-            // cout << "kolorowanie wskazowki " << endl;
-
-        }
     }
     else {    // wektorowa wskazowka ===========================================
 
@@ -465,6 +449,25 @@ int MainWindow::znajdz_nr_wskazowki_o_nazwie(string naz, vector<Tdane_wskazowki>
 
 }
 //************************************************************************************************************************
+// Wgrywa bitmapę tylko wtedy, gdy ścieżka albo obrazek się zmieniły.
+// Suwak zoomu woła zmianę wyglądu przy każdym kroku — bez tego każdy krok
+// dekoduje tarczę i wskazówki od nowa.
+bool MainWindow::zaladuj_pixmape(QPixmap &cel, const string &sciezka)
+{
+    const QString path = QString::fromStdString(sciezka);
+    const auto znalezione = sciezki_zaladowanych_pixmap.constFind(&cel);
+    if (znalezione != sciezki_zaladowanych_pixmap.cend()
+            && znalezione.value() == path
+            && !cel.isNull()) {
+        return true;
+    }
+
+    const bool ok = cel.load(path);
+    if (ok)
+        sciezki_zaladowanych_pixmap.insert(&cel, path);
+    return ok;
+}
+//************************************************************************************************************************
 void MainWindow::wgraj_wskazowke(string nazwa,
                                  vector<Tdane_wskazowki> &vecwsk,
                                  bool * flag_bitvec, int *nr_wekt, int * nr_bitm   // tu beda odpowiedzi
@@ -490,7 +493,7 @@ void MainWindow::wgraj_wskazowke(string nazwa,
             *nr_bitm = znajdz_nr_wskazowki_o_nazwie(nazwa,  vecwsk);
             //            cout << "wskazowka " << nazwa << " znaleziona pod numerem " << *nr_bitm << endl;
 
-            auto  rezultat = bitmapa->load( vecwsk[*nr_bitm].bitmapa.c_str() );
+            auto  rezultat = zaladuj_pixmape(*bitmapa, vecwsk[*nr_bitm].bitmapa);
             if(!rezultat){
 
                 cout << "Nieudane WGRANIE  pliku bitmapy wskazowki o nazwie : "
@@ -614,7 +617,7 @@ void MainWindow::wgraj_wskazowke_fabryczna(string nazwa,
         *flag_bitvec = true;
         // Jeśli bitmapowa, to przepisujemy stamtąd nazwe ulubionej bitmapy
         *nr_bitm = znajdz_nr_wskazowki_o_nazwie(nazwa,  vecwsk);
-        bitmapa->load( nazwa.c_str());
+        zaladuj_pixmape(*bitmapa, nazwa);
     }
     else
     {
@@ -857,12 +860,12 @@ bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
     // jesli sie nie uda ladowanie to rezultatem load jest false ???
 
 
-    if( tarcza.load( cyf.bitmapa_tarcza.c_str()) == false)
+    if( zaladuj_pixmape(tarcza, cyf.bitmapa_tarcza) == false)
     {
         cout << "blad w trakcie ladowania cyferblatu "  <<  cyf.bitmapa_tarcza << endl;
         exit(2);
     }
-    central.load( cyf.bitmapa_central.c_str());
+    zaladuj_pixmape(central, cyf.bitmapa_central);
 
     if(tryb == tryb_wskazowek::fabryczne)
     {
@@ -1502,20 +1505,24 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
 
 
     //cout << "F. spectrum_1D::mousePressEven - button" << endl ;
-    if(e->button() & Qt::RightButton)
+    if(e->button() == Qt::RightButton)
     {
         //                cout << "F. spectrum_1D::mousePressEven - RIGHT button" << endl ;
-        QMenu *context_Menu = new QMenu;
+        // Rodzic jest potrzebny na Waylandzie: popup bez transient parenta
+        // kompozytor potrafi w ogóle nie pokazać. globalPosition() bierze
+        // współrzędne kursora ze zdarzenia, a nie z (po suwaniu już złego)
+        // zapamiętanego położenia okna.
+        QMenu context_Menu(this);
 
-        context_Menu->addAction(tr("Options..."), this, SLOT(wywolanie_okna_opcji() ));
-        context_Menu->addAction(tr("Alarms..."), this, SLOT(wywolanie_okna_alarmow() ) );
+        context_Menu.addAction(tr("Options..."), this, SLOT(wywolanie_okna_opcji() ));
+        context_Menu.addAction(tr("Alarms..."), this, SLOT(wywolanie_okna_alarmow() ) );
 
-        context_Menu->addSeparator();
-        //  context_Menu->addAction(tr("Change clock-face"), this, SLOT(nastepna_tarcza() ));
-        //        context_Menu->addAction(tr("Change clock-hands"), this, SLOT(wywolanie_okna_wskazowek() ));
+        context_Menu.addSeparator();
+        //  context_Menu.addAction(tr("Change clock-face"), this, SLOT(nastepna_tarcza() ));
+        //        context_Menu.addAction(tr("Change clock-hands"), this, SLOT(wywolanie_okna_wskazowek() ));
 
 #if KRZYZE_PROWADZACE == true
-        context_Menu->addAction(tr("Resource file use - report for expert"), this,
+        context_Menu.addAction(tr("Resource file use - report for expert"), this,
                                 SLOT(resource_files_use() ));
 #endif
 
@@ -1527,52 +1534,80 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
         //            string tekst = (flag_dialog_bez_ramki ? "Show" : "Hide") +
         //                    string(" frame of this window");
 
-        //            context_Menu->addAction(tr(tekst.c_str()), this,
+        //            context_Menu.addAction(tr(tekst.c_str()), this,
         //                                    SLOT(pokaz_ramke_dialogu() ));
         //        }
 
-        context_Menu->addAction(tr("Exit program"), this, SLOT(koniec_programu() ));
+        context_Menu.addAction(tr("Exit program"), this, SLOT(koniec_programu() ));
 
-        // uruchomienie przygotowanego menu
-        context_Menu->exec(mapToGlobal(QPoint(e->position().x() ,e->position().y()   )));
-        delete context_Menu;
+        context_Menu.exec(e->globalPosition().toPoint());
+        e->accept();
+        return;
     }
 
-    else{
+    if(e->button() != Qt::LeftButton)
+        return;
+
 #if KRZYZE_PROWADZACE
-        //if(e->button() & Qt::ControlModifier)
-        cout << "zwykle klikniecie .. lewym klawiszem w pozycji x="
-             << e->position().x()
-             << ", y= "  << e->position().y()
-             << endl;
+    //if(e->button() & Qt::ControlModifier)
+    cout << "zwykle klikniecie .. lewym klawiszem w pozycji x="
+         << e->position().x()
+         << ", y= "  << e->position().y()
+         << endl;
 #endif
 
-        // do suwania tarczy po ekranie
-        lastMouseX = e->position().x();
-        lastMouseY = e->position().y();
+    if(flag_blokuj_na_ekranie)
+        return;
+
+    // do suwania tarczy po ekranie
+    lastMouseX = e->position().x();
+    lastMouseY = e->position().y();
+
+    // Ubuntu (Wayland) nie pozwala klientowi przesunąć już widocznego okna.
+    // this->move() zmienia tylko pozycję zapamiętaną przez Qt — zegar stoi,
+    // a kolejne menu kontekstowe otwiera się poza ekranem.
+    const QString platforma = QGuiApplication::platformName();
+    if(platforma.startsWith(QLatin1String("wayland"))) {
+        if(QWindow *uchwyt = windowHandle())
+            uchwyt->startSystemMove();
+        e->accept();
+        return;
     }
 
-
-    //        cout << "KOniec funkcji " <<  __PRETTY_FUNCTION__ << endl;
+    ciagniecie_okna = true;
+    e->accept();
 }
 //***************************************************************************************
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
+    // Na Waylandzie okno suwa kompozytor (startSystemMove). Ręczne move()
+    // rozjeżdża współrzędne menu, więc tu go nie wołamy.
+    if(!ciagniecie_okna || !(event->buttons() & Qt::LeftButton))
+        return;
+
+    if(flag_blokuj_na_ekranie)
+        return;
+
     auto okno_x = this->x();
     auto okno_y = this->y();
 
     okno_x += (event->position().x()  - lastMouseX);
     okno_y += (event->position().y()  - lastMouseY);
 
-    if(flag_blokuj_na_ekranie == false){
-        this->move(okno_x, okno_y);
-        poz_srodka_zegara_x = okno_x + (width() /2.0 ) ;
+    this->move(okno_x, okno_y);
+    poz_srodka_zegara_x = okno_x + (width() /2.0 ) ;
 
-        //        cout << "okno_x = " << okno_x
-        //             <<  ", poz_srodka_zegara_x == " << poz_srodka_zegara_x
-        //              << endl;
-        poz_zegara_y = okno_y;
-    }
+    //        cout << "okno_x = " << okno_x
+    //             <<  ", poz_srodka_zegara_x == " << poz_srodka_zegara_x
+    //              << endl;
+    poz_zegara_y = okno_y;
+}
+//***************************************************************************************
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton)
+        ciagniecie_okna = false;
+    QMainWindow::mouseReleaseEvent(event);
 }
 //**************************************************************************************************************************
 void MainWindow::paintEvent(QPaintEvent *)
@@ -1613,13 +1648,16 @@ void MainWindow::paintEvent(QPaintEvent *)
 
     //    cout << "Zestaw wskazowek pod tarcza " << endl;
 
-    // jesli tarcza ma okienka przezroczyste to najpierw rysujemy ich treść
-    for(uint i = 0 ; i < cyf. pointery_wskazowek.size() ; ++i )
+    // Wskazówki są posortowane po warstwie. Poniżej tarczy są tylko te z warstwą < 0,
+    // więc druga pętla zaczyna się tam, gdzie ta się zatrzymała.
+    const uint ile_wskazowek = cyf.pointery_wskazowek.size();
+    uint pierwsza_nad_tarcza = 0;
+    for (; pierwsza_nad_tarcza < ile_wskazowek; ++pierwsza_nad_tarcza)
     {
-        if( cyf.pointery_wskazowek[i]->warstwa >= 0  )
+        if (cyf.pointery_wskazowek[pierwsza_nad_tarcza]->warstwa >= 0)
             break;
 
-        rysuj_ogolna_wskazowke(painter,  *(cyf.pointery_wskazowek[i]) );
+        rysuj_ogolna_wskazowke(painter, *(cyf.pointery_wskazowek[pierwsza_nad_tarcza]));
     }
 
 
@@ -1739,21 +1777,25 @@ void MainWindow::paintEvent(QPaintEvent *)
                         );
 
             // auto loc_long = date.toString(QLocale::LongFormat);
-            auto loc_long = QLocale().toString(date, QLocale::LongFormat);
-
-            auto dzien_tyg =  QLocale().toString(date, "dddd") ;  // dzien tygodnia
-            // czy w tym jest już dzień tygodnia?
-            bool flag_juz_jest = true;
-            if(loc_long.contains(dzien_tyg) == false )
+            // Tekst daty zależy od dnia i języka, nie od sekundy.
+            if (cache_data_napisu != date || cache_jezyk_napisu != nr_jezyka)
             {
-                flag_juz_jest  = false;
+                const QLocale loc;
+                const auto loc_long = loc.toString(date, QLocale::LongFormat);
+                const auto dzien_tyg = loc.toString(date, "dddd");  // dzien tygodnia
+                // czy w tym jest już dzień tygodnia?
+                const bool flag_juz_jest = loc_long.contains(dzien_tyg);
+
+                cache_pelnej_daty =
+                        " " +
+                        (flag_juz_jest ? QString() : loc.toString(date, "dddd, ")) +  // dzień tygodnia w lokalnym języku
+                        loc_long
+                        + " ";
+                cache_data_napisu = date;
+                cache_jezyk_napisu = nr_jezyka;
             }
 
-            auto full_date =
-                    " " +
-                    (flag_juz_jest ? "" : QLocale().toString(date, "dddd, ")) +  // dzień tygodnia w lokalnym języku
-                    QLocale().toString(date, QLocale::LongFormat)
-                    + " ";
+            const QString full_date = cache_pelnej_daty;
 
 
 
@@ -1895,15 +1937,16 @@ void MainWindow::paintEvent(QPaintEvent *)
     //###################################################################
 
     painter.setPen(Qt::SolidLine);
-    painter.setPen(Qt::RoundJoin | Qt::RoundCap);
+    painter.setPen(Qt::RoundJoin);
+    painter.setPen(Qt::RoundCap);
 
     //    cout << "Zestaw wskazowek NAD tarcza " << endl;
 
-    for(uint i = 0 ; i < cyf. pointery_wskazowek.size() ; ++i )
+    for (uint i = pierwsza_nad_tarcza; i < ile_wskazowek; ++i)
     {
         // if( cyf.pointery_wskazowek[i]->warstwa > 20) continue;
-        if( cyf.pointery_wskazowek[i]->warstwa >= 0  )
-            rysuj_ogolna_wskazowke(painter,  *(cyf.pointery_wskazowek[i]) );
+        if (cyf.pointery_wskazowek[i]->warstwa >= 0)
+            rysuj_ogolna_wskazowke(painter, *(cyf.pointery_wskazowek[i]));
     }
 
 
@@ -2176,6 +2219,23 @@ void MainWindow::ustaw_czas_wg_strefy()
 
 }
 //*************************************************************************************************************************
+const QPixmap &Tdane_wskazowki::bitmapa_cienia(const QColor &kolor) const
+{
+    const qint64 klucz = pix_ptr->cacheKey();
+    const QRgb rgba = kolor.rgba();
+    if (cache_cienia.isNull()
+            || cache_cienia_klucz != klucz
+            || cache_cienia_kolor != rgba)
+    {
+        cache_cienia = QPixmap(pix_ptr->size());
+        cache_cienia.fill(kolor);
+        cache_cienia.setMask(pix_ptr->createMaskFromColor(Qt::transparent));
+        cache_cienia_klucz = klucz;
+        cache_cienia_kolor = rgba;
+    }
+    return cache_cienia;
+}
+//*************************************************************************************************************************
 void MainWindow::rysuj_ogolna_wskazowke(
         QPainter &painter,
         Tdane_wskazowki & wskazowka
@@ -2270,23 +2330,28 @@ void MainWindow::rysuj_ogolna_wskazowke(
         //            << endl;
 
 
-        double  kat_obrotu_rad = qDegreesToRadians(kat_obrotu +45 );
-        double odl_cienia_x = sin(kat_obrotu_rad) * lokalna_odl_cienia /  wskazowka.przel_skalowanie_x;
-        double odl_cienia_y = cos(kat_obrotu_rad) * lokalna_odl_cienia /  wskazowka.przel_skalowanie_y;
+        // Cień tylko gdy tarcza go chce i bitmapa jest wgrana.
+        // Sam obraz cienia bierze się z cache (bitmapa_cienia), więc maska
+        // nie jest składana przy każdym obrocie sekundnika.
+        if (lokalna_odl_cienia != 0
+                && wskazowka.pix_ptr != nullptr
+                && !wskazowka.pix_ptr->isNull()
+                && wskazowka.przel_skalowanie_x != 0
+                && wskazowka.przel_skalowanie_y != 0)
+        {
+            double  kat_obrotu_rad = qDegreesToRadians(kat_obrotu +45 );
+            double odl_cienia_x = sin(kat_obrotu_rad) * lokalna_odl_cienia /  wskazowka.przel_skalowanie_x;
+            double odl_cienia_y = cos(kat_obrotu_rad) * lokalna_odl_cienia /  wskazowka.przel_skalowanie_y;
 
-        // cień wskazówki ------------------
-
-        QPixmap cien_pix =  * wskazowka.pix_ptr;
-        cien_pix.fill(cyf.kolor_cienia);
-        auto maska =  wskazowka.pix_ptr->createMaskFromColor(Qt::transparent);
-        cien_pix.setMask( maska ) ;
-
-        painter.drawPixmap(wskazowka.przel_mimosrod_x+ odl_cienia_x,
-                           wskazowka.przel_mimosrod_y + odl_cienia_y,
-                           cien_pix);
+            const QPixmap &cien_pix = wskazowka.bitmapa_cienia(cyf.kolor_cienia);
+            painter.drawPixmap(wskazowka.przel_mimosrod_x+ odl_cienia_x,
+                               wskazowka.przel_mimosrod_y + odl_cienia_y,
+                               cien_pix);
+        }
 
         // wlasciwa wskazowka --------------
-        painter.drawPixmap(wskazowka.przel_mimosrod_x,   wskazowka.przel_mimosrod_y,   *wskazowka.pix_ptr);
+        if (wskazowka.pix_ptr != nullptr)
+            painter.drawPixmap(wskazowka.przel_mimosrod_x,   wskazowka.przel_mimosrod_y,   *wskazowka.pix_ptr);
     }
     else{
         painter.setPen(Qt::RoundJoin );
@@ -2601,56 +2666,54 @@ void MainWindow::player_position_upadate(qint64 position)
     //    cout << "Wektor grajacych ma elementow = " << v.size() << endl;
 
     // przeszukac alarmy ktory z nich ma adres tego playera
+    QObject * const nadawca = sender();
     for(uint i = 0 ; i < v.size() ; ++i)
     {
         // czy to ten palyer ?
-        if( v[i].wsk_playera == sender())
+        if( v[i].wsk_playera != nadawca)
+            continue;
+
+        //            cout << "to ten nadawca " << "ma miec sekund " << v[i].sekund_utworu << endl;
+
+        if(position/1000 <= v[i].sekund_utworu)
+            break;
+
+        // stop() potrafi wejść tu jeszcze raz; drugi raz już nie ruszamy wektora
+        if(v[i].wsk_playera->playbackState() == QMediaPlayer::StoppedState)
+            break;
+
+        cout  << "Mija czas, wiec stop " << endl;
+
+        QMediaPlayer * const player = v[i].wsk_playera;
+        const bool loop = v[i].flag_loop;
+        if(loop == false)
         {
-            //            cout << "to ten nadawca " << "ma miec sekund " << v[i].sekund_utworu << endl;
-
-            if(position/1000 > v[i].sekund_utworu)
-            {
-                cout  << "Mija czas, wiec stop " << endl;
-                v[i].wsk_playera->stop();
-
-                if(v[i].flag_loop == false)
-                {
-                    //                    cout << "nie ma flagi 'loop' wiec usuwamy z tablicy grajacych" << endl;
-
-
-                    //  v[i].wsk_playera = nullptr;
-                    //    v. pop_back();
-
-                    for( auto it =  v.begin() ;                         it != v.end() ; )
-                    {
-                        if(it->wsk_playera == sender() )
-                        {
-                            v.erase(it);
-                        }
-                        else
-                            ++it;
-                    }
-                }
-                else
-                {
-                    //                    cout << "jest flaga 'loop' nie usuwamy z tablicy grajacych " << endl;
-                    v[i].wsk_playera->play();
-                }
-                break;
-            }
+            //                    cout << "nie ma flagi 'loop' wiec usuwamy z tablicy grajacych" << endl;
+            // Najpierw zdejmujemy z listy i odpinamy sygnał, potem stop().
+            // stop() potrafi wysłać positionChanged jeszcze raz — wtedy iterator
+            // po erase() byłby już nieważny.
+            disconnect(player, &QMediaPlayer::positionChanged,
+                       this, &MainWindow::player_position_upadate);
+            v.erase(std::remove_if(v.begin(), v.end(),
+                                   [player](const Trojka &t) {
+                                       return t.wsk_playera == player;
+                                   }),
+                    v.end());
+            player->stop();
         }
-        else{
-            //            cout << i << ") Ta pozycja w tablicy grajacych to nie TEN " << endl;
-
+        else
+        {
+            //                    cout << "jest flaga 'loop' nie usuwamy z tablicy grajacych " << endl;
+            // Na czas stop/play odpinamy sygnał, żeby positionChanged nie wszedł tu drugi raz.
+            disconnect(player, &QMediaPlayer::positionChanged,
+                       this, &MainWindow::player_position_upadate);
+            player->stop();
+            player->play();
+            connect(player, &QMediaPlayer::positionChanged,
+                    this, &MainWindow::player_position_upadate);
         }
-
-
-        //          if(v.first = )
-        //          v.second   .sekund_dzwieku
-        //                  al.player
+        break;
     }
-    //cout << " ma byc sekund " << al.sekund_dzwieku << endl;
-    //if(al.sekund_dzwieku  )
 }
 
 //*********************************************************************************************************
@@ -8812,7 +8875,15 @@ bool MainWindow::spr_rozne_typy_alarmu(Tjeden_alarm & al, QTime time, QDate date
     //        cout << "Porownanie  alarmu " << (al.godzina + ":00") << endl;
     //        cout << "  z czasem " << time.toString().toStdString()    << endl;
 
-    if( (al.godzina + ":00")  == time.toString().toStdString() )
+    const QTime alarm_time = al.czas_godziny();
+    // Godzina alarmu jest trzymana jako tekst "hh:mm". Dawniej co sekundę
+    // sklejaliśmy stringi; QTime porównuje to samo (dokładnie ta minuta i sekunda 0).
+    const bool ta_sama_minuta = alarm_time.isValid()
+            && alarm_time.hour() == time.hour()
+            && alarm_time.minute() == time.minute()
+            && time.second() == 0;
+
+    if( ta_sama_minuta )
     {
         // cout << "bezacy miesiac " << date.month();
         // cout << ", czestotliwosc  " << al.czestotliwosc << endl;
@@ -8906,15 +8977,9 @@ bool MainWindow::spr_rozne_typy_alarmu(Tjeden_alarm & al, QTime time, QDate date
 
         // cout << " co interwal, " << al.interwal << " poczawszy od " << al.godzina << endl;
 
-        string s_godz = al.godzina.substr(0,2);
-        string s_min = al.godzina.substr(3,2);
-        int g = stoi(s_godz);
-        int m = stoi(s_min);
+        const QTime start = alarm_time;
 
-        QTime start;
-        start.setHMS(g, m, 0);
-
-        if(al.interwal != 0){
+        if(al.interwal != 0 && start.isValid()){
             if(( time.secsTo(start) % (al.interwal*60) ) == 0)
             {
                 cout << " zgodzil sie interwal "  << endl;
@@ -8972,26 +9037,51 @@ void MainWindow::player_loop_needed(QMediaPlayer::MediaStatus status)
         //cout << "---------> player zakonczyl media" << endl;
 
         QMediaPlayer *wsk = dynamic_cast< QMediaPlayer*> (sender());
-
-        wsk->play();
+        if (wsk != nullptr)
+            wsk->play();
 
     }
         break;
 
     default:
-        cout << "nieznany status " << endl;
+        // Loading / Buffering / Playing przychodzą często; nie logujemy ich co chwilę.
         break;
 
 
     }
 }
 
-// *********************************************************************************************************
+// ********************************************************************************************************
+// Zatrzymuje dźwięk alarmu i zdejmuje odtwarzacz z listy grających.
+// Kasowanie playera w slocie positionChanged psuło iterator; tu jesteśmy poza tym slotem.
+void zatrzymaj_dzwiek_alarmu(Tjeden_alarm &al)
+{
+    if (al.player != nullptr)
+    {
+        QMediaPlayer * const player = al.player;
+        player->disconnect();
+        player->stop();
+
+        auto &v = vec_playerow_grajaych_teraz;
+        v.erase(std::remove_if(v.begin(), v.end(),
+                               [player](const Trojka &t) {
+                                   return t.wsk_playera == player;
+                               }),
+                v.end());
+        delete player;
+        al.player = nullptr;
+    }
+
+    delete al.audioOutput;
+    al.audioOutput = nullptr;
+}
+// ********************************************************************************************************
 /* Uwaga, tu może być problem, bo jeśli wykonanie
  * jednego alarmu zajmie więcej czasu, to drugi, który ma być
  * o tej samej porze może już stać się o sekundę nieaktualny
  * dlatego napierw pytam tu o czas i ten sam czas jest
- * używany do wszystkich sprawdzanych alarmów
+ * używany do wszystkich sprawdzanych alarmów.
+ * Czas jest brany ze strefy tarczy, tej samej co paintEvent.
  */
 // ********************************************************************************************************
 void MainWindow::sprawdzenie_alarmow()
@@ -8999,8 +9089,9 @@ void MainWindow::sprawdzenie_alarmow()
 
     //cout <<  __func__ << endl;
 
-    QTime time = QTime::currentTime();
-    QDate date = QDate::currentDate();
+    const QDateTime w_strefie = QDateTime::currentDateTimeUtc().toTimeZone(strefa_czasowa);
+    const QTime time = w_strefie.isValid() ? w_strefie.time() : QTime::currentTime();
+    const QDate date = w_strefie.isValid() ? w_strefie.date() : QDate::currentDate();
 
     for(auto & al : tablica_alarmow)
     {
@@ -9046,6 +9137,10 @@ void MainWindow::sprawdzenie_alarmow()
                     // al.player->setMedia(QUrl::fromLocalFile(al.muzyka.c_str()) );
                     // al.player->setVolume(50);
 
+                    // Poprzednie odtworzenie tego alarmu (jeśli jeszcze gra) zwalniamy,
+                    // inaczej kolejna minuta gubi wskaźnik i zostawia grający obiekt.
+                    zatrzymaj_dzwiek_alarmu(al);
+
                     al.player = new QMediaPlayer(this);
                     al.audioOutput = new QAudioOutput(this);    // nowy element w Qt6
                     al.player->setAudioOutput(al.audioOutput);  // powiązanie
@@ -9058,27 +9153,20 @@ void MainWindow::sprawdzenie_alarmow()
 
                     if(al.sekund_dzwieku > 0)
                     {
-                        connect(al.player, SIGNAL(positionChanged(qint64)),
-                                this, SLOT(player_position_upadate(qint64)));
+                        connect(al.player, &QMediaPlayer::positionChanged,
+                                this, &MainWindow::player_position_upadate);
 
                         vec_playerow_grajaych_teraz.push_back (
                                     Trojka { al.player, al.sekund_dzwieku, al.loop}
                                     );
-                        //                        auto itt = vec_playerow_grajaych_teraz.front();
-                        //                        vec_playerow_grajaych_teraz.erase(itt);
                     }
                     // Co zrobić, żeby pętla się zarzymała, gdy zamkniemy okno.
                     if(al.loop)
                     {
                         cout << "Wejscie do opcji loop w muzyce" << endl;
-                        connect(al.player,
-                                SIGNAL(
-                                    mediaStatusChanged(QMediaPlayer::MediaStatus)
-                                    ),
-                                this,
-                                SLOT(player_loop_needed(QMediaPlayer::MediaStatus )));
+                        connect(al.player, &QMediaPlayer::mediaStatusChanged,
+                                this, &MainWindow::player_loop_needed);
                     }
-                    // delete player;
                 }
             }
 

@@ -2,10 +2,10 @@
 #define TOPCJE_DLG_H
 
 #include <QDialog>
-#include <QListWidget>
-#include <QTableWidgetItem>
 
 #include <string>
+
+class QTableWidgetItem;
 
 namespace Ui {
 class Topcje_dlg;

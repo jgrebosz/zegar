@@ -2,14 +2,10 @@
 #include "ui_tedytor_alarmow_dlg.h"
 
 #include <QFileDialog>
-#include <QTranslator>
 //#define tr  QObject::tr
-#include <QMessageBox>
 
-#include <iostream>
 using namespace std;
 
-#include "tjeden_alarm.h"
 #include "alarmy.h"   // dla case_czestotliwosc
 
 //**********************************************************************************************************************************

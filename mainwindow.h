@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QPoint>
 #include <QMediaPlayer>
+#include <QHash>
 //#include <QRubberBand>
 #include <QDate>
 #include <QDateTime>
@@ -16,7 +17,6 @@
 #include <string>
 #include <vector>
 #include "tjeden_alarm.h"
-#include "alarmy.h"   // dla case_czestotliwosc
 
 extern std::string nazwa_pliku_sygnalizujacego_prace;
 extern const int CO_ILE_SEK_SPRAWDZENIE_AKTYWNOSCI ;
@@ -75,6 +75,13 @@ struct Tdane_wskazowki
     int odleglosc_cienia = -1;
     int warstwa = 0;  // na jakiej warstwie wyswietlac
     QPixmap *pix_ptr = nullptr;
+
+    // Cień bitmapy jest maską tej samej wskazówki. Liczymy go raz na zmianę
+    // obrazka albo koloru, a nie przy każdym tyknięciu sekundnika.
+    const QPixmap &bitmapa_cienia(const QColor &kolor) const;
+    mutable QPixmap cache_cienia;
+    mutable qint64 cache_cienia_klucz = 0;
+    mutable QRgb cache_cienia_kolor = 0;
 
     std::function<double ()> obliczenie_kata = nullptr;    // dla funkcji lambda obliczajacej kat
     //            [] (int x) { cout << "lambda obliczenie kata dla " << x << endl;
@@ -438,10 +445,7 @@ private slots:
 
     void mousePressEvent(QMouseEvent *e) override;
     void mouseMoveEvent(QMouseEvent *event)override;
-    //    void mouseReleaseEvent([[maybe_unused]] QMouseEvent *   event)override
-    //    {
-
-    //    }
+    void mouseReleaseEvent(QMouseEvent *event) override;
     //        void closeEvent(QCloseEvent *event) override;  // dla system_tray
 
 
@@ -489,6 +493,16 @@ private:
     QPixmap godzinowa;
     QPixmap sekundnik;
     QPixmap tarcza;
+
+    // Ścieżka ostatnio wgranej bitmapy. Zoom i ponowny wybór tej samej tarczy
+    // nie dekodują pliku, który już siedzi w QPixmap.
+    QHash<const QPixmap *, QString> sciezki_zaladowanych_pixmap;
+    bool zaladuj_pixmape(QPixmap &cel, const std::string &sciezka);
+
+    // Pełna data zmienia się raz na dobę; tekst nie jest składany co sekundę.
+    QDate cache_data_napisu;
+    int cache_jezyk_napisu = -1;
+    QString cache_pelnej_daty;
     QPixmap central;
     QPixmap ksiezyc;
     QPixmap pix_wskazowka_dni_tygodnia;
@@ -590,6 +604,8 @@ private:
     // do suwania tarczy po ekranie
     int lastMouseX = 0;
     int lastMouseY = 0;
+    // true tylko przy ręcznym suwaniu (Windows / X11). Na Waylandzie suwa kompozytor.
+    bool ciagniecie_okna = false;
 
     // dla lambda obliczenie_kata NOW
     int now_minutes_from_UTC;

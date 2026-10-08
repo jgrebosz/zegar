@@ -12,6 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Gui
     Widgets
     Multimedia
+    LinguistTools
 )
 
 qt_standard_project_setup()
@@ -40,16 +41,21 @@ target_link_libraries(zegar PRIVATE
 
 
 # Resources:
-set(translations_resource_files
-    "polski2.qm"
+
+
+
+qt6_add_translation(translations
+    polski2.ts
 )
 
 qt_add_resources(zegar "translations"
-    PREFIX
-        "/"
+    PREFIX "/"
+    BASE
+        ${CMAKE_CURRENT_BINARY_DIR}
     FILES
-        ${translations_resource_files}
+        ${translations}
 )
+
 set(zegar_elementy_resource_files
     "content/Azimuthal_projection_SW.png"
     "content/Azul_large.png"
@@ -284,20 +290,11 @@ qt_add_resources(zegar "zegar_elementy"
         ${zegar_elementy_resource_files}
 )
 
-if((QT_VERSION_MAJOR GREATER 4))
-    target_link_libraries(zegar PRIVATE
-        Qt::Widgets
-    )
-endif()
+
 
 install(TARGETS zegar
     BUNDLE DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-qt_generate_deploy_app_script(
-    TARGET zegar
-    OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
-)
-install(SCRIPT ${deploy_script})
+

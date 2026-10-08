@@ -6,12 +6,11 @@
 #include <fstream>
 
 #include <QMessageBox>
-#include <QTime>
 #include <QTimeZone>
 #include <QTableWidgetItem>
-#include <QProcess>
 #include <QDir>
 #include <QTranslator>
+#include <QHash>
 
 #include "mainwindow.h"
 #include "tpreferred_hands.h"
@@ -145,19 +144,31 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
 
     // zbudowanie listy nazw stref ----------------------------------
     // z ustawieniem wybranej linijki na bieżąco obowiązującej strefie czasowej
+    // Lista identyfikatorów stref nie zmienia się w czasie pracy programu.
+    // Szukamy tak samo jak dotychczas: ostatnia nazwa, która zawiera nazwę strefy.
+    static const QStringList nazwy_stref = [] {
+        const QList<QByteArray> lista = QTimeZone::availableTimeZoneIds();
+        QStringList wynik;
+        wynik.reserve(lista.size());
+        for (const QByteArray &id : lista)
+            wynik.append(QString::fromUtf8(id));
+        return wynik;
+    }();
+
     int indeks = 0;
     QString n;
-    QList<QByteArray> lista = QTimeZone::availableTimeZoneIds();
-    for(int i = 0 ; i < lista.size() ; ++i)
+    for (int i = 0; i < nazwy_stref.size(); ++i)
     {
-        QString nazwa = lista[i].toStdString().c_str();
-        ui->comboBox_timezone->addItem(nazwa);
-        if(nazwa.toStdString() .find(nazwa_strefy) != string::npos )
+        const QString &nazwa = nazwy_stref.at(i);
+        if (nazwa.toStdString().find(nazwa_strefy) != string::npos)
         {
             indeks = i;
             n = nazwa;
         }
     }
+    ui->comboBox_timezone->blockSignals(true);
+    ui->comboBox_timezone->addItems(nazwy_stref);
+    ui->comboBox_timezone->blockSignals(false);
     //    cout << "po znalezieniu str czasow nr " << indeks
     //         << " o nazwie "
     //         << n.toStdString()
@@ -167,120 +178,52 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
     strefa_czasowa = QTimeZone( n.toLatin1());
 
     // =======tablice wskazówek =====================
+    // Jedna funkcja dla trzech tabel: obrót ikony o 90° jest wspólny,
+    // a pierwsza wskazówka sekundowa zostaje bez obrazka (jak dotychczas).
+    auto wypelnij_tabele_wskazowek = [](QTableWidget *tabela,
+                                        const vector<Tdane_wskazowki> &wskazowki,
+                                        const QSize &rozmiar_ikony,
+                                        int kolumny,
+                                        bool pierwsza_bez_ikony) {
+        const uint ile = wskazowki.size();
+        tabela->setRowCount(ile);
+        tabela->setColumnCount(kolumny);
+        tabela->setIconSize(rozmiar_ikony);
 
-    // godzinowa
-    {
-        uint ile =  parent->vect_godzinowych.size();
-        ui->tableWidget_wsk_godzinowe->setRowCount(ile);
-        ui->tableWidget_wsk_godzinowe->setColumnCount(1);
+        QTransform obrot;
+        obrot.rotate(90);
 
+        // Obrót pełnej bitmapy jest drogi, a dialog opcji powstaje od nowa przy każdym otwarciu.
+        // Ta sama ścieżka i ten sam obrót o 90° dają tę samą ikonę.
+        static QHash<QString, QIcon> ikony_obrocone;
 
-        /*       QStringList labels;
-                     labels << "nazwa wskazowk; minutowej";
-                     ui->tableWidget->  setHorizontalHeaderLabels(labels) ;        */
-        ui->tableWidget_wsk_godzinowe->setIconSize(QSize(150, 100));
-
-        for(uint i = 0 ; i < ile ; ++i)
+        for (uint i = 0; i < ile; ++i)
         {
-            QString nazwa_ikony = parent->vect_godzinowych[i].bitmapa.c_str();
-            //   QString nazwa_ikony = parent->cyferblat [i].bitmapa_tarcza.c_str();
-            QPixmap robocza(nazwa_ikony);
-            QTransform t ;
-            t= t.rotate(90);
-
-            QPixmap  robocza_pozioma = robocza.transformed( t );
-            QIcon ikona (robocza_pozioma);
-
-            string naz = parent->vect_godzinowych[i].nazwa;
-
-            //    if(i == 0) ikona = QIcon();
-            auto  *newItem = new  QTableWidgetItem( ikona, naz.c_str());
-
-
-            ui->tableWidget_wsk_godzinowe->setItem(i, 0, newItem );
+            QIcon ikona;
+            if (!(pierwsza_bez_ikony && i == 0))
+            {
+                const QString sciezka = QString::fromStdString(wskazowki[i].bitmapa);
+                const auto znalezione = ikony_obrocone.constFind(sciezka);
+                if (znalezione == ikony_obrocone.cend())
+                {
+                    const QPixmap robocza(sciezka);
+                    ikona = QIcon(robocza.transformed(obrot));
+                    ikony_obrocone.insert(sciezka, ikona);
+                }
+                else
+                    ikona = znalezione.value();
+            }
+            tabela->setItem(i, 0, new QTableWidgetItem(ikona, QString::fromStdString(wskazowki[i].nazwa)));
         }
-        ui->tableWidget_wsk_godzinowe->resizeColumnsToContents ();
+        tabela->resizeColumnsToContents();
+    };
 
-    }
-
-
-
-
-    // -------minutowa tablica===========================================
-    {
-        uint ile =  parent->vect_minutowych.size();
-        ui->tableWidget_wsk_minutowe->setRowCount(ile);
-        ui->tableWidget_wsk_minutowe->setColumnCount(1);
-
-
-        /*       QStringList labels;
-           labels << "nazwa wskazowk; minutowej";
-           ui->tableWidget->  setHorizontalHeaderLabels(labels) ;        */
-        ui->tableWidget_wsk_minutowe->setIconSize(QSize(150, 100));
-
-        for(uint i = 0 ; i < ile ; ++i)
-        {
-            QString nazwa_ikony = parent->vect_minutowych[i].bitmapa.c_str();
-            //   QString nazwa_ikony = parent->cyferblat [i].bitmapa_tarcza.c_str();
-            QPixmap robocza(nazwa_ikony);
-            QTransform t ;
-            t= t.rotate(90);
-
-            QPixmap  robocza_pozioma = robocza.transformed( t );
-            QIcon ikona (robocza_pozioma);
-
-            string naz = parent->vect_minutowych[i].nazwa;
-
-            //   if(i == 0) ikona = QIcon();  // piewszy rzad nie ma ikony?
-            auto  *newItem = new  QTableWidgetItem( ikona, naz.c_str());
-
-
-            ui->tableWidget_wsk_minutowe->setItem(i, 0, newItem );
-        }
-        ui->tableWidget_wsk_minutowe->resizeColumnsToContents ();
-    } // kon lok
-
-
-    // -------sekundowa tablica-----------------------------------------
-    {
-        uint ile =  parent->vect_sekundnikow.size();
-        ui->tableWidget_wsk_sekundowe->setRowCount(ile);
-        ui->tableWidget_wsk_sekundowe->setColumnCount(2);
-
-
-        /*       QStringList labels;
-           labels << "nazwa wskazowk; minutowej";
-           ui->tableWidget->  setHorizontalHeaderLabels(labels) ;        */
-        ui->tableWidget_wsk_sekundowe->setIconSize(QSize(120, 200));
-
-
-        for(uint i = 0 ; i < ile ; ++i)
-        {
-            QString nazwa_ikony = parent->vect_sekundnikow[i].bitmapa.c_str();
-            //   QString nazwa_ikony = parent->cyferblat [i].bitmapa_tarcza.c_str();
-            QPixmap robocza(nazwa_ikony);
-            QTransform t ;
-            t= t.rotate(90);
-
-            QPixmap  robocza_pozioma = robocza.transformed( t );
-            QIcon ikona (robocza_pozioma);
-
-            string naz = parent->vect_sekundnikow[i].nazwa;
-
-            if(i == 0) ikona = QIcon();
-            auto  *newItem = new  QTableWidgetItem( ikona, naz.c_str());
-
-
-            ui->tableWidget_wsk_sekundowe->setItem(i, 0, newItem );
-
-
-
-
-        }
-        ui->tableWidget_wsk_sekundowe->resizeColumnsToContents ();
-
-
-    } // kon lok
+    wypelnij_tabele_wskazowek(ui->tableWidget_wsk_godzinowe,
+                              parent->vect_godzinowych, QSize(150, 100), 1, false);
+    wypelnij_tabele_wskazowek(ui->tableWidget_wsk_minutowe,
+                              parent->vect_minutowych, QSize(150, 100), 1, false);
+    wypelnij_tabele_wskazowek(ui->tableWidget_wsk_sekundowe,
+                              parent->vect_sekundnikow, QSize(120, 200), 2, true);
 
 
     //-------------
@@ -321,21 +264,8 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
 //******************************************************************************************************
 Topcje_dlg::~Topcje_dlg()
 {
-
-    // może yu trzeba skasować treść tablic z bitmapami wskazowek?
-    for(uint i = 0 ; i < zegar->vect_minutowych.size() ; ++i)
-    {
-        delete  ui->tableWidget_wsk_minutowe->itemAt(0, i);
-    }
-    for(uint i = 0 ; i < zegar->vect_godzinowych.size() ; ++i)
-    {
-        delete  ui->tableWidget_wsk_godzinowe->itemAt(0, i);
-    }
-    for(uint i = 0 ; i < zegar->vect_sekundnikow.size() ; ++i)
-    {
-        delete  ui->tableWidget_wsk_sekundowe->itemAt(0, i);
-    }
-
+    // QTableWidget sam jest właścicielem itemów. itemAt(x, y) szuka po współrzędnych
+    // widoku, nie po (kolumna, wiersz), a delete ui i tak je zwalnia.
     delete ui;
 }
 //******************************************************************************************************
@@ -1108,9 +1038,12 @@ void Topcje_dlg::laduj_tablice_cyferblatow()
 
 
     //       QPixmap gwiazdka(":/new/prefix1/content/star.png");
-    QPixmap gwiazdka(":/new/prefix1/content/pencil.png");
+    static const QPixmap gwiazdka(":/new/prefix1/content/pencil.png");
     //gwiazdka = gwiazdka.scaled(15, 15);
     QPixmap nic;
+
+    // Miniatury tarcz są dekodowane przy każdym odświeżeniu tabeli (także po zapisie faworyta).
+    static QHash<QString, QPixmap> miniatury_tarcz;
 
     for(uint i = 0 ; i < zegar->cyferblat.size(); ++i)
     {
@@ -1118,9 +1051,16 @@ void Topcje_dlg::laduj_tablice_cyferblatow()
 
         QString nazwa_ikony = zegar->cyferblat[i].bitmapa_tarcza.c_str();
 
-        QPixmap robocza(nazwa_ikony);
+        QPixmap robocza;
+        const auto znaleziona = miniatury_tarcz.constFind(nazwa_ikony);
+        if (znaleziona == miniatury_tarcz.cend())
+        {
+            robocza = QPixmap(nazwa_ikony);
+            miniatury_tarcz.insert(nazwa_ikony, robocza);
+        }
+        else
+            robocza = znaleziona.value();
 
-        QIcon ikona (robocza);
         //----------
         auto  *newItem = new  QTableWidgetItem(robocza, zegar->cyferblat[i].nazwa.c_str());
         ui->tableWidget_cyferblaty->setItem(i, 0, newItem );
@@ -1291,42 +1231,17 @@ void Topcje_dlg::set_zoom( double g)
 //****************************************************************************
 void Topcje_dlg::on_pushButton_zoom50_clicked()
 {
-    gskala = 0.5;
-    //   ui->label_zoom->setNum(gskala);
-
-    ui->label_zoom->setNum(gskala * 100);
-    auto tmp = ui->label_zoom->text();
-    ui->label_zoom->setText(tmp + " %");
-    ui->horizontalSlider_zoom->setValue(gskala * 100);
-
-    zegar->resize_okna_z_tarcza();
+    set_zoom(0.5);
 }
 //****************************************************************************
 void Topcje_dlg::on_pushButton_zoom100_clicked()
 {
-    gskala = 1;
-    //   ui->label_zoom->setNum(gskala);
-
-    ui->label_zoom->setNum(gskala * 100);
-    auto tmp = ui->label_zoom->text();
-    ui->label_zoom->setText(tmp + " %");
-    ui->horizontalSlider_zoom->setValue(gskala * 100);
-
-    zegar->resize_okna_z_tarcza();
+    set_zoom(1);
 }
 //****************************************************************************
 void Topcje_dlg::on_pushButton_zoom200_clicked()
 {
-    gskala = 2;
-    //   ui->label_zoom->setNum(gskala);
-
-    ui->label_zoom->setNum(gskala * 100);
-    auto tmp = ui->label_zoom->text();
-    ui->label_zoom->setText(tmp + " %");
-    ui->horizontalSlider_zoom->setValue(gskala * 100);
-
-
-    zegar->resize_okna_z_tarcza();
+    set_zoom(2);
 }
 //****************************************************************************
 void Topcje_dlg::on_pushButton_start_with_login_clicked()

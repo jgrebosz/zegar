@@ -1,7 +1,4 @@
 #include "tpreferred_hands.h"
-#include <iostream>
-#include <fstream>
-using namespace  std;
 
 Tpreferred_hands::Tpreferred_hands(
         std::string clock_face_name_arg,

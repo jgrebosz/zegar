@@ -1,7 +1,5 @@
 #include "tjeden_alarm.h"
 
-#include <QMediaPlayer>
-
 // static
 // QStringList Tjeden_alarm::list_czestotliwosc =
 //   {

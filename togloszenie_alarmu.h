@@ -28,7 +28,7 @@ private slots:
 private:
     Ui::Togloszenie_alarmu *ui;
 
-    Tjeden_alarm * wsk_alarmu;
+    Tjeden_alarm * wsk_alarmu = nullptr;
 };
 
 #endif // TOGLOSZENIE_ALARMU_H
