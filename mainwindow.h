@@ -436,6 +436,8 @@ public:
     string kosmetyka_nazwy_programu(string nazwa);
     void zmiana_opcji_on_top(bool flag );
     void zmiana_jezyka(int nr_jezyka);
+    // true, gdy wystartowała nowa kopia przez XWayland i ta ma się zakończyć.
+    bool uruchom_ponownie_przez_xwayland();
 
     void zapisz_ulubione_wskazowki_na_dysku();
     void odczytaj_ulubione_wskazowki_z_dysku();

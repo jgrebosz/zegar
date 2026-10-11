@@ -16,6 +16,9 @@ extern int nr_jezyka;
 // extern int nr_obecnie_zainstalowanego_jezyka;
 string nazwa_pliku_sygnalizujacego_prace {"zegar_is_active.dat" } ;
 const int CO_ILE_SEK_SPRAWDZENIE_AKTYWNOSCI { 10 };
+// Ustawiane tuż przed startem nowej kopii (XWayland). Stara kopia nie może
+// wtedy skasować zegar_is_active.dat, bo nowa już z niego korzysta.
+bool flag_nowa_kopia_przejmuje_zamek = false;
 string sciezka;
 //********************************************************************************
 // Qt nie ma funkcji do przeglądania innych procesów (ani na Windows, ani na
@@ -156,11 +159,36 @@ int main(int argc, char *argv[])
 
     // At first let`s select the language
     pathed_nazwa_pliku_z_opcjami = sciezka + nazwa_pliku_z_opcjami;
-    ifstream file(pathed_nazwa_pliku_z_opcjami);
-    file >> nr_jezyka ;
-    file.close();
+    int na_wierzchu_z_pliku = 0;
+    {
+        ifstream file(pathed_nazwa_pliku_z_opcjami);
+        int pomin_przezroczystosc = 0;
+        int pomin_przezroczystosc_kursora = 0;
+        file >> nr_jezyka
+                >> pomin_przezroczystosc
+                >> pomin_przezroczystosc_kursora
+                >> na_wierzchu_z_pliku;
+        (void)pomin_przezroczystosc;
+        (void)pomin_przezroczystosc_kursora;
+    }
     // cout << "wczytany z pliku nr jezyka = " << nr_jezyka << endl;
     if(nr_jezyka < 0 ) nr_jezyka = 0 ;
+
+#ifdef Q_OS_LINUX
+    // GNOME na Waylandzie nie ma prośby „zawsze na wierzchu” dla klienta.
+    // Okno XWayland dostaje _NET_WM_STATE_ABOVE, więc przy włączonej opcji
+    // zostajemy przy X11. QT_QPA_PLATFORM ustawione przez użytkownika zostawiamy.
+    const bool sesja_wayland =
+            qgetenv("XDG_SESSION_TYPE") == "wayland"
+            || !qgetenv("WAYLAND_DISPLAY").isEmpty();
+    if(na_wierzchu_z_pliku
+            && sesja_wayland
+            && qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM")
+            && !qgetenv("DISPLAY").isEmpty())
+    {
+        qputenv("QT_QPA_PLATFORM", QByteArray("xcb"));
+    }
+#endif
 
     //  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); <-- deprecated
 
@@ -226,7 +254,8 @@ int main(int argc, char *argv[])
     // else
     {
         // cout << "Usuwam plik sygnalizacyjny " << nazwa_pliku_sygnalizujacego_prace << endl;
-        dir.remove(nazwa_pliku_sygnalizujacego_prace.c_str());
+        if(!flag_nowa_kopia_przejmuje_zamek)
+            dir.remove(nazwa_pliku_sygnalizujacego_prace.c_str());
         return answer;   // zwykle opuszczenie programu
     }
 

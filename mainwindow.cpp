@@ -77,6 +77,7 @@ int przezroczystosc = 255;
 int przezroczystosc_dla_kursora = 255;
 
 bool flag_na_wierzchu = false;
+extern bool flag_nowa_kopia_przejmuje_zamek;
 bool flag_ograniczenie_pozycji = false;
 bool flag_blokuj_na_ekranie = false;
 
@@ -123,7 +124,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //            //         <<   tr( "example of language English ").toStdString()
     //         << endl;
 
-    this->setWindowOpacity(przezroczystosc/255.0);
+    zmien_przezroczystosc(przezroczystosc);
 
 
     createTrayActions_i_context_menu();
@@ -1635,6 +1636,11 @@ void MainWindow::paintEvent(QPaintEvent *)
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
+    // Wayland nie ma setWindowOpacity (wtyczka tego nie implementuje).
+    // Tarcza i tak jest rysowana na przezroczystym oknie, więc alfa
+    // pikseli daje ten sam efekt co suwak na X11.
+    if(QGuiApplication::platformName().startsWith(QLatin1String("wayland")))
+        painter.setOpacity(przezroczystosc / 255.0);
 
     //    painter.translate(width() / 2, height() / 2);
 
@@ -2595,12 +2601,14 @@ void MainWindow::wywolanie_okna_opcji()
     // cout <<__PRETTY_FUNCTION__ << "nr jezyka = " << nr_jezyka << endl;
 
     bool flaga__byl_tryb_random =  flag_random_tarcza;
+    bool dlg_zaakceptowany = false;
     auto *dlg = new Topcje_dlg(this);
 
     smart_positioning(dlg);
 
     if(dlg->exec() == QDialog::Accepted)
     {
+        dlg_zaakceptowany = true;
         // COTO;
         if(flaga__byl_tryb_random)
         {
@@ -2615,7 +2623,14 @@ void MainWindow::wywolanie_okna_opcji()
     }
     delete dlg;
     // COTO;
-    this->setWindowOpacity(przezroczystosc/255.0);
+    zmien_przezroczystosc(przezroczystosc);
+
+    if(dlg_zaakceptowany) {
+        // Na Waylandzie (GNOME) flaga Qt jest ignorowana. Nowa kopia idzie
+        // przez XWayland, gdzie „zawsze na wierzchu” działa.
+        if(!uruchom_ponownie_przez_xwayland())
+            zmiana_opcji_on_top(flag_na_wierzchu);
+    }
 
     // cout << "Po dialogu opcji jezyk nr  " << nr_jezyka << endl;
 
@@ -8778,7 +8793,7 @@ void MainWindow::wczytanie_opcji_z_dysku()
 
 
 
-    this->setWindowOpacity(przezroczystosc/255.0);
+    zmien_przezroczystosc(przezroczystosc);
     auto pozycja_x_rogu = poz_srodka_zegara_x  - (width() / 2.0) ;
     this->move(pozycja_x_rogu, poz_zegara_y);
 
@@ -8821,12 +8836,64 @@ void MainWindow::zmiana_opcji_on_top(bool flag_top)
 
     //  cout << "Flaga - zegar ma byc on top ? " << boolalpha << flag_top << endl;
 
+    // setWindowFlag na już pokazanym oknie chowa je (Qt przebudowuje okno).
+    const bool bylo_widoczne = isVisible();
+
     setWindowFlag(Qt::WindowStaysOnTopHint, flag_top );
     setWindowFlag(Qt::X11BypassWindowManagerHint, flag_top);
     //  Informs the window system that the window should stay on top of all other windows.
     // Note that on some window managers on X11 you also have
     // to pass Qt::X11BypassWindowManagerHint for this flag to work correctly.
 
+    if(bylo_widoczne) {
+        show();
+       if(flag_top)raise();
+    }
+}
+
+//***************************************************************************************************************
+bool MainWindow::uruchom_ponownie_przez_xwayland()
+{
+#ifndef Q_OS_LINUX
+    return false;
+#else
+    if(!flag_na_wierzchu)
+        return false;
+    if(!QGuiApplication::platformName().startsWith(QLatin1String("wayland")))
+        return false;
+    // Użytkownik sam wybrał platformę — nie podmieniamy jej.
+    if(!qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM"))
+        return false;
+    if(qgetenv("DISPLAY").isEmpty())
+        return false;
+
+    if(timer_sprawdzania_pracy_programu)
+        timer_sprawdzania_pracy_programu->stop();
+
+    // Świeży plik aktywności zablokowałby nową kopię. Wpis „0” jest już
+    // przedawniony, więc czy_wolno_uruchomic() ją wpuści.
+    {
+        ofstream plik(nazwa_pliku_sygnalizujacego_prace);
+        if(plik)
+            plik << 0 << "\t" << flag_pozwalam_na_kilka_kopii_program;
+    }
+
+    const bool wystartowala = QProcess::startDetached(
+                QCoreApplication::applicationFilePath(),
+                QCoreApplication::arguments().mid(1),
+                QDir::currentPath());
+    if(!wystartowala) {
+        if(timer_sprawdzania_pracy_programu)
+            timer_sprawdzania_pracy_programu->start(
+                        1000 * CO_ILE_SEK_SPRAWDZENIE_AKTYWNOSCI);
+        sygnalizacja_pracujacego_programu();
+        return false;
+    }
+
+    flag_nowa_kopia_przejmuje_zamek = true;
+    QCoreApplication::quit();
+    return true;
+#endif
 }
 
 //***************************************************************************************************************
@@ -8849,7 +8916,11 @@ void MainWindow::zmiana_jezyka(int nr_jezyka)
 //***************************************************************************************************************
 void MainWindow::zmien_przezroczystosc(int value)
 {
-    setWindowOpacity(value/255.0);
+    przezroczystosc = value;
+    if(QGuiApplication::platformName().startsWith(QLatin1String("wayland")))
+        update();
+    else
+        setWindowOpacity(value/255.0);
 }
 //*********************************************************************************************************
 bool MainWindow::spr_rozne_typy_alarmu(Tjeden_alarm & al, QTime time, QDate date)
