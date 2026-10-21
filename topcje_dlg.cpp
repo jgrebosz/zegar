@@ -51,7 +51,6 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
 {
 
     ui->setupUi(this);
-    setModal(Qt::NonModal);
     zegar = parent;
     // qDebug() << __LINE__ << "  w KOnstriktorze  options current język = " << nr_jezyka ;
 
@@ -140,7 +139,6 @@ Topcje_dlg::Topcje_dlg(MainWindow * parent) :
 
         //zoneDateTime = localTime;
     }
-    show();
 
     // zbudowanie listy nazw stref ----------------------------------
     // z ustawieniem wybranej linijki na bieżąco obowiązującej strefie czasowej

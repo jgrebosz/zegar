@@ -727,6 +727,9 @@ private:
 
     void  smart_positioning(QDialog * dlg);
 
+    // Jedno okno opcji. Drugie wywołanie z menu tylko je podnosi.
+    Topcje_dlg *okno_opcji = nullptr;
+
 };
 
 #endif // MAINWINDOW_H

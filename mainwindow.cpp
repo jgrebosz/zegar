@@ -2600,9 +2600,18 @@ void MainWindow::wywolanie_okna_opcji()
 
     // cout <<__PRETTY_FUNCTION__ << "nr jezyka = " << nr_jezyka << endl;
 
+    // Menu kontekstowe może wejść tu drugi raz, gdy dialog nie blokuje
+    // zegara (Wayland). Drugiego okna nie tworzymy.
+    if(okno_opcji) {
+        okno_opcji->raise();
+        okno_opcji->activateWindow();
+        return;
+    }
+
     bool flaga__byl_tryb_random =  flag_random_tarcza;
     bool dlg_zaakceptowany = false;
     auto *dlg = new Topcje_dlg(this);
+    okno_opcji = dlg;
 
     smart_positioning(dlg);
 
@@ -2621,6 +2630,7 @@ void MainWindow::wywolanie_okna_opcji()
         }
         zapis_opcji_na_dysku();
     }
+    okno_opcji = nullptr;
     delete dlg;
     // COTO;
     zmien_przezroczystosc(przezroczystosc);
@@ -8847,7 +8857,7 @@ void MainWindow::zmiana_opcji_on_top(bool flag_top)
 
     if(bylo_widoczne) {
         show();
-       if(flag_top)raise();
+        if(flag_top)raise();  // <--- tu dodatkowe if
     }
 }
 
