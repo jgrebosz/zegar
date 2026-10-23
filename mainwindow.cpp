@@ -5421,8 +5421,8 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_miesiaca,
                 Rola_wskazowki::wsk_miesiaca,
-                0,  // x pozycja osi  na tarczy
-                80, // y pozycja osi  na tarczy
+                -4,  // x pozycja osi  na tarczy
+                82, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/iwc_hours.png",
                 -6, // os_x    mimosrod       // w %
@@ -5553,8 +5553,8 @@ void MainWindow::wstepne_wpisanie_cyferblatow()
     cyferblat.back().dodaj_extra_wskazowke(
                 &  cyferblat.back().wsk_miesiaca,
                 Rola_wskazowki::wsk_miesiaca,
-                0,  // x pozycja osi  na tarczy
-                80, // y pozycja osi  na tarczy
+                -4,  // x pozycja osi  na tarczy
+                82, // y pozycja osi  na tarczy
                 "noname",
                 ":/new/prefix1/content/iwc_hours.png",
                 -6, // os_x    mimosrod       // w %
