@@ -72,7 +72,7 @@ void Alarmy::redisplay_table()
     auto nr_rows = (int) tablica_alarmow.size();
     ui->tableWidget->setRowCount (nr_rows);
 
-       cout << "nr_rows = " << nr_rows << endl;
+       // cout << "nr_rows = " << nr_rows << endl;
 
     // creating row widgets ---------------------------------------
     int nr_columns = ui->tableWidget->columnCount ();

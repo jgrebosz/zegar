@@ -42,7 +42,7 @@
 #include "tpreferred_hands.h"
 
 
-#define  KRZYZE_PROWADZACE     false //  true  //
+#define  KRZYZE_PROWADZACE     false // true  //
 
 #define COTO  ;  cout << "File = " << __FILE__ << "Linia = " << __LINE__ << endl;
 
@@ -497,7 +497,7 @@ void MainWindow::wgraj_wskazowke(string nazwa,
             auto  rezultat = zaladuj_pixmape(*bitmapa, vecwsk[*nr_bitm].bitmapa);
             if(!rezultat){
 
-                cout << "Nieudane WGRANIE  pliku bitmapy wskazowki o nazwie : "
+                cerr << "Nieudane WGRANIE  pliku bitmapy wskazowki o nazwie : "
                      << vecwsk[*nr_bitm].bitmapa
                      << "    rezultat = " << rezultat << endl;
                 cout << endl;
@@ -863,7 +863,7 @@ bool MainWindow::zmiana_wygladu_cyferblatu(int nr,  tryb_wskazowek  tryb)
 
     if( zaladuj_pixmape(tarcza, cyf.bitmapa_tarcza) == false)
     {
-        cout << "blad w trakcie ladowania cyferblatu "  <<  cyf.bitmapa_tarcza << endl;
+        cerr << "blad w trakcie ladowania cyferblatu "  <<  cyf.bitmapa_tarcza << endl;
         exit(2);
     }
     zaladuj_pixmape(central, cyf.bitmapa_central);
@@ -9256,8 +9256,10 @@ void MainWindow::sprawdzenie_alarmow()
                 cout << "!!!!!! Przed uruchomieniem zewnetrznego programu  !!!!!!!!" << al.nazwa_programu << endl;
                 string komenda =  al.nazwa_programu ;
 #ifdef Q_OS_WINDOWS
-                komenda = kosmetyka_nazwy_programu(komenda);   // zrobic podwojne bacslashe
+                komenda = kosmetyka_nazwy_programu(komenda);   // zrobic podwojne backslashe
 #endif
+                // cout << "!!!!!! komenda = >"<< komenda << "<" << endl;
+
                 QProcess::startDetached(komenda.c_str()); // nie zatrzyma sekundnika
             }
 
