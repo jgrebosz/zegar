@@ -9255,8 +9255,9 @@ void MainWindow::sprawdzenie_alarmow()
             {
                 cout << "!!!!!! Przed uruchomieniem zewnetrznego programu  !!!!!!!!" << al.nazwa_programu << endl;
                 string komenda =  al.nazwa_programu ;
-                komenda = kosmetyka_nazwy_programu(komenda);
-
+#ifdef Q_OS_WINDOWS
+                komenda = kosmetyka_nazwy_programu(komenda);   // zrobic podwojne bacslashe
+#endif
                 QProcess::startDetached(komenda.c_str()); // nie zatrzyma sekundnika
             }
 
